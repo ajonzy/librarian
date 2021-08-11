@@ -1,0 +1,15 @@
+import React from 'react'
+
+export default function landing() {
+    return (
+        <div className='landing-wrapper'>
+            <h1>Welcome to Libarbarian</h1>
+            <img src="" alt="Logo"/>
+            <div className="buttons-wrapper">
+                <button>Sign In</button>
+                <div>- OR -</div>
+                <button>Create Account</button>
+            </div>
+        </div>
+    )
+}
