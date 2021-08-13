@@ -2,27 +2,81 @@ import React, { useState } from 'react'
 
 import logo from "../../../static/assets/Libarbarian.jpg"
 
-export default function landing() {
+export default function landing(props) {
     const [display, setDisplay] = useState("landing")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
+
+    const handlePageChange = display => {
+        setUsername("")
+        setPassword("")
+        setPasswordConfirm("")
+        setError("")
+        setDisplay(display)
+    }
+
+    const handleAuth = type => {
+        fetch(`http://127.0.0.1:5000/user/${type}`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            setLoading(false)
+            if (typeof data === "string") {
+                console.log(data)
+            }
+            else {
+                props.handleSuccessfulAuth(data)
+            }
+        })
+        .catch(error => {
+            setError("An error occured... Please try again later.")
+            setLoading(false)
+            console.log("Error authenticating account: ", error)
+        })
+    }
 
     const handleSignIn = event => {
         event.preventDefault()
+
+        if (username === "" || password === "") {
+            setError("Please fill out all fields")
+        }
+        else {
+            setError("")
+            setLoading(true)
+            handleAuth("login")
+        }
     }
 
     const handleCreateAccount = event => {
         event.preventDefault()
+
+        if (username === "" || password === "" || passwordConfirm === "") {
+            setError("Please fill out all fields")
+        }
+        else if (password !== passwordConfirm) {
+            setError("Passwords do not match")
+        }
+        else {
+            setError("")
+            setLoading(true)
+            handleAuth("add")
+        }
     }
 
     const renderDisplay = () => {
         switch(display) {
             case "landing": return (
                 <div className="buttons-wrapper">
-                    <button onClick={() => setDisplay("sign-in")}>Sign In</button>
+                    <button onClick={() => handlePageChange("sign-in")} disabled={loading}>Sign In</button>
                     <div>- OR -</div>
-                    <button onClick={() => setDisplay("create-account")}>Create Account</button>
+                    <button onClick={() => handlePageChange("create-account")} disabled={loading}>Create Account</button>
                 </div>
             )
             case "sign-in": return (
@@ -79,6 +133,7 @@ export default function landing() {
             <h1>Welcome to<br/>Libarbarian</h1>
             <img src={logo} alt="Logo"/>
             {renderDisplay()}
+            <div>{error}</div>
         </div>
     )
 }
