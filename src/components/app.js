@@ -3,13 +3,16 @@ import Cookies from 'js-cookie'
 
 import Landing from "./pages/landing"
 
+import loading from "../../static/assets/loading.gif"
+
 export default class App extends Component {
   constructor() {
     super()
 
     this.state = {
       userToken: Cookies.get("token"),
-      user: {}
+      user: {},
+      loading: true
     }
 
     this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this)
@@ -29,7 +32,11 @@ export default class App extends Component {
       <div className='app'>
         {this.state.userToken
         ?
-        <h1>Logged In</h1>
+        this.state.loading
+          ?
+          <img src={loading} alt="Loading"/>
+          :
+          <h1>Logged In</h1>
         :
         <Landing handleSuccessfulAuth={this.handleSuccessfulAuth} />}
       </div>

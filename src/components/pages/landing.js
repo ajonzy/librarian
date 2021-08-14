@@ -29,6 +29,9 @@ export default function landing(props) {
             setLoading(false)
             if (typeof data === "string") {
                 console.log(data)
+                if (data === "Invalid Credentials") {
+                    setError("Incorrect username or password")
+                }
             }
             else {
                 props.handleSuccessfulAuth(data)
@@ -89,14 +92,14 @@ export default function landing(props) {
                             onChange={event => setUsername(event.target.value)}
                         />
                         <input 
-                            type="text" 
+                            type="password" 
                             placeholder="Password"
                             value={password}
                             onChange={event => setPassword(event.target.value)}
                         />
                         <button type="submit">Sign In</button>
                     </form>
-                    <button onClick={() => setDisplay("landing")}>&lt;- Back</button>
+                    <button onClick={() => handlePageChange("landing")}>&lt;- Back</button>
                 </div>
             )
             case "create-account": return (
@@ -109,20 +112,20 @@ export default function landing(props) {
                             onChange={event => setUsername(event.target.value)}
                         />
                         <input 
-                            type="text" 
+                            type="password" 
                             placeholder="Password"
                             value={password}
                             onChange={event => setPassword(event.target.value)}
                         />
                         <input 
-                            type="text" 
+                            type="password" 
                             placeholder="Confirm Password"
                             value={passwordConfirm}
                             onChange={event => setPasswordConfirm(event.target.value)}
                         />
-                        <button type="submit">Sign In</button>
+                        <button type="submit">Create Account</button>
                     </form>
-                    <button onClick={() => setDisplay("landing")}>&lt;- Back</button>
+                    <button onClick={() => handlePageChange("landing")}>&lt;- Back</button>
                 </div>
             )
         }
