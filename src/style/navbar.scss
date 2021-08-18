@@ -1,0 +1,27 @@
+.navbar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .logo-wrapper {
+        display: flex;
+        align-items: center;
+
+        img {
+            height: 70px;
+            margin-right: 10px;
+            padding: 10px;
+        }
+    }
+
+    .user-wrapper {
+        display: flex;
+        align-items: center;
+
+        svg {
+            margin: 10px;
+            margin-left: 20px;
+        }
+    }
+}
