@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cookies from 'js-cookie'
 
 import Landing from "./pages/landing"
+import Bookcase from "./pages/bookcase"
 
 import loading from "../../static/assets/loading.gif"
 
@@ -16,14 +17,40 @@ export default class App extends Component {
     }
 
     this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this)
+    this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this)
   }
 
   handleSuccessfulAuth(user) {
     Cookies.set("token", user.token, { expires: 1825 })
     this.setState({
       userToken: Cookies.get("token"),
-      user: user
+      user: user,
+      loading: false
     })
+  }
+
+  handleSuccessfulLogout() {
+    Cookies.remove("token")
+    this.setState({
+      user: {},
+      userToken: undefined,
+      loading: false
+    })
+  }
+
+  componentDidMount() {
+    if (this.state.userToken) {
+      fetch(`http://127.0.0.1:5000/user/get/${this.state.userToken}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data === "Invalid Credentials") {
+          this.handleSuccessfullogout()
+        }
+        else {
+          this.handleSuccessfulAuth(data)
+        }
+      })
+    }
   }
 
   render() {
@@ -36,7 +63,7 @@ export default class App extends Component {
           ?
           <img src={loading} alt="Loading"/>
           :
-          <h1>Logged In</h1>
+          <Bookcase user={this.state.user} handleSuccessfulLogout={this.handleSuccessfulLogout} />
         :
         <Landing handleSuccessfulAuth={this.handleSuccessfulAuth} />}
       </div>
