@@ -18,6 +18,7 @@ export default class App extends Component {
 
     this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this)
     this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this)
+    this.updateUser = this.updateUser.bind(this)
   }
 
   handleSuccessfulAuth(user) {
@@ -38,13 +39,17 @@ export default class App extends Component {
     })
   }
 
+  updateUser(newuserData) {
+    this.setState({ user: newuserData })
+  }
+
   componentDidMount() {
     if (this.state.userToken) {
       fetch(`http://127.0.0.1:5000/user/get/${this.state.userToken}`)
       .then(response => response.json())
       .then(data => {
         if (data === "Invalid Credentials") {
-          this.handleSuccessfullogout()
+          this.handleSuccessfulLogout()
         }
         else {
           this.handleSuccessfulAuth(data)
@@ -63,7 +68,7 @@ export default class App extends Component {
           ?
           <img src={loading} alt="Loading"/>
           :
-          <Bookcase user={this.state.user} handleSuccessfulLogout={this.handleSuccessfulLogout} />
+          <Bookcase user={this.state.user} updateUser={this.updateUser} handleSuccessfulLogout={this.handleSuccessfulLogout} />
         :
         <Landing handleSuccessfulAuth={this.handleSuccessfulAuth} />}
       </div>

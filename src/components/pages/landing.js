@@ -97,7 +97,7 @@ export default function landing(props) {
                             value={password}
                             onChange={event => setPassword(event.target.value)}
                         />
-                        <button type="submit">Sign In</button>
+                        <button type="submit" disabled={loading}>Sign In</button>
                     </form>
                     <button onClick={() => handlePageChange("landing")}>&lt;- Back</button>
                 </div>
@@ -123,7 +123,7 @@ export default function landing(props) {
                             value={passwordConfirm}
                             onChange={event => setPasswordConfirm(event.target.value)}
                         />
-                        <button type="submit">Create Account</button>
+                        <button type="submit" disabled={loading}>Create Account</button>
                     </form>
                     <button onClick={() => handlePageChange("landing")}>&lt;- Back</button>
                 </div>
