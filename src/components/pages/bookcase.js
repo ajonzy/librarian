@@ -4,14 +4,32 @@ import Navbar from "../utitlities/navbar"
 import Shelf from "../utitlities/shelf"
 import ManageShelves from "./manage-shelves"
 import ManageSeries from "./manage-series"
+import ShelfDisplay from "./shelf"
 
 export default function bookcase(props) {
     const [display, setDisplay] = useState("bookcase")
     const [nameInput, setNameInput] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+    const [selectedShelf, setSelectedShelf] = useState({})
 
-    const renderShelves = () => props.user.shelves.map(shelf => <Shelf key={shelf.id} shelf={shelf}/>)
+    const handleViewShelf = shelf => {
+        setSelectedShelf(shelf)
+        setDisplay("shelf")
+    }
+
+    const handleViewShelfCancel = () => {
+        setSelectedShelf({})
+        setDisplay("bookcase")
+    }
+
+    const renderShelves = () => props.user.shelves.map(shelf => (
+        <Shelf 
+            key={shelf.id} 
+            shelf={shelf}
+            handleViewShelf={handleViewShelf}
+        />
+    ))
 
     const handleAddShelf = event => {
         event.preventDefault()
@@ -91,6 +109,9 @@ export default function bookcase(props) {
             )
             case "manage-series": return (
                 <ManageSeries user={props.user} updateUser={props.updateUser} setDisplay={setDisplay} />
+            )
+            case "shelf": return (
+                <ShelfDisplay shelf={selectedShelf} handleViewShelfCancel={handleViewShelfCancel} />
             )
         }
     }
