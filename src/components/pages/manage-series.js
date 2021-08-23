@@ -54,8 +54,7 @@ export default function manageSeries(props) {
                     setNameInput("")
                     setSelectedSeries({})
                     setDisplay("manage-series")
-                    props.user.series = props.user.series.map(series => series.id === data.id ? data : series)
-                    props.updateUser(props.user)
+                    props.updateUser(data.user)
                 }
             })
             .catch(error => {
@@ -67,12 +66,9 @@ export default function manageSeries(props) {
     }
 
     const handleDeleteSeries = deletedSeries => {
-        fetch(`http://127.0.0.1:5000/shelf/delete/${deletedSeries.id}`, { method: "DELETE" })
+        fetch(`http://127.0.0.1:5000/series/delete/${deletedSeries.id}`, { method: "DELETE" })
         .then(response => response.json())
-        .then(data => {
-            props.user.series = props.user.series.filter(series => series.id !== data.id)
-            props.updateUser(props.user)
-        })
+        .then(data => props.updateUser(data.user))
         .catch(error => console.log("Error deleting series: ", error))
     }
 
@@ -84,7 +80,7 @@ export default function manageSeries(props) {
                         <h3>{series.name}</h3>
                         <div className="options-wrapper">
                             <div onClick={() => handleEdit(series)}>Edit</div>
-                            <div onClick={() => handleDeleteShelf(series)}>Delete</div>
+                            <div onClick={() => handleDeleteSeries(series)}>Delete</div>
                         </div>
                     </div>
                 ))

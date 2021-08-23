@@ -48,8 +48,7 @@ export default function bookcase(props) {
                 else {
                     setNameInput("")
                     setDisplay("bookcase")
-                    props.user.shelves.push(data)
-                    props.updateUser(props.user)
+                    props.updateUser(data.user)
                 }
             })
             .catch(error => {

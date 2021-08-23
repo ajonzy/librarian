@@ -54,8 +54,7 @@ export default function manageShelves(props) {
                     setNameInput("")
                     setSelectedShelf({})
                     setDisplay("manage-shelves")
-                    props.user.shelves = props.user.shelves.map(shelf => shelf.id === data.id ? data : shelf)
-                    props.updateUser(props.user)
+                    props.updateUser(data.user)
                 }
             })
             .catch(error => {
@@ -69,10 +68,7 @@ export default function manageShelves(props) {
     const handleDeleteShelf = deletedShelf => {
         fetch(`http://127.0.0.1:5000/shelf/delete/${deletedShelf.id}`, { method: "DELETE" })
         .then(response => response.json())
-        .then(data => {
-            props.user.shelves = props.user.shelves.filter(shelf => shelf.id !== data.id)
-            props.updateUser(props.user)
-        })
+        .then(data => props.updateUser(data.user))
         .catch(error => console.log("Error deleting shelf: ", error))
     }
 
