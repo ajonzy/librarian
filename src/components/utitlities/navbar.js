@@ -14,7 +14,10 @@ export default function navbar(props) {
 
             <div className="user-wrapper">
                 <div>Welcome, {props.user.username}</div>
-                <FontAwesomeIcon icon={faSignOutAlt} onClick={props.handleSuccessfulLogout} />
+                <div className="account-dropdown">
+                    <div onClick={() => props.setDisplay("manage-shelves")}>Manage Shelves</div>
+                    <FontAwesomeIcon icon={faSignOutAlt} onClick={props.handleSuccessfulLogout} />
+                </div>
             </div>
         </div>
     )
