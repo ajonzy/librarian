@@ -16,6 +16,7 @@ export default function navbar(props) {
                 <div>Welcome, {props.user.username}</div>
                 <div className="account-dropdown">
                     <div onClick={() => props.setDisplay("manage-shelves")}>Manage Shelves</div>
+                    <div onClick={() => props.setDisplay("manage-series")}>Manage Series</div>
                     <FontAwesomeIcon icon={faSignOutAlt} onClick={props.handleSuccessfulLogout} />
                 </div>
             </div>

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Navbar from "../utitlities/navbar"
 import Shelf from "../utitlities/shelf"
 import ManageShelves from "./manage-shelves"
+import ManageSeries from "./manage-series"
 
 export default function bookcase(props) {
     const [display, setDisplay] = useState("bookcase")
@@ -88,6 +89,9 @@ export default function bookcase(props) {
             )
             case "manage-shelves": return (
                 <ManageShelves user={props.user} updateUser={props.updateUser} setDisplay={setDisplay} />
+            )
+            case "manage-series": return (
+                <ManageSeries user={props.user} updateUser={props.updateUser} setDisplay={setDisplay} />
             )
         }
     }

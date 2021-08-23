@@ -1,27 +1,27 @@
 import React, { useState } from 'react'
 
-export default function manageShelves(props) {
-    const [display, setDisplay] = useState("manage-shelves")
+export default function manageSeries(props) {
+    const [display, setDisplay] = useState("manage-series")
     const [nameInput, setNameInput] = useState("")
-    const [selectedShelf, setSelectedShelf] = useState({})
+    const [selectedSeries, setSelectedSeries] = useState({})
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
-    const handleEdit = shelf => {
-        setNameInput(shelf.name)
-        setSelectedShelf(shelf)
-        setDisplay("edit-shelf")
+    const handleEdit = series => {
+        setNameInput(series.name)
+        setSelectedSeries(series)
+        setDisplay("edit-series")
     }
 
     const handleFormCancel = () => {
         setError("")
         setNameInput("")
-        setSelectedShelf({})
+        setSelectedSeries({})
         setLoading(false)
-        setDisplay("manage-shelves")
+        setDisplay("manage-series")
     }
 
-    const handleEditShelf = event => {
+    const handleEditSeries = event => {
         event.preventDefault()
         setError("")
 
@@ -36,7 +36,7 @@ export default function manageShelves(props) {
                                   .map(word => word[0].toUpperCase() + word.slice(1))
                                   .join(" ")
 
-            fetch(`http://127.0.0.1:5000/shelf/update/${selectedShelf.id}`, {
+            fetch(`http://127.0.0.1:5000/series/update/${selectedSeries.id}`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({ name: formattedName })
@@ -46,58 +46,54 @@ export default function manageShelves(props) {
                 setLoading(false)
                 if (typeof data === "string") {
                     console.log(data)
-                    if (data === "Error: Shelf already exists") {
-                        setError("Shelf already exists")
+                    if (data === "Error: Series already exists") {
+                        setError("Series already exists")
                     }
                 }
                 else {
                     setNameInput("")
-                    setSelectedShelf({})
-                    setDisplay("manage-shelves")
-                    props.user.shelves = props.user.shelves.map(shelf => shelf.id === data.id ? data : shelf)
+                    setSelectedSeries({})
+                    setDisplay("manage-series")
+                    props.user.series = props.user.series.map(series => series.id === data.id ? data : series)
                     props.updateUser(props.user)
                 }
             })
             .catch(error => {
                 setError("An error occured... Please try again later.")
                 setLoading(false)
-                console.log("Error updating shelf: ", error)
+                console.log("Error updating series: ", error)
             })
         }
     }
 
-    const handleDeleteShelf = deletedShelf => {
-        fetch(`http://127.0.0.1:5000/shelf/delete/${deletedShelf.id}`, { method: "DELETE" })
+    const handleDeleteSeries = deletedSeries => {
+        fetch(`http://127.0.0.1:5000/shelf/delete/${deletedSeries.id}`, { method: "DELETE" })
         .then(response => response.json())
         .then(data => {
-            props.user.shelves = props.user.shelves.filter(shelf => shelf.id !== data.id)
+            props.user.series = props.user.series.filter(series => series.id !== data.id)
             props.updateUser(props.user)
         })
-        .catch(error => console.log("Error deleting shelf: ", error))
+        .catch(error => console.log("Error deleting series: ", error))
     }
 
     const renderDisplay = () => {
         switch(display) {
-            case "manage-shelves": return (
-                props.user.shelves.map(shelf => (
-                    shelf.name !== "All Books" 
-                    ?
-                    <div className="shelf-wrapper" key={shelf.id}>
-                        <h3>{shelf.name}</h3>
+            case "manage-series": return (
+                props.user.series.map(series => (
+                    <div className="series-wrapper" key={series.id}>
+                        <h3>{series.name}</h3>
                         <div className="options-wrapper">
-                            <div onClick={() => handleEdit(shelf)}>Edit</div>
-                            <div onClick={() => handleDeleteShelf(shelf)}>Delete</div>
+                            <div onClick={() => handleEdit(series)}>Edit</div>
+                            <div onClick={() => handleDeleteShelf(series)}>Delete</div>
                         </div>
                     </div>
-                    :
-                    null
                 ))
             )
-            case "edit-shelf": return (
-                <form onSubmit={handleEditShelf}>
-                    <input type="text" placeholder="Shelf Name" value={nameInput} onChange={event => setNameInput(event.target.value)}/>
+            case "edit-series": return (
+                <form onSubmit={handleEditSeries}>
+                    <input type="text" placeholder="Series Name" value={nameInput} onChange={event => setNameInput(event.target.value)}/>
                     <div className="buttons-wrapper">
-                        <button type="submit" disabled={loading}>Edit Shelf</button>
+                        <button type="submit" disabled={loading}>Edit Series</button>
                         <button onClick={handleFormCancel}>Cancel</button>
                     </div>
                     <div>{error}</div>
@@ -108,7 +104,7 @@ export default function manageShelves(props) {
 
     return (
         <div className='manager-wrapper'>
-            <h2>Manage Shelves</h2>
+            <h2>Manage Series</h2>
             <button onClick={() => props.setDisplay("bookcase")}>Done</button>
             {renderDisplay()}
         </div>
