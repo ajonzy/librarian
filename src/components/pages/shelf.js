@@ -11,6 +11,10 @@ export default function shelf(props) {
         setDisplay("book")
     }
 
+    const handleChangeBookView = book => {
+        setSelectedBook(book)
+    }
+
     const handleViewBookCancel = () => {
         setSelectedBook({})
         setDisplay("shelf")
@@ -21,19 +25,27 @@ export default function shelf(props) {
     const renderDisplay = () => {
         switch(display) {
             case "shelf": return (
-                <div className='shelf-display-wrapper'>
+                <div className='shelf-display'>
                     <h2>{props.shelf.name}</h2>
                     <button onClick={() => props.handleViewShelfCancel()}>Back</button>
                     {renderBooks()}
                 </div>
             )
             case "book": return (
-                <BookDisplay book={selectedBook} handleViewBookCancel={handleViewBookCancel} handleViewShelf={props.handleViewShelf} />
+                <BookDisplay 
+                    book={selectedBook} 
+                    handleViewBookCancel={handleViewBookCancel}
+                    handleChangeBookView={handleChangeBookView} 
+                    handleViewShelf={props.handleViewShelf} 
+                    series={props.series} 
+                />
             )
         }
     }
 
     return (
-        renderDisplay()
+        <div className="shelf-display-wrapper">
+            {renderDisplay()}
+        </div>
     )
 }

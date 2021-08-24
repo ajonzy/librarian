@@ -19,7 +19,21 @@ export default function book(props) {
         props.handleViewShelf(shelf)
     }
 
-    const renderShelves = () => shelves.map(shelf => shelf.name !== "All Books" ? <p key={shelf.id} onClick={() => handleViewShelf(shelf)}>{shelf.name}</p> : null)
+    const renderSeries = () => {
+        const series = props.series.filter(series => series.id === series_data.id)[0]
+
+        return (
+            <ul>{series.books.map(book => (
+                <li key={book.id} onClick={() => props.handleChangeBookView(book)}>{book.title}</li>
+            ))}</ul>
+        )
+    }
+
+    const renderShelves = () => {
+        return shelves.map(shelf => shelf.name !== "All Books" ? (
+            <p key={shelf.id} onClick={() => handleViewShelf(shelf)}>{shelf.name}</p>
+         ) : null)
+    }
 
     return (
         <div className='book-display-wrapper'>
@@ -33,7 +47,9 @@ export default function book(props) {
             {/* TODO: Add grey stars to represent negative ratings */}
             <p>Rating: {"\u2605".repeat(rating)}</p>
             <p>Notes: {notes}</p>
-            {series_data ? <p>Series: {series_data.name}</p> : null}
+            {series_data ? <h3>Series</h3> : null}
+            {series_data ? <h4>{series_data.name}</h4> : null}
+            {series_data ? renderSeries() : null}
             {shelves.length > 1 ? <h3>Shelves</h3> : null}
             {renderShelves()}
         </div>

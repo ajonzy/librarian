@@ -111,13 +111,26 @@ export default function bookcase(props) {
                 </form>
             )
             case "manage-shelves": return (
-                <ManageShelves user={props.user} updateUser={props.updateUser} setDisplay={setDisplay} />
+                <ManageShelves 
+                    user={props.user} 
+                    updateUser={props.updateUser} 
+                    setDisplay={setDisplay} 
+                />
             )
             case "manage-series": return (
-                <ManageSeries user={props.user} updateUser={props.updateUser} setDisplay={setDisplay} />
+                <ManageSeries 
+                    user={props.user} 
+                    updateUser={props.updateUser} 
+                    setDisplay={setDisplay} 
+                />
             )
             case "shelf": return (
-                <ShelfDisplay shelf={selectedShelf} handleViewShelfCancel={handleViewShelfCancel} handleViewShelf={handleViewNestedShelf} />
+                <ShelfDisplay 
+                    shelf={selectedShelf} 
+                    handleViewShelfCancel={handleViewShelfCancel} 
+                    handleViewShelf={handleViewNestedShelf} 
+                    series={props.user.series} 
+                />
             )
         }
     }
