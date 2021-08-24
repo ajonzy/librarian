@@ -18,6 +18,12 @@ export default function bookcase(props) {
         setDisplay("shelf")
     }
 
+    const handleViewNestedShelf = nestedShelf => {
+        const shelf = props.user.shelves.filter(shelf => shelf.id === nestedShelf.id)[0]
+        setSelectedShelf(shelf)
+        setDisplay("shelf")
+    }
+
     const handleViewShelfCancel = () => {
         setSelectedShelf({})
         setDisplay("bookcase")
@@ -111,7 +117,7 @@ export default function bookcase(props) {
                 <ManageSeries user={props.user} updateUser={props.updateUser} setDisplay={setDisplay} />
             )
             case "shelf": return (
-                <ShelfDisplay shelf={selectedShelf} handleViewShelfCancel={handleViewShelfCancel} />
+                <ShelfDisplay shelf={selectedShelf} handleViewShelfCancel={handleViewShelfCancel} handleViewShelf={handleViewNestedShelf} />
             )
         }
     }
