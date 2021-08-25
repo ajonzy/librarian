@@ -10,6 +10,7 @@ export default function book(props) {
         read,
         rating,
         notes,
+        series_id,
         series_data,
         shelves
     } = props.book
@@ -23,7 +24,9 @@ export default function book(props) {
     const [readInput, setReadInput] = useState(read)
     const [ratingInput, setRatingInput] = useState(rating)
     const [notesInput, setNotesInput] = useState(notes)
-    const [seriesInput, setSeriesInput] = useState(series_data ? series_data.id : null)
+    const [seriesExists, setSeriesExists] = useState(Boolean(series_id))
+    const [seriesInput, setSeriesInput] = useState(series_id)
+    const [shelvesNumber, setShelvesNumber] = useState(0)
     const [shelvesInput, setShelvesInput] = useState(shelves.map(shelf => shelf.id))
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
@@ -119,6 +122,18 @@ export default function book(props) {
                         value={notesInput}
                         onChange={event => setNotesInput(event.target.value)}
                     />
+                    {seriesExists
+                    ?
+                    <div className="series-wrapper">
+                        <input type="text" 
+                            placeholder="Series"
+                            value={seriesInput}
+                            onChange={event => setNotesInput(event.target.value)}
+                        />
+                    </div>
+                    :
+                    <button onClick={setSeriesExists(true)}>Add Series</button>
+                    }
                 </form>
             )
         }
