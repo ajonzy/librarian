@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Autosuggest from 'react-autosuggest';
 
 export default function book(props) {
     const {
@@ -25,7 +26,8 @@ export default function book(props) {
     const [ratingInput, setRatingInput] = useState(rating)
     const [notesInput, setNotesInput] = useState(notes)
     const [seriesExists, setSeriesExists] = useState(Boolean(series_id))
-    const [seriesInput, setSeriesInput] = useState(series_id)
+    const [seriesInput, setSeriesInput] = useState(series_data.name)
+    const [seriesInputSuggestions, setSeriesInputSuggestions] = useState([])
     const [shelvesNumber, setShelvesNumber] = useState(0)
     const [shelvesInput, setShelvesInput] = useState(shelves.map(shelf => shelf.id))
     const [loading, setLoading] = useState(false)
@@ -50,6 +52,21 @@ export default function book(props) {
         return shelves.map(shelf => shelf.name !== "All Books" ? (
             <p key={shelf.id} onClick={() => handleViewShelf(shelf)}>{shelf.name}</p>
          ) : null)
+    }
+
+    const getSuggestions = value => {
+        const inputValue = value.trim().toLowerCase();
+        const inputLength = inputValue.length
+
+        return inputLength === 0 ? [] : props.series.filter(series =>
+            series.name.toLowerCase().includes(inputValue)
+        )
+    }
+
+    const handleRemoveSeries = () => {
+        setSeriesExists(false)
+        setSeriesInput("")
+        setSeriesInputSuggestions([])
     }
 
     const renderDisplay = () => {
@@ -125,14 +142,22 @@ export default function book(props) {
                     {seriesExists
                     ?
                     <div className="series-wrapper">
-                        <input type="text" 
-                            placeholder="Series"
-                            value={seriesInput}
-                            onChange={event => setNotesInput(event.target.value)}
+                        <Autosuggest
+                            suggestions={seriesInputSuggestions}
+                            onSuggestionsFetchRequested={({ value }) => setSeriesInputSuggestions(getSuggestions(value))}
+                            onSuggestionsClearRequested={() => setSeriesInputSuggestions([])}
+                            getSuggestionValue={suggestion => suggestion.name}
+                            renderSuggestion={suggestion => <div>{suggestion.name}</div>}
+                            inputProps={{
+                                placeholder: "Series",
+                                value: seriesInput,
+                                onChange: (event, { newValue }) => setSeriesInput(newValue)
+                            }}
                         />
+                        <button type="button" onClick={handleRemoveSeries}>Remove Series</button>
                     </div>
                     :
-                    <button onClick={setSeriesExists(true)}>Add Series</button>
+                    <button type="button" onClick={() => setSeriesExists(true)}>Add Series</button>
                     }
                 </form>
             )
