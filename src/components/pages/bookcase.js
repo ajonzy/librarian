@@ -131,6 +131,7 @@ export default function bookcase(props) {
                     handleViewShelf={handleViewNestedShelf} 
                     series={props.user.series} 
                     shelves={props.user.shelves} 
+                    updateUser={props.updateUser}
                 />
             )
         }

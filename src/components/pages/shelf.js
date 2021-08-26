@@ -39,6 +39,7 @@ export default function shelf(props) {
                     handleViewShelf={props.handleViewShelf} 
                     series={props.series} 
                     shelves={props.shelves} 
+                    updateUser={props.updateUser}
                 />
             )
         }

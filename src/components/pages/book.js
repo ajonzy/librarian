@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import Autosuggest from 'react-autosuggest';
+
+import Autosuggest from "../utitlities/autosuggest"
 
 export default function book(props) {
     const {
+        id,
         title,
         author,
         published_year,
@@ -13,7 +15,8 @@ export default function book(props) {
         notes,
         series_id,
         series_data,
-        shelves
+        shelves,
+        user_id
     } = props.book
 
     const [display, setDisplay] = useState("book")
@@ -26,10 +29,7 @@ export default function book(props) {
     const [ratingInput, setRatingInput] = useState(rating)
     const [notesInput, setNotesInput] = useState(notes)
     const [seriesExists, setSeriesExists] = useState(Boolean(series_id))
-    const [seriesInput, setSeriesInput] = useState(series_data.name)
-    const [seriesInputSuggestions, setSeriesInputSuggestions] = useState([])
-    const [shelvesNumber, setShelvesNumber] = useState(0)
-    const [shelvesInput, setShelvesInput] = useState(shelves.map(shelf => shelf.id))
+    const [seriesInput, setSeriesInput] = useState(series_data ? series_data.name : "")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
@@ -54,19 +54,69 @@ export default function book(props) {
          ) : null)
     }
 
-    const getSuggestions = value => {
-        const inputValue = value.trim().toLowerCase();
-        const inputLength = inputValue.length
-
-        return inputLength === 0 ? [] : props.series.filter(series =>
-            series.name.toLowerCase().includes(inputValue)
-        )
-    }
-
     const handleRemoveSeries = () => {
         setSeriesExists(false)
         setSeriesInput("")
-        setSeriesInputSuggestions([])
+    }
+
+    const handleEditSubmit = async event => {
+        event.preventDefault()
+
+        setLoading(true)
+        setError("")
+
+        let series = props.series.filter(series => series.name.toLowerCase() === seriesInput.toLowerCase())[0]
+        if (series === undefined && seriesInput !== "") {
+            const formattedName = seriesInput
+                                  .split(" ")
+                                  .map(word => word[0].toUpperCase() + word.slice(1))
+                                  .join(" ")
+
+            await fetch("http://127.0.0.1:5000/series/add", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                    name: formattedName,
+                    user_id
+                })
+            })
+            .then(response => response.json())
+            .then(data => series = data.item)
+            .catch(error => {
+                setError("An error occured... Please try again later.")
+                setLoading(false)
+                console.log("Error adding series: ", error)
+            })
+        }
+
+        if (error === "") {
+            await fetch(`http://127.0.0.1:5000/book/update/${id}`, {
+                method: "PUT",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                    title: titleInput,
+                    author: authorInput,
+                    published_year: publishedYearInput,
+                    number_of_pages: numberOfPagesInput,
+                    thumbnail_url: thumbnailUrlInput,
+                    read: readInput,
+                    rating: ratingInput,
+                    notes: notesInput,
+                    series_id: series ? series.id : null
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                props.updateUser(data.user)
+                setLoading(false)
+                setDisplay("book")
+            })
+            .catch(error => {
+                setError("An error occured... Please try again later.")
+                setLoading(false)
+                console.log("Error updating book: ", error)
+            })
+        }
     }
 
     const renderDisplay = () => {
@@ -90,12 +140,13 @@ export default function book(props) {
                     {renderShelves()}
                     <div className="options-wrapper">
                         <div onClick={() => setDisplay("edit-book")}>Edit</div>
+                        {/* TODO: Add delete function */}
                         <div onClick={null}>Delete</div>
                     </div>
                 </div>
             )
             case "edit-book": return (
-                <form>
+                <form onSubmit={handleEditSubmit}>
                     <input type="text" 
                         placeholder="Title"
                         value={titleInput}
@@ -124,7 +175,7 @@ export default function book(props) {
                     <label>Read: </label>
                     <input type="checkbox" 
                         placeholder="Read"
-                        value={readInput}
+                        checked={readInput}
                         onChange={event => setReadInput(event.target.checked)}
                     />
                     <input type="number" 
@@ -143,22 +194,17 @@ export default function book(props) {
                     ?
                     <div className="series-wrapper">
                         <Autosuggest
-                            suggestions={seriesInputSuggestions}
-                            onSuggestionsFetchRequested={({ value }) => setSeriesInputSuggestions(getSuggestions(value))}
-                            onSuggestionsClearRequested={() => setSeriesInputSuggestions([])}
-                            getSuggestionValue={suggestion => suggestion.name}
-                            renderSuggestion={suggestion => <div>{suggestion.name}</div>}
-                            inputProps={{
-                                placeholder: "Series",
-                                value: seriesInput,
-                                onChange: (event, { newValue }) => setSeriesInput(newValue)
-                            }}
+                            input={seriesInput}
+                            setInput={setSeriesInput}
+                            suggestions={props.series}
                         />
                         <button type="button" onClick={handleRemoveSeries}>Remove Series</button>
                     </div>
                     :
-                    <button type="button" onClick={() => setSeriesExists(true)}>Add Series</button>
-                    }
+                    <button type="button" onClick={() => setSeriesExists(true)}>Add Series</button>}
+                    <button type="button">Edit Shelves</button>
+                    <button type="submit" disabled={loading}>Submit</button>
+                    <button type="button" onClick={() => setDisplay("book")}>Cancel</button>
                 </form>
             )
         }
