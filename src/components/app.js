@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie'
 
-import Landing from "./pages/landing"
-import Bookcase from "./pages/bookcase"
+import Landing from "./pages/containers/landing"
+import Bookcase from "./pages/containers/bookcase"
 
 import loading from "../../static/assets/loading.gif"
 

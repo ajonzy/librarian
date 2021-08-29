@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import Shelf from "../pages/shelf/shelf"
 import BookDisplay from "./book"
 
 export default function shelf(props) {
@@ -20,16 +21,14 @@ export default function shelf(props) {
         setDisplay("shelf")
     }
 
-    const renderBooks = () => props.shelf.books.map(book => <div key={book.id} onClick={() => handleViewBook(book)}>{book.title}</div>)
-
     const renderDisplay = () => {
         switch(display) {
             case "shelf": return (
-                <div className='shelf-display'>
-                    <h2>{props.shelf.name}</h2>
-                    <button onClick={() => props.handleViewShelfCancel()}>Back</button>
-                    {renderBooks()}
-                </div>
+                <Shelf 
+                    shelf={props.shelf} 
+                    handleViewBook={handleViewBook} 
+                    handleViewShelfCancel={props.handleViewShelfCancel} 
+                />
             )
             case "book": return (
                 <BookDisplay 
@@ -37,8 +36,7 @@ export default function shelf(props) {
                     handleViewBookCancel={handleViewBookCancel}
                     handleChangeBookView={handleChangeBookView} 
                     handleViewShelf={props.handleViewShelf} 
-                    series={props.series} 
-                    shelves={props.shelves} 
+                    user={props.user}
                     updateUser={props.updateUser}
                 />
             )

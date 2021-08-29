@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 
-import logo from "../../../static/assets/Libarbarian.jpg"
+import Landing from "../pages/landing/landing"
+import SignIn from "../pages/landing/sign-in"
+import CreateAccount from "../pages/landing/create-account"
+
+import logo from "../../../../static/assets/Libarbarian.jpg"
 
 export default function landing(props) {
     const [display, setDisplay] = useState("landing")
@@ -76,57 +80,32 @@ export default function landing(props) {
     const renderDisplay = () => {
         switch(display) {
             case "landing": return (
-                <div className="buttons-wrapper">
-                    <button onClick={() => handlePageChange("sign-in")} disabled={loading}>Sign In</button>
-                    <div>- OR -</div>
-                    <button onClick={() => handlePageChange("create-account")} disabled={loading}>Create Account</button>
-                </div>
+                <Landing 
+                    loading={loading} 
+                    handlePageChange={handlePageChange} 
+                />
             )
             case "sign-in": return (
-                <div className="form-wrapper">
-                    <form onSubmit={handleSignIn}>
-                        <input 
-                            type="text" 
-                            placeholder="Username"
-                            value={username}
-                            onChange={event => setUsername(event.target.value)}
-                        />
-                        <input 
-                            type="password" 
-                            placeholder="Password"
-                            value={password}
-                            onChange={event => setPassword(event.target.value)}
-                        />
-                        <button type="submit" disabled={loading}>Sign In</button>
-                    </form>
-                    <button onClick={() => handlePageChange("landing")}>&lt;- Back</button>
-                </div>
+                <SignIn 
+                    handleSignIn={handleSignIn} 
+                    handlePageChange={handlePageChange} 
+                    loading={loading} username={username} 
+                    setUsername={setUsername} password={password} 
+                    setPassword={setPassword} 
+                />
             )
             case "create-account": return (
-                <div className="form-wrapper">
-                    <form onSubmit={handleCreateAccount}>
-                        <input 
-                            type="text" 
-                            placeholder="Username"
-                            value={username}
-                            onChange={event => setUsername(event.target.value)}
-                        />
-                        <input 
-                            type="password" 
-                            placeholder="Password"
-                            value={password}
-                            onChange={event => setPassword(event.target.value)}
-                        />
-                        <input 
-                            type="password" 
-                            placeholder="Confirm Password"
-                            value={passwordConfirm}
-                            onChange={event => setPasswordConfirm(event.target.value)}
-                        />
-                        <button type="submit" disabled={loading}>Create Account</button>
-                    </form>
-                    <button onClick={() => handlePageChange("landing")}>&lt;- Back</button>
-                </div>
+                <CreateAccount 
+                    handleCreateAccount={handleCreateAccount} 
+                    handlePageChange={handlePageChange} 
+                    loading={loading} 
+                    username={username} 
+                    setUsername={setUsername} 
+                    password={password} 
+                    setPassword={setPassword} 
+                    passwordConfirm={passwordConfirm} 
+                    setPasswordConfirm={setPasswordConfirm} 
+                />
             )
         }
     }
