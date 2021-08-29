@@ -27,6 +27,12 @@ export default function bookcase(props) {
         setDisplay("bookcase")
     }
 
+    const updateUser = user => {
+        const updatedShelf = selectedShelf.id ? user.shelves.filter(shelf => shelf.id === selectedShelf.id)[0] : {}
+        setSelectedShelf(updatedShelf)
+        props.updateUser(user)
+    }
+
     const renderDisplay = () => {
         switch(display) {
             case "bookcase": return (
@@ -39,21 +45,21 @@ export default function bookcase(props) {
             case "add-shelf": return (
                 <AddShelf 
                     user={props.user} 
-                    updateUser={props.updateUser} 
+                    updateUser={updateUser} 
                     setDisplay={setDisplay} 
                 />
             )
             case "manage-shelves": return (
                 <ManageShelves 
                     user={props.user} 
-                    updateUser={props.updateUser} 
+                    updateUser={updateUser} 
                     setDisplay={setDisplay} 
                 />
             )
             case "manage-series": return (
                 <ManageSeries 
                     user={props.user} 
-                    updateUser={props.updateUser} 
+                    updateUser={updateUser} 
                     setDisplay={setDisplay} 
                 />
             )
@@ -63,7 +69,7 @@ export default function bookcase(props) {
                     handleViewShelfCancel={handleViewShelfCancel} 
                     handleViewShelf={handleViewNestedShelf} 
                     user={props.user} 
-                    updateUser={props.updateUser}
+                    updateUser={updateUser}
                 />
             )
         }

@@ -21,6 +21,12 @@ export default function shelf(props) {
         setDisplay("shelf")
     }
 
+    const updateUser = user => {
+        const updatedBook = selectedBook.id ? user.books.filter(book => book.id === selectedBook.id)[0] : {}
+        setSelectedBook(updatedBook)
+        props.updateUser(user)
+    }
+
     const renderDisplay = () => {
         switch(display) {
             case "shelf": return (
@@ -37,7 +43,7 @@ export default function shelf(props) {
                     handleChangeBookView={handleChangeBookView} 
                     handleViewShelf={props.handleViewShelf} 
                     user={props.user}
-                    updateUser={props.updateUser}
+                    updateUser={updateUser}
                 />
             )
         }
