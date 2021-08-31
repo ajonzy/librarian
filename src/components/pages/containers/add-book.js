@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 
 import Scan from "../pages/add-book/scan"
+import Isbn from "../pages/add-book/isbn"
 import SearchResults from "../pages/add-book/search-results"
 
 export default function addBook() {
@@ -46,6 +47,13 @@ export default function addBook() {
         switch(display) {
             case "scan": return (
                 <Scan 
+                    handleSearch={handleSearch}
+                    loading={loading}
+                    setError={setError}
+                />
+            )
+            case "isbn": return (
+                <Isbn 
                     handleSearch={handleSearch}
                     loading={loading}
                     setError={setError}
