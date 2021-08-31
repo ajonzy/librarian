@@ -21,11 +21,12 @@ export default function scan({ handleSearch, loading, setError }) {
                 onUpdate={(err, result) => {
                     if (!loading) {
                         if (result) {
-                            handleSearch("isbn", result)
+                            const query = `isbn:${result}`
+                            handleSearch(query)
                         }
                         else if (err) {
                             // TODO: Remove testing line
-                            handleSearch("isbn", "9781524412357")
+                            handleSearch("isbn:9781524412357")
                             if (err.name != "NotFoundException") {
                                 setError("Error scaning book... Does this app have camera permissions?")
                                 console.log(err)

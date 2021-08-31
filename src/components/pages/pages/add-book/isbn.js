@@ -9,7 +9,8 @@ export default function isbn({ handleSearch, loading, setError }) {
             setError("ISBN must be 10 or 13 digits only")
         }
         else {
-            handleSearch("isbn", isbnCheck)
+            const query = `isbn:${isbnCheck}`
+            handleSearch(query)
         }
     }
 

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 
 import Scan from "../pages/add-book/scan"
 import Isbn from "../pages/add-book/isbn"
+import Search from "../pages/add-book/search"
 import SearchResults from "../pages/add-book/search-results"
 
 export default function addBook() {
@@ -16,11 +17,11 @@ export default function addBook() {
         setDisplay(newDisplay)
     }
 
-    const handleSearch = (method, query) => {
+    const handleSearch = (query) => {
         setLoading(true)
         setError("")
 
-        fetch(`https://www.googleapis.com/books/v1/volumes?q=${method}:${query}`)
+        fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=40`)
         .then(response => response.json())
         .then(data => {
             setLoading(false)
@@ -54,6 +55,13 @@ export default function addBook() {
             )
             case "isbn": return (
                 <Isbn 
+                    handleSearch={handleSearch}
+                    loading={loading}
+                    setError={setError}
+                />
+            )
+            case "search": return (
+                <Search 
                     handleSearch={handleSearch}
                     loading={loading}
                     setError={setError}
