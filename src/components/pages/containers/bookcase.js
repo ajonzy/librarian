@@ -6,6 +6,8 @@ import AddShelf from "../pages/bookcase/add-shelf"
 import ManageShelves from "./manage-shelves"
 import ManageSeries from "./manage-series"
 import Shelf from "./shelf"
+import AddBook from "./add-book"
+import Footer from "../../utitlities/footer"
 
 export default function bookcase(props) {
     const [display, setDisplay] = useState("bookcase")
@@ -72,6 +74,13 @@ export default function bookcase(props) {
                     updateUser={updateUser}
                 />
             )
+            case "add-book": return (
+                <AddBook
+                    setDisplay={setDisplay}
+                    user={props.user} 
+                    updateUser={updateUser}
+                />
+            )
         }
     }
 
@@ -83,6 +92,7 @@ export default function bookcase(props) {
                 setDisplay={setDisplay} 
             />
             {renderDisplay()}
+            <Footer setDisplay={setDisplay} />
         </div>
     )
 }
