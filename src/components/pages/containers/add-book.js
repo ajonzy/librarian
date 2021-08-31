@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 
 import Scan from "../pages/add-book/scan"
+import SearchResults from "../pages/add-book/search-results"
 
 export default function addBook() {
     const [display, setDisplay] = useState("scan")
@@ -8,7 +9,7 @@ export default function addBook() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
-    const handleSetNestedDisplay = newDisplay => {
+    const handleSetDisplay = newDisplay => {
         setLoading(false)
         setError("")
         setDisplay(newDisplay)
@@ -37,14 +38,23 @@ export default function addBook() {
         })
     }
 
+    const handleBookSelect = book => {
+        console.log(book)
+    }
+
     const renderDisplay = () => {
         switch(display) {
             case "scan": return (
                 <Scan 
-                    setDisplay={handleSetNestedDisplay}
                     handleSearch={handleSearch}
                     loading={loading}
                     setError={setError}
+                />
+            )
+            case "search-results": return (
+                <SearchResults 
+                    booksData={booksData} 
+                    handleBookSelect={handleBookSelect}
                 />
             )
         }
@@ -52,6 +62,12 @@ export default function addBook() {
 
     return (
         <div className="add-book-wrapper">
+            <div className="add-book-options-wrapper">
+                <button onClick={() => handleSetDisplay("scan")}>Scan</button>
+                <button onClick={() => handleSetDisplay("isbn")}>ISBN</button>
+                <button onClick={() => handleSetDisplay("search")}>Search</button>
+                <button onClick={() => handleSetDisplay("manual-input")}>Manual&nbsp;Input</button>
+            </div>
             {renderDisplay()}
             <div>{error}</div>
         </div>

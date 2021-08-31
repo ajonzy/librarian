@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import BarcodeScannerComponent from "react-webcam-barcode-scanner"
 
-export default function scan(props) {
+export default function scan({ handleSearch, loading, setError }) {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
     useEffect(() => {
@@ -19,15 +19,15 @@ export default function scan(props) {
             <BarcodeScannerComponent
                 width={windowWidth}
                 onUpdate={(err, result) => {
-                    if (!props.loading) {
+                    if (!loading) {
                         if (result) {
-                            props.handleSearch("isbn", result)
+                            handleSearch("isbn", result)
                         }
                         else if (err) {
                             // TODO: Remove testing line
-                            props.handleSearch("isbn", "9781524412357")
+                            handleSearch("isbn", "9781524412357")
                             if (err.name != "NotFoundException") {
-                                props.setError("Error scaning book... Does this app have camera permissions?")
+                                setError("Error scaning book... Does this app have camera permissions?")
                                 console.log(err)
                             }
                         }
