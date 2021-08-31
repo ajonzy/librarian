@@ -28,6 +28,8 @@ export default function editBook({ id, title, author, published_year, number_of_
         setLoading(true)
         setError("")
 
+        // TODO: Check for blank title or author
+
         let series = user.series.filter(series => series.name.toLowerCase() === seriesInput.toLowerCase())[0]
         if (series === undefined && seriesInput !== "") {
             const formattedName = seriesInput
