@@ -25,7 +25,7 @@ export default function book(props) {
             )
             case "edit-book": return (
                 <EditBook 
-                    {...props.book} 
+                    book={props.book} 
                     setDisplay={setDisplay} 
                     user={props.user} 
                     updateUser={props.updateUser} 

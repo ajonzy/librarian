@@ -1,104 +1,27 @@
 import React, { useState } from 'react'
 
-import Autosuggest from "../../../utitlities/autosuggest"
+import BookForm from "../../../utitlities/book-form"
 
-export default function editBook({ id, title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_id, series_data, shelves, user_id, setDisplay, user, updateUser }) {
-    const [titleInput, setTitleInput] = useState(title)
-    const [authorInput, setAuthorInput] = useState(author)
-    const [publishedYearInput, setPublishedYearInput] = useState(published_year)
-    const [numberOfPagesInput, setNumberOfPagesInput] = useState(number_of_pages)
-    const [thumbnailUrlInput, setThumbnailUrlInput] = useState(thumbnail_url)
-    const [readInput, setReadInput] = useState(read)
-    const [ratingInput, setRatingInput] = useState(rating)
-    const [notesInput, setNotesInput] = useState(notes)
-    const [seriesExists, setSeriesExists] = useState(Boolean(series_id))
-    const [seriesInput, setSeriesInput] = useState(series_data ? series_data.name : "")
-    const [shelvesInput, setShelvesInput] = useState(shelves.map(shelf => shelf.name))
+export default function editBook({ book, setDisplay, user, updateUser }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
-    const handleRemoveSeries = () => {
-        setSeriesExists(false)
-        setSeriesInput("")
-    }
-
-    const handleEditSubmit = async event => {
-        event.preventDefault()
-
-        setLoading(true)
-        setError("")
-
-        // TODO: Check for blank title or author
-
-        let series = user.series.filter(series => series.name.toLowerCase() === seriesInput.toLowerCase())[0]
-        if (series === undefined && seriesInput !== "") {
-            const formattedName = seriesInput
-                                  .split(" ")
-                                  .map(word => word[0].toUpperCase() + word.slice(1))
-                                  .join(" ")
-
-            await fetch("http://127.0.0.1:5000/series/add", {
-                method: "POST",
-                headers: { "content-type": "application/json" },
-                body: JSON.stringify({
-                    name: formattedName,
-                    user_id: user_id
-                })
-            })
-            .then(response => response.json())
-            .then(data => series = data.item)
-            .catch(error => {
-                setError("An error occured... Please try again later.")
-                setLoading(false)
-                console.log("Error adding series: ", error)
-            })
-        }
-
-        const shelvesIds = []
-        for (let shelfInput of shelvesInput) {
-            if (shelfInput !== "") {
-                let shelf = user.shelves.filter(shelf => shelf.name.toLowerCase() === shelfInput.toLowerCase())[0]
-                if (shelf === undefined) {
-                    const formattedName = shelfInput
-                                          .split(" ")
-                                          .map(word => word[0].toUpperCase() + word.slice(1))
-                                          .join(" ")
-
-                    await fetch("http://127.0.0.1:5000/shelf/add", {
-                        method: "POST",
-                        headers: { "content-type": "application/json" },
-                        body: JSON.stringify({
-                            name: formattedName,
-                            user_id: user_id
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => shelf = data.item)
-                    .catch(error => {
-                        setError("An error occured... Please try again later.")
-                        setLoading(false)
-                        console.log("Error adding shelf: ", error)
-                    })
-                }
-                shelvesIds.push(shelf.id)
-            }
-        }
-
+    const handleEditSubmit = editData => {
         if (error === "") {
-            await fetch(`http://127.0.0.1:5000/book/update/${id}`, {
+            fetch(`http://127.0.0.1:5000/book/update/${book.id}`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({
-                    title: titleInput,
-                    author: authorInput,
-                    published_year: publishedYearInput,
-                    number_of_pages: numberOfPagesInput,
-                    thumbnail_url: thumbnailUrlInput,
-                    read: readInput,
-                    rating: ratingInput,
-                    notes: notesInput,
-                    series_id: series ? series.id : null,
-                    shelves_ids: shelvesIds
+                    title: editData.titleInput,
+                    author: editData.authorInput,
+                    published_year: editData.publishedYearInput,
+                    number_of_pages: editData.numberOfPagesInput,
+                    thumbnail_url: editData.thumbnailUrlInput,
+                    read: editData.readInput,
+                    rating: editData.ratingInput,
+                    notes: editData.notesInput,
+                    series_id: editData.series ? editData.series.id : null,
+                    shelves_ids: editData.shelvesIds
                 })
             })
             .then(response => response.json())
@@ -116,81 +39,17 @@ export default function editBook({ id, title, author, published_year, number_of_
     }
 
     return (
-        <form onSubmit={handleEditSubmit}>
-            <input type="text" 
-                placeholder="Title"
-                value={titleInput}
-                onChange={event => setTitleInput(event.target.value)}
+        <div className="edit-book">
+            <BookForm 
+                {...book}
+                handleSubmit={handleEditSubmit}
+                loading={loading}
+                setLoading={setLoading}
+                setError={setError}
+                user={user}
             />
-            <input type="text" 
-                placeholder="Author"
-                value={authorInput}
-                onChange={event => setAuthorInput(event.target.value)}
-            />
-            <input type="text" 
-                placeholder="Published Year"
-                value={publishedYearInput}
-                onChange={event => setPublishedYearInput(event.target.value)}
-            />
-            <input type="number" 
-                placeholder="Number of Pages"
-                value={numberOfPagesInput}
-                onChange={event => setNumberOfPagesInput(event.target.valueAsNumber)}
-            />
-            <input type="text" 
-                placeholder="Thumbnail URL"
-                value={thumbnailUrlInput}
-                onChange={event => setThumbnailUrlInput(event.target.value)}
-            />
-            <label>Read: </label>
-            <input type="checkbox" 
-                placeholder="Read"
-                checked={readInput}
-                onChange={event => setReadInput(event.target.checked)}
-            />
-            <input type="number" 
-                placeholder="Rating"
-                value={ratingInput}
-                min="1"
-                max="10"
-                onChange={event => setRatingInput(event.target.valueAsNumber)}
-            />
-            <textarea
-                placeholder="Notes"
-                value={notesInput}
-                onChange={event => setNotesInput(event.target.value)}
-            />
-            {seriesExists
-            ?
-            <div className="series-wrapper">
-                <Autosuggest
-                    input={seriesInput}
-                    setInput={setSeriesInput}
-                    suggestions={user.series}
-                />
-                <button type="button" onClick={handleRemoveSeries}>Remove Series</button>
-            </div>
-            :
-            <button type="button" onClick={() => setSeriesExists(true)}>Add Series</button>}
-            <div className="shelves-wrapper">
-                {shelvesInput.map((shelf, index) => (
-                    shelf !== "All Books" ?
-                    <div key={index} className="shelf-wrapper">
-                        <Autosuggest 
-                            input={shelvesInput[index] ? shelvesInput[index] : ""}
-                            setInput={newInput => setShelvesInput(shelvesInput.map((oldShelf, oldIndex) => oldIndex === index ? newInput : oldShelf))}
-                            suggestions={user.shelves.filter(shelf => shelf.name !== "All Books")}
-                        />
-                        <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>
-                    </div>
-                    : null
-                ))}
-                <button type="button" onClick={() => setShelvesInput([...shelvesInput, ""])}>Add Shelf</button>
-            </div>
-
-            <button type="button">Edit Shelves</button>
-            <button type="submit" disabled={loading}>Submit</button>
             <button type="button" onClick={() => setDisplay("book")}>Cancel</button>
-        </form>
+            <div>{error}</div>
+        </div>
     )
 }

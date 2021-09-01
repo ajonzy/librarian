@@ -27,7 +27,7 @@ export default function search({ handleSearch, loading, setError }) {
     }
 
     return (
-        <div className="isbn">
+        <div className="search">
             <input 
                 type="text"
                 placeholder="Title"
