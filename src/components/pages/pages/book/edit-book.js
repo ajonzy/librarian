@@ -8,7 +8,7 @@ export default function editBook({ book, setDisplay, user, updateUser }) {
 
     const handleEditSubmit = editData => {
         if (error === "") {
-            fetch(`http://127.0.0.1:5000/book/update/${book.id}`, {
+            fetch(`https://librarianapi.herokuapp.com/book/update/${book.id}`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({

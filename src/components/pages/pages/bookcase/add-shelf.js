@@ -20,7 +20,7 @@ export default function addShelf({ setDisplay, user, updateUser }) {
                                   .map(word => word[0].toUpperCase() + word.slice(1))
                                   .join(" ")
 
-            fetch("http://127.0.0.1:5000/shelf/add", {
+            fetch("https://librarianapi.herokuapp.com/shelf/add", {
                 method: "POST",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({

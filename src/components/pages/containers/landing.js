@@ -23,7 +23,7 @@ export default function landing(props) {
     }
 
     const handleAuth = type => {
-        fetch(`http://127.0.0.1:5000/user/${type}`, {
+        fetch(`https://librarianapi.herokuapp.com/user/${type}`, {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ username, password })

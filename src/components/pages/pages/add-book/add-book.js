@@ -8,7 +8,7 @@ export default function addBook({ title, author, published_year, number_of_pages
 
     const handleAddSubmit = addData => {
         if (error === "") {
-            fetch("http://127.0.0.1:5000/book/add", {
+            fetch("https://librarianapi.herokuapp.com/book/add", {
                 method: "POST",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({

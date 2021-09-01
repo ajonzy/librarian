@@ -45,7 +45,7 @@ export default class App extends Component {
 
   componentDidMount() {
     if (this.state.userToken) {
-      fetch(`http://127.0.0.1:5000/user/get/${this.state.userToken}`)
+      fetch(`https://librarianapi.herokuapp.com/user/get/${this.state.userToken}`)
       .then(response => response.json())
       .then(data => {
         if (data === "Invalid Credentials") {

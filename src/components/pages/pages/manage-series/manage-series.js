@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function manageSeries({ user, updateUser, handleEdit }) {
     const handleDeleteSeries = deletedSeries => {
-        fetch(`http://127.0.0.1:5000/series/delete/${deletedSeries.id}`, { method: "DELETE" })
+        fetch(`https://librarianapi.herokuapp.com/series/delete/${deletedSeries.id}`, { method: "DELETE" })
         .then(response => response.json())
         .then(data => updateUser(data.user))
         .catch(error => console.log("Error deleting series: ", error))

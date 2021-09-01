@@ -38,7 +38,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                                       .map(word => word[0].toUpperCase() + word.slice(1))
                                       .join(" ")
     
-                await fetch("http://127.0.0.1:5000/series/add", {
+                await fetch("https://librarianapi.herokuapp.com/series/add", {
                     method: "POST",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({
@@ -65,7 +65,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                                               .map(word => word[0].toUpperCase() + word.slice(1))
                                               .join(" ")
     
-                        await fetch("http://127.0.0.1:5000/shelf/add", {
+                        await fetch("https://librarianapi.herokuapp.com/shelf/add", {
                             method: "POST",
                             headers: { "content-type": "application/json" },
                             body: JSON.stringify({
