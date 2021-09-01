@@ -4,7 +4,7 @@ import Landing from "../pages/landing/landing"
 import SignIn from "../pages/landing/sign-in"
 import CreateAccount from "../pages/landing/create-account"
 
-import logo from "../../../../static/assets/Libarbarian.jpg"
+import logo from "../../../../static/assets/libarbarian.jpg"
 
 export default function landing(props) {
     const [display, setDisplay] = useState("landing")

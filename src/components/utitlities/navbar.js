@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
-import logo from "../../../static/assets/Libarbarian.jpg"
+import logo from "../../../static/assets/libarbarian.jpg"
 
 export default function navbar(props) {
     return (
