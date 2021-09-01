@@ -21,7 +21,7 @@ export default function autosuggest(props) {
             getSuggestionValue={suggestion => suggestion.name}
             renderSuggestion={suggestion => <div>{suggestion.name}</div>}
             inputProps={{
-                placeholder: "Series",
+                placeholder: props.placeholder,
                 value: props.input,
                 onChange: (event, { newValue }) => props.setInput(newValue)
             }}

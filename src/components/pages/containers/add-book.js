@@ -4,10 +4,12 @@ import Scan from "../pages/add-book/scan"
 import Isbn from "../pages/add-book/isbn"
 import Search from "../pages/add-book/search"
 import SearchResults from "../pages/add-book/search-results"
+import AddBook from "../pages/add-book/add-book"
 
-export default function addBook() {
+export default function addBook(props) {
     const [display, setDisplay] = useState("scan")
     const [booksData, setBooksData] = useState([])
+    const [selectedBook, setSelectedBook] = useState({})
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
@@ -41,7 +43,8 @@ export default function addBook() {
     }
 
     const handleBookSelect = book => {
-        console.log(book)
+        setSelectedBook(book)
+        setDisplay("add-book")
     }
 
     const renderDisplay = () => {
@@ -73,6 +76,18 @@ export default function addBook() {
                     handleBookSelect={handleBookSelect}
                 />
             )
+            case "add-book": return (
+                <AddBook 
+                    title={selectedBook.title}
+                    author={selectedBook.author}
+                    published_year={selectedBook.publishedYear}
+                    number_of_pages={selectedBook.pageCount}
+                    thumbnail_url={selectedBook.thumbnailUrl}
+                    setDisplay={props.setDisplay}
+                    user={props.user}
+                    updateUser={props.updateUser}
+                />
+            )
         }
     }
 
@@ -82,7 +97,7 @@ export default function addBook() {
                 <button onClick={() => handleSetDisplay("scan")}>Scan</button>
                 <button onClick={() => handleSetDisplay("isbn")}>ISBN</button>
                 <button onClick={() => handleSetDisplay("search")}>Search</button>
-                <button onClick={() => handleSetDisplay("manual-input")}>Manual&nbsp;Input</button>
+                <button onClick={() => handleSetDisplay("add-book")}>Manual&nbsp;Input</button>
             </div>
             {renderDisplay()}
             <div>{error}</div>

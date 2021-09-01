@@ -85,7 +85,10 @@ export default function bookForm({ title, author, published_year, number_of_page
                 }
             }
 
-            handleSubmit({ titleInput, authorInput, publishedYearInput, numberOfPagesInput, thumbnailUrlInput, readInput, ratingInput, notesInput, series, shelvesIds })
+            const numberOfPages = isNaN(numberOfPagesInput) ? -1 : numberOfPagesInput
+            const rating = isNaN(ratingInput) ? 0 : ratingInput
+
+            handleSubmit({ titleInput, authorInput, publishedYearInput, numberOfPages, thumbnailUrlInput, readInput, rating, notesInput, series, shelvesIds, user_id })
         }
     }
 
@@ -141,6 +144,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                     input={seriesInput}
                     setInput={setSeriesInput}
                     suggestions={user.series}
+                    placeholder="Series"
                 />
                 <button type="button" onClick={handleRemoveSeries}>Remove Series</button>
             </div>
@@ -154,6 +158,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                             input={shelvesInput[index] ? shelvesInput[index] : ""}
                             setInput={newInput => setShelvesInput(shelvesInput.map((oldShelf, oldIndex) => oldIndex === index ? newInput : oldShelf))}
                             suggestions={user.shelves.filter(shelf => shelf.name !== "All Books")}
+                            placeholder="Shelf"
                         />
                         <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>
                     </div>
