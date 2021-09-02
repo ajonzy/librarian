@@ -27,7 +27,8 @@ export default function scan({ handleSearch, loading, setError }) {
                         else if (err) {
                             if (err.name != "NotFoundException") {
                                 setError("Error scaning book... Does this app have camera permissions?")
-                                console.log(err)
+                                console.log(err.name)
+                                console.log(err.message)
                             }
                         }
                     }
