@@ -25,8 +25,6 @@ export default function scan({ handleSearch, loading, setError }) {
                             handleSearch(query)
                         }
                         else if (err) {
-                            // TODO: Remove testing line
-                            handleSearch("isbn:9781524412357")
                             if (err.name != "NotFoundException") {
                                 setError("Error scaning book... Does this app have camera permissions?")
                                 console.log(err)
