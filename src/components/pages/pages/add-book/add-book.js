@@ -48,6 +48,7 @@ export default function addBook({ title, author, published_year, number_of_pages
                 published_year={published_year}
                 number_of_pages={number_of_pages}
                 thumbnail_url={thumbnail_url}
+                user_id={user.id}
                 handleSubmit={handleAddSubmit}
                 loading={loading}
                 setLoading={setLoading}
