@@ -21,6 +21,7 @@ export default function book(props) {
                     handleViewBookCancel={props.handleViewBookCancel} 
                     handleViewShelf={handleViewShelf} 
                     user={props.user} 
+                    updateUser={props.updateUser} 
                 />
             )
             case "edit-book": return (

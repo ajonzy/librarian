@@ -20,6 +20,7 @@ export default function bookForm({ title, author, published_year, number_of_page
         setSeriesInput("")
     }
 
+    // TODO: Figure out why sumbitting after an error freezes
     const handleFormSubmit = async event => {
         event.preventDefault()
 

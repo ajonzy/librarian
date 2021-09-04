@@ -22,7 +22,10 @@ export default function shelf(props) {
     }
 
     const updateUser = user => {
-        const updatedBook = selectedBook.id ? user.books.filter(book => book.id === selectedBook.id)[0] : {}
+        const updatedBook = selectedBook.id ? user.books.filter(book => book.id === selectedBook.id)[0] || {} : {}
+        if (updatedBook.id === undefined) {
+            setDisplay("shelf")
+        }
         setSelectedBook(updatedBook)
         props.updateUser(user)
     }
