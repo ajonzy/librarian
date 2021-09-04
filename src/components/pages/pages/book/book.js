@@ -23,11 +23,11 @@ export default function book({ title, author, published_year, number_of_pages, t
             <h2>{title}</h2>
             <h3>{author}</h3>
             <p>Published: {published_year}</p>
-            <p>Pages: {number_of_pages}</p>
+            <p>Pages: {number_of_pages ? number_of_pages : "Unknown"}</p>
             <img src={thumbnail_url} alt=""/>
             <p>Read: <input type="checkbox" checked={read} disabled /></p>
             {/* TODO: Add grey stars to represent negative ratings */}
-            <p>Rating: {"\u2605".repeat(rating)}</p>
+            <p>Rating: {rating ? "\u2605".repeat(rating) : "No Rating"}</p>
             <p>Notes: {notes}</p>
             {series_data ? <h3>Series</h3> : null}
             {series_data ? <h4>{series_data.name}</h4> : null}

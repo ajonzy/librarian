@@ -6,10 +6,10 @@ export default function bookForm({ title, author, published_year, number_of_page
     const [titleInput, setTitleInput] = useState(title || "")
     const [authorInput, setAuthorInput] = useState(author || "")
     const [publishedYearInput, setPublishedYearInput] = useState(published_year || "")
-    const [numberOfPagesInput, setNumberOfPagesInput] = useState(number_of_pages || null)
+    const [numberOfPagesInput, setNumberOfPagesInput] = useState(number_of_pages || Number.NaN)
     const [thumbnailUrlInput, setThumbnailUrlInput] = useState(thumbnail_url || "")
     const [readInput, setReadInput] = useState(read || false)
-    const [ratingInput, setRatingInput] = useState(rating || null)
+    const [ratingInput, setRatingInput] = useState(rating || Number.NaN)
     const [notesInput, setNotesInput] = useState(notes || "")
     const [seriesExists, setSeriesExists] = useState(Boolean(series_id) || false)
     const [seriesInput, setSeriesInput] = useState(series_data ? series_data.name : "")
@@ -85,10 +85,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                 }
             }
 
-            const numberOfPages = isNaN(numberOfPagesInput) ? -1 : numberOfPagesInput
-            const rating = isNaN(ratingInput) ? 0 : ratingInput
-
-            handleSubmit({ titleInput, authorInput, publishedYearInput, numberOfPages, thumbnailUrlInput, readInput, rating, notesInput, series, shelvesIds, user_id })
+            handleSubmit({ titleInput, authorInput, publishedYearInput, numberOfPagesInput, thumbnailUrlInput, readInput, ratingInput, notesInput, series, shelvesIds, user_id })
         }
     }
 
@@ -111,7 +108,8 @@ export default function bookForm({ title, author, published_year, number_of_page
             />
             <input type="number" 
                 placeholder="Number of Pages"
-                value={numberOfPagesInput}
+                value={isNaN(numberOfPagesInput) ? "" : numberOfPagesInput}
+                min="1"
                 onChange={event => setNumberOfPagesInput(event.target.valueAsNumber)}
             />
             <input type="text" 
@@ -127,7 +125,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             />
             <input type="number" 
                 placeholder="Rating"
-                value={ratingInput}
+                value={isNaN(ratingInput) ? "" : ratingInput}
                 min="1"
                 max="10"
                 onChange={event => setRatingInput(event.target.valueAsNumber)}
