@@ -8,6 +8,7 @@ import AddBook from "../pages/add-book/add-book"
 
 export default function addBook(props) {
     const [display, setDisplay] = useState("scan")
+    const [scannedIsbn, setScannedIsbn] = useState("")
     const [booksData, setBooksData] = useState([])
     const [selectedBook, setSelectedBook] = useState({})
     const [loading, setLoading] = useState(false)
@@ -16,7 +17,17 @@ export default function addBook(props) {
     const handleSetDisplay = newDisplay => {
         setLoading(false)
         setError("")
+        setSelectedBook({})
+        setBooksData([])
+        setScannedIsbn("")
         setDisplay(newDisplay)
+    }
+
+    const handleScan = isbn => {
+        setScannedIsbn(isbn)
+        setDisplay("isbn")
+        const query = `isbn:${isbn}`
+        handleSearch(query)
     }
 
     const handleSearch = (query) => {
@@ -51,13 +62,14 @@ export default function addBook(props) {
         switch(display) {
             case "scan": return (
                 <Scan 
-                    handleSearch={handleSearch}
+                    handleSearch={handleScan}
                     loading={loading}
                     setError={setError}
                 />
             )
             case "isbn": return (
                 <Isbn 
+                    isbn={scannedIsbn}
                     handleSearch={handleSearch}
                     loading={loading}
                     setError={setError}

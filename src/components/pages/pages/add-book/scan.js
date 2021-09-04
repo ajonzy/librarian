@@ -21,8 +21,7 @@ export default function scan({ handleSearch, loading, setError }) {
                 onUpdate={(err, result) => {
                     if (!loading) {
                         if (result) {
-                            const query = `isbn:${result}`
-                            handleSearch(query)
+                            handleSearch(result)
                         }
                         else if (err) {
                             if (err.name != "NotFoundException" && err.name != "t") {

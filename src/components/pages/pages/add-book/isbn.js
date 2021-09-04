@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
-export default function isbn({ handleSearch, loading, setError }) {
-    const [isbnInput, setIsbnInput] = useState("")
+export default function isbn({ isbn, handleSearch, loading, setError }) {
+    const [isbnInput, setIsbnInput] = useState(isbn)
 
     const handleIsbnSearch = () => {
         const isbnCheck = isbnInput.replace("-", "")
