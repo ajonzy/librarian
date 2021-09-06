@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import Camera, { FACING_MODES } from 'react-html5-camera-photo'
+import 'react-html5-camera-photo/build/css/index.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUpload, faCamera, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 import Autosuggest from "./autosuggest"
 
@@ -8,6 +12,8 @@ export default function bookForm({ title, author, published_year, number_of_page
     const [publishedYearInput, setPublishedYearInput] = useState(published_year || "")
     const [numberOfPagesInput, setNumberOfPagesInput] = useState(number_of_pages || Number.NaN)
     const [thumbnailUrlInput, setThumbnailUrlInput] = useState(thumbnail_url || "")
+    const [thumbnailInput, setThumbnailInput] = useState(null)
+    const [cameraDisplay, setCameraDisplay] = useState(false)
     const [readInput, setReadInput] = useState(read || false)
     const [ratingInput, setRatingInput] = useState(rating || Number.NaN)
     const [notesInput, setNotesInput] = useState(notes || "")
@@ -90,7 +96,28 @@ export default function bookForm({ title, author, published_year, number_of_page
         }
     }
 
+    const handleTakePhoto = dataUri => {
+        setThumbnailInput(dataUri)
+        setCameraDisplay(false)
+    }
+
+    const handleImageUpload = event => {
+        if (event.target.files && event.target.files[0]) {
+            let img = event.target.files[0]
+            setThumbnailInput(URL.createObjectURL(img))
+        }
+    }
+
     return (
+        cameraDisplay 
+        ? 
+        <div className="camera-wrapper">
+            <Camera
+                idealFacingMode={FACING_MODES.ENVIRONMENT}
+                onTakePhoto={dataUri => handleTakePhoto(dataUri)}
+            />
+        </div>
+        : 
         <form onSubmit={handleFormSubmit}>
             <input type="text" 
                 placeholder="Title"
@@ -113,11 +140,19 @@ export default function bookForm({ title, author, published_year, number_of_page
                 min="1"
                 onChange={event => setNumberOfPagesInput(event.target.valueAsNumber)}
             />
-            <input type="text" 
-                placeholder="Thumbnail URL"
-                value={thumbnailUrlInput}
-                onChange={event => setThumbnailUrlInput(event.target.value)}
-            />
+            <div className="thumnail-wrapper">
+                <img src={thumbnailInput ? thumbnailInput : thumbnailUrlInput} alt=""/>
+                <label>
+                    <input 
+                        type="file" 
+                        onChange={handleImageUpload}
+                        style={{ display: "none" }} 
+                    />
+                    <FontAwesomeIcon icon={faUpload} />
+                </label>
+                <FontAwesomeIcon icon={faCamera} onClick={() => setCameraDisplay(true)} />
+                {thumbnailInput ? <FontAwesomeIcon icon={faTimesCircle} onClick={() => setThumbnailInput(null)} /> : null}
+            </div>
             <label>Read: </label>
             <input type="checkbox" 
                 placeholder="Read"
