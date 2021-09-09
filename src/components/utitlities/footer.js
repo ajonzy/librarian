@@ -10,7 +10,7 @@ export default function footer(props) {
                 <FontAwesomeIcon icon={faBook} />
             </div>
 
-            <div className="search-wrapper">
+            <div className="search-wrapper" onClick={() => props.setDisplay("search")}>
                 <span>Search</span>
                 <FontAwesomeIcon icon={faSearch} />
             </div>

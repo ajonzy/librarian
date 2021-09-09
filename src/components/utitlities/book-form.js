@@ -208,7 +208,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                 <Autosuggest
                     input={seriesInput}
                     setInput={setSeriesInput}
-                    suggestions={user.series}
+                    suggestions={user.series.map(series => series.name)}
                     placeholder="Series"
                 />
                 <button type="button" onClick={handleRemoveSeries}>Remove Series</button>
@@ -222,7 +222,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                         <Autosuggest 
                             input={shelvesInput[index] ? shelvesInput[index] : ""}
                             setInput={newInput => setShelvesInput(shelvesInput.map((oldShelf, oldIndex) => oldIndex === index ? newInput : oldShelf))}
-                            suggestions={user.shelves.filter(shelf => shelf.name !== "All Books")}
+                            suggestions={user.shelves.filter(shelf => shelf.name !== "All Books").map(shelf => shelf.name)}
                             placeholder="Shelf"
                         />
                         <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>

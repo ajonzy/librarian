@@ -7,6 +7,7 @@ import ManageShelves from "./manage-shelves"
 import ManageSeries from "./manage-series"
 import Shelf from "./shelf"
 import AddBook from "./add-book"
+import Search from "./search"
 import Footer from "../../utitlities/footer"
 
 export default function bookcase(props) {
@@ -79,6 +80,12 @@ export default function bookcase(props) {
                     setDisplay={setDisplay}
                     user={props.user} 
                     updateUser={updateUser}
+                />
+            )
+            case "search": return (
+                <Search
+                    setDisplay={setDisplay}
+                    user={props.user} 
                 />
             )
         }
