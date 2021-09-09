@@ -22,7 +22,7 @@ export default function editBook({ book, setDisplay, user, updateUser }) {
                         author: editData.authorInput,
                         published_year: editData.publishedYearInput,
                         number_of_pages: editData.numberOfPagesInput,
-                        thumbnail_url: editData.thumbnailUrlInput,
+                        thumbnail_url: editData.thumbnail,
                         read: editData.readInput,
                         rating: editData.ratingInput,
                         notes: editData.notesInput,

@@ -26,7 +26,6 @@ export default function bookForm({ title, author, published_year, number_of_page
         setSeriesInput("")
     }
 
-    // TODO: Figure out why sumbitting after an error freezes
     const handleFormSubmit = async event => {
         event.preventDefault()
 
@@ -92,7 +91,36 @@ export default function bookForm({ title, author, published_year, number_of_page
                 }
             }
 
-            handleSubmit({ titleInput, authorInput, publishedYearInput, numberOfPagesInput, thumbnailUrlInput, readInput, ratingInput, notesInput, series, shelvesIds, user_id })
+            let thumbnail = thumbnailUrlInput
+            if (thumbnailInput) {
+                const form = new FormData()
+                form.append("file", thumbnailInput)
+                form.append("upload_preset", process.env.CLOUDINARY_UPLOAD_PRESET)
+
+                await fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_NAME}/image/upload`, {
+                    method: "POST",
+                    body: form
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.log(data.error.message)
+                        setError("An error occured... Please try again later.")
+                        setLoading(false)
+                    }
+                    else {
+                        thumbnail = data.url
+                        setThumbnailUrlInput(data.url)
+                    }
+                })
+                .catch(error => {
+                    setError("An error occured... Please try again later.")
+                    setLoading(false)
+                    console.log("Error adding shelf: ", error)
+                })
+            }
+
+            handleSubmit({ titleInput, authorInput, publishedYearInput, numberOfPagesInput, thumbnail, readInput, ratingInput, notesInput, series, shelvesIds, user_id })
         }
     }
 
@@ -103,8 +131,10 @@ export default function bookForm({ title, author, published_year, number_of_page
 
     const handleImageUpload = event => {
         if (event.target.files && event.target.files[0]) {
+            const file = new FileReader()
             let img = event.target.files[0]
-            setThumbnailInput(URL.createObjectURL(img))
+            file.onload = () => setThumbnailInput(file.result)
+            file.readAsDataURL(img)
         }
     }
 
@@ -145,6 +175,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                 <label>
                     <input 
                         type="file" 
+                        accept="image/*"
                         onChange={handleImageUpload}
                         style={{ display: "none" }} 
                     />

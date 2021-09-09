@@ -22,7 +22,7 @@ export default function addBook({ title, author, published_year, number_of_pages
                         author: addData.authorInput,
                         published_year: addData.publishedYearInput,
                         number_of_pages: addData.numberOfPagesInput,
-                        thumbnail_url: addData.thumbnailUrlInput,
+                        thumbnail_url: addData.thumbnail,
                         read: addData.readInput,
                         rating: addData.ratingInput,
                         notes: addData.notesInput,
