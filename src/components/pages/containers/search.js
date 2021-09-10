@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import Search from "../pages/search/search"
+import SearchResults from "../pages/search/search-results"
 
 export default function book(props) {
     const [display, setDisplay] = useState("search")
@@ -17,7 +18,11 @@ export default function book(props) {
                 />
             )
             case "search-results": return (
-                <div>{console.log(searchInput)}</div>
+                <SearchResults
+                    user={props.user}
+                    searchInput={searchInput.toLowerCase()}
+                    setDisplay={setDisplay}
+                />
             )
         }
     }
