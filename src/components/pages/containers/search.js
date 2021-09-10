@@ -22,6 +22,7 @@ export default function book(props) {
                     user={props.user}
                     searchInput={searchInput.toLowerCase()}
                     setDisplay={setDisplay}
+                    handleViewBook={props.handleViewBook}
                 />
             )
         }

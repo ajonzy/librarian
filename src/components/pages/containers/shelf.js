@@ -4,8 +4,8 @@ import Shelf from "../pages/shelf/shelf"
 import BookDisplay from "./book"
 
 export default function shelf(props) {
-    const [display, setDisplay] = useState("shelf")
-    const [selectedBook, setSelectedBook] = useState({})
+    const [display, setDisplay] = useState(props.selectedBook.id ? "book" : "shelf")
+    const [selectedBook, setSelectedBook] = useState(props.selectedBook)
 
     const handleViewBook = book => {
         setSelectedBook(book)

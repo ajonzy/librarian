@@ -13,26 +13,38 @@ import Footer from "../../utitlities/footer"
 export default function bookcase(props) {
     const [display, setDisplay] = useState("bookcase")
     const [selectedShelf, setSelectedShelf] = useState({})
+    const [selectedBook, setSelectedBook] = useState({})
 
     const handleViewShelf = shelf => {
         setSelectedShelf(shelf)
+        setSelectedBook({})
         setDisplay("shelf")
     }
 
     const handleViewNestedShelf = nestedShelf => {
         const shelf = props.user.shelves.filter(shelf => shelf.id === nestedShelf.id)[0]
         setSelectedShelf(shelf)
+        setSelectedBook({})
         setDisplay("shelf")
     }
 
     const handleViewShelfCancel = () => {
         setSelectedShelf({})
+        setSelectedBook({})
         setDisplay("bookcase")
+    }
+
+    const handleViewBook = book => {
+        setSelectedBook(book)
+        setSelectedShelf(props.user.shelves.filter(shelf => shelf.name === "All Books")[0])
+        setDisplay("shelf")
     }
 
     const updateUser = user => {
         const updatedShelf = selectedShelf.id ? user.shelves.filter(shelf => shelf.id === selectedShelf.id)[0] : {}
+        const updatedBook = selectedBook.id ? user.books.filter(book => book.id === selectedBook.id)[0] : {}
         setSelectedShelf(updatedShelf)
+        setSelectedBook(updatedBook)
         props.updateUser(user)
     }
 
@@ -69,6 +81,7 @@ export default function bookcase(props) {
             case "shelf": return (
                 <Shelf
                     shelf={selectedShelf} 
+                    selectedBook={selectedBook}
                     handleViewShelfCancel={handleViewShelfCancel} 
                     handleViewShelf={handleViewNestedShelf} 
                     user={props.user} 
@@ -86,6 +99,7 @@ export default function bookcase(props) {
                 <Search
                     setDisplay={setDisplay}
                     user={props.user} 
+                    handleViewBook={handleViewBook}
                 />
             )
         }
