@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import BookForm from "../../../utitlities/book-form"
 
-export default function addBook({ title, author, published_year, number_of_pages, thumbnail_url, setDisplay, user, updateUser }) {
+export default function addBook({ title, author, published_year, number_of_pages, thumbnail_url, setDisplay, user, updateUser, handleViewBook }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [submitForm, setSubmitForm] = useState(false)
@@ -36,7 +36,7 @@ export default function addBook({ title, author, published_year, number_of_pages
                 .then(data => {
                     updateUser(data.user)
                     setLoading(false)
-                    setDisplay("bookcase")
+                    handleViewBook(data.item, data.user)
                 })
                 .catch(error => {
                     setError("An error occured... Please try again later.")

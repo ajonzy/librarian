@@ -98,6 +98,7 @@ export default function addBook(props) {
                     setDisplay={props.setDisplay}
                     user={props.user}
                     updateUser={props.updateUser}
+                    handleViewBook={props.handleViewBook}
                 />
             )
         }

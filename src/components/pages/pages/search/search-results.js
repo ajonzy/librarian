@@ -22,7 +22,7 @@ export default function book({ user, searchInput, setDisplay, handleViewBook }) 
             <div className="search-results-section">
                 <h3>Titles</h3>
                 {matchedTitles.map(book => (
-                    <div key={`${book.id}-title`} className="search-result" onClick={() => handleViewBook(book)}>
+                    <div key={`${book.id}-title`} className="search-result" onClick={() => handleViewBook(book, user)}>
                         <p>{book.title}<br/>by<br/>{book.author}</p>
                         <img src={book.thumbnail_url} alt=""/>
                     </div>
@@ -36,7 +36,7 @@ export default function book({ user, searchInput, setDisplay, handleViewBook }) 
             <div className="search-results-section">
                 <h3>Authors</h3>
                 {matchedAuthors.map(book => (
-                    <div key={`${book.id}-author`} className="search-result" onClick={() => handleViewBook(book)}>
+                    <div key={`${book.id}-author`} className="search-result" onClick={() => handleViewBook(book, user)}>
                         <p>{book.title}<br/>by<br/>{book.author}</p>
                         <img src={book.thumbnail_url} alt=""/>
                     </div>
@@ -50,7 +50,7 @@ export default function book({ user, searchInput, setDisplay, handleViewBook }) 
             <div className="search-results-section">
                 <h3>Series</h3>
                 {matchedSeries.map(book => (
-                    <div key={`${book.id}-series`} className="search-result" onClick={() => handleViewBook(book)}>
+                    <div key={`${book.id}-series`} className="search-result" onClick={() => handleViewBook(book, user)}>
                         <p>{book.title}<br/>by<br/>{book.author}</p>
                         <p>({book.series_data.name})</p>
                         <img src={book.thumbnail_url} alt=""/>
@@ -65,7 +65,7 @@ export default function book({ user, searchInput, setDisplay, handleViewBook }) 
             <div className="search-results-section">
                 <h3>Notes</h3>
                 {matchedNotes.map(book => (
-                    <div key={`${book.id}-notes`} className="search-result" onClick={() => handleViewBook(book)}>
+                    <div key={`${book.id}-notes`} className="search-result" onClick={() => handleViewBook(book, user)}>
                         <p>{book.title}<br/>by<br/>{book.author}</p>
                         <p>({book.notes})</p>
                         <img src={book.thumbnail_url} alt=""/>

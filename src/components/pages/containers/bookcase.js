@@ -34,9 +34,9 @@ export default function bookcase(props) {
         setDisplay("bookcase")
     }
 
-    const handleViewBook = book => {
+    const handleViewBook = (book, userData) => {
         setSelectedBook(book)
-        setSelectedShelf(props.user.shelves.filter(shelf => shelf.name === "All Books")[0])
+        setSelectedShelf(userData.shelves.filter(shelf => shelf.name === "All Books")[0])
         setDisplay("shelf")
     }
 
@@ -93,6 +93,7 @@ export default function bookcase(props) {
                     setDisplay={setDisplay}
                     user={props.user} 
                     updateUser={updateUser}
+                    handleViewBook={handleViewBook}
                 />
             )
             case "search": return (
