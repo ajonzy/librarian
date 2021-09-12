@@ -21,8 +21,8 @@ export default function navbar(props) {
                     <img id="title" src={title} alt=""/>
                 </div>
 
-                <div className="user-wrapper">
-                    <FontAwesomeIcon icon={faBars} onClick={() => setDropdownOpen(!dropdownOpen)} />
+                <div className="user-wrapper" style={{ color: dropdownOpen ? "rgba(255, 255, 255, .8)" : "black" }} onClick={() => setDropdownOpen(!dropdownOpen)}>
+                    <FontAwesomeIcon icon={faBars} />
                 </div>
             </div>
 

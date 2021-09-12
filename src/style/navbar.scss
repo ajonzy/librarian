@@ -1,5 +1,9 @@
 .navbar-wrapper {
     background-image: url("../../static/assets/White\ Header.png");
+    border: 1px solid black;
+    width: 100%;
+    position: fixed;
+    z-index: 10000;
 
     .navbar-contents {
         display: flex;
@@ -29,6 +33,7 @@
             svg {
                 margin: 10px;
                 margin-right: 26px;
+                margin-left: 26px;
                 font-size: 28px;
             }
         }
@@ -41,7 +46,6 @@
     .account-dropdown.open {
         display: block;
         text-align: center;
-        border-bottom: 1px solid black;
 
         div, h4 {
             height: 50px;
