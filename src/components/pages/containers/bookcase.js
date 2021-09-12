@@ -111,6 +111,7 @@ export default function bookcase(props) {
             <Navbar 
                 user={props.user} 
                 handleSuccessfulLogout={props.handleSuccessfulLogout} 
+                display={display}
                 setDisplay={setDisplay} 
             />
             {renderDisplay()}
