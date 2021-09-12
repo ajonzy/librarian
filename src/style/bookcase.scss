@@ -1,3 +1,84 @@
 .bookcase-wrapper {
     width: 100%;
+    height: 100%;
+    background-image: url("../../static//assets/Gray\ Background.png");
+
+    .bookcase {
+        padding-top: 34px;
+        padding-bottom: 34px;
+        width: 100%;
+        height: calc(100vh - 144px);
+        overflow: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bookcase::-webkit-scrollbar {
+        display: none;
+    }
+
+    .shelves-wrapper {
+        width: 80%;
+        border: 1px solid black;
+        box-shadow: -15px -15px 15px 5px rgba(0,0,0,0.3), 15px -15px 15px 5px rgba(0,0,0,0.3);
+    }
+
+    .add-shelf-wrapper, .shelf-wrapper {
+        height: 75px;
+        width: 100%;
+        background-position: center;
+        background-size: 100% 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #e5d8c4;
+
+        h3, h4 {
+            margin: 0px;
+        }
+
+        .shelf-info {
+            width: 60%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            background-color: rgba(0,0,0,.3);
+            box-shadow: 0px 0px 15px 5px rgba(0,0,0,.3)
+        }
+    }
+
+    .add-shelf-wrapper {
+        background-image: url("../../static//assets/New\ Bookshelf_.png");
+    }
+
+    .shelf-wrapper.n0 {
+        background-image: url("../../static/assets/Bookshelf\ 1.png");
+    }
+
+    .shelf-wrapper.n1 {
+        background-image: url("../../static/assets/Bookshelf\ 2.png");
+    }
+
+    .shelf-wrapper.n2 {
+        background-image: url("../../static/assets/Bookshelf\ 3.png");
+    }
+
+    .shelf-wrapper.n3 {
+        background-image: url("../../static/assets/Bookshelf\ 4.png");
+    }
+
+    .shelf-wrapper.n4 {
+        background-image: url("../../static/assets/Bookshelf\ 5.png");
+    }
+
+    .shelf-wrapper.n5 {
+        background-image: url("../../static/assets/Bookshelf\ 6.png");
+    }
 }

@@ -114,9 +114,9 @@ export default function bookcase(props) {
                 display={display}
                 setDisplay={setDisplay} 
             />
-            <div className="spacer-70" />
+            <div className="spacer-72" />
             {renderDisplay()}
-            <div className="spacer-70" />
+            <div className="spacer-72" />
             <Footer 
                 display={display}
                 setDisplay={setDisplay} 

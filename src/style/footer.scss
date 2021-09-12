@@ -1,5 +1,6 @@
 .footer-wrapper {
     width: 100%;
+    max-width: 360px;
     position: fixed;
     bottom: 0px;
     z-index: 10000;
@@ -9,7 +10,7 @@
 
     .footer-button {
         width: 100%;
-        height: 70px;
+        height: 72px;
         border: 1px solid black;
         display: flex;
         justify-content: center;
