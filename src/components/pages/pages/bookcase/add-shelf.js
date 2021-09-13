@@ -59,13 +59,13 @@ export default function addShelf({ setDisplay, user, updateUser }) {
     }
 
     return (
-        <form onSubmit={handleAddShelf}>
+        <form className="add-shelf-form" onSubmit={handleAddShelf}>
             <input type="text" placeholder="Shelf Name" onChange={event => setNameInput(event.target.value)}/>
             <div className="buttons-wrapper">
                 <button type="submit" disabled={loading}>Add Shelf</button>
                 <button onClick={handleFormCancel}>Cancel</button>
             </div>
-            <div>{error}</div>
+            <div className="error">{error}</div>
         </form>
     )
 }
