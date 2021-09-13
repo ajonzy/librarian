@@ -47,7 +47,7 @@ form {
     }
 
     button {
-        width: 75px;
+        width: 80px;
         margin: 0px 5px;
     }
 }
@@ -55,4 +55,14 @@ form {
 .error {
     color: red;
     height: 20px;
+}
+
+.options-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    font-weight: bold;
 }

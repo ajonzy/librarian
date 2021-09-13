@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
 
 import Book from "../pages/book/book"
 import EditBook from "../pages/book/edit-book"
@@ -18,7 +20,6 @@ export default function book(props) {
                     {...props.book} 
                     setDisplay={setDisplay} 
                     handleChangeBookView={props.handleChangeBookView} 
-                    handleViewBookCancel={props.handleViewBookCancel} 
                     handleViewShelf={handleViewShelf} 
                     user={props.user} 
                     updateUser={props.updateUser} 
@@ -37,6 +38,7 @@ export default function book(props) {
 
     return (
         <div className='book-wrapper'>
+            <button onClick={props.handleViewBookCancel}><FontAwesomeIcon icon={faLongArrowAltLeft} /> Back</button>
             {renderDisplay()}
         </div>
     )
