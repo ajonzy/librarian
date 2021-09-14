@@ -4,7 +4,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
-export default function book({ id, title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_data, shelves, setDisplay, handleChangeBookView,  handleViewShelf, user, updateUser }) {
+export default function book({ id, title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_data, shelves, setDisplay, handleChangeBookView,  handleViewShelf, handleScroll, user, updateUser }) {
     const [confirmDelete, setConfirmDelete] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
@@ -44,6 +44,11 @@ export default function book({ id, title, author, published_year, number_of_page
         }
     }
 
+    const handleEdit = () => {
+        setDisplay("edit-book")
+        handleScroll()
+    }
+
     return (
         <div className="book">
             <div className="book-title-wrapper">
@@ -73,7 +78,7 @@ export default function book({ id, title, author, published_year, number_of_page
                 {renderShelves()}
             </div> : null}
             <div className="options-wrapper">
-                <button disabled={loading} onClick={() => setDisplay("edit-book")}>Edit</button>
+                <button disabled={loading} onClick={handleEdit}>Edit</button>
                 <button disabled={loading} onClick={handleDelete} style={{ color: "red" }}>Delete</button>
             </div>
             <p className="confirm-error-loading">{confirmDelete}{error}{loading ? <img src={loadingImg} /> : null}</p>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import BookForm from "../../../utitlities/book-form"
 
-export default function editBook({ book, setDisplay, user, updateUser }) {
+export default function editBook({ book, setDisplay, handleScroll, user, updateUser }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [submitForm, setSubmitForm] = useState(false)
@@ -53,7 +53,10 @@ export default function editBook({ book, setDisplay, user, updateUser }) {
         setSubmitForm(true)
     }
 
-    const handleSetDisplay = newDisplay => setDisplay(newDisplay)
+    const handleSetDisplay = newDisplay => {
+        setDisplay(newDisplay)
+        handleScroll()
+    }
 
     return (
         <div className="edit-book">
