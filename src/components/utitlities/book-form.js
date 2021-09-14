@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import 'react-html5-camera-photo/build/css/index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
