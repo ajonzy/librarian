@@ -9,7 +9,7 @@ function main() {
   const vh = window.innerHeight * 0.01
   document.documentElement.style.setProperty('--vh', `${vh}px`)
 
-  window.addEventListener('resize', () => {
+  window.addEventListener('orientationchange', () => {
     const vh = window.innerHeight * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)
   })
