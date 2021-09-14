@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import 'react-html5-camera-photo/build/css/index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 
 import Autosuggest from "./autosuggest"
 
-export default function bookForm({ title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_id, series_data, shelves, user_id, handleSubmit, loading, setLoading, setError, user }) {
+import loadingImg from "../../../static/assets/loading-small.gif"
+
+export default function bookForm({ title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_id, series_data, shelves, user_id, handleSubmit, loading, setLoading, error, setError, setDisplay, user }) {
     const [titleInput, setTitleInput] = useState(title || "")
     const [authorInput, setAuthorInput] = useState(author || "")
     const [publishedYearInput, setPublishedYearInput] = useState(published_year || "")
@@ -122,11 +125,6 @@ export default function bookForm({ title, author, published_year, number_of_page
         }
     }
 
-    const handleTakePhoto = dataUri => {
-        setThumbnailInput(dataUri)
-        setCameraDisplay(false)
-    }
-
     const handleImageUpload = event => {
         if (event.target.files && event.target.files[0]) {
             const file = new FileReader()
@@ -136,91 +134,138 @@ export default function bookForm({ title, author, published_year, number_of_page
         }
     }
 
+    const handleImageRemove = event => {
+        event.preventDefault()
+
+        setThumbnailInput(null)
+    }
+
+    const textAreaAdjust = event => {
+        event.target.style.height = "inherit";
+        event.target.style.height = `${event.target.scrollHeight + 2.4}px`;
+    }
+
     return (
         <form onSubmit={handleFormSubmit}>
-            <input type="text" 
-                placeholder="Title"
-                value={titleInput}
-                onChange={event => setTitleInput(event.target.value)}
-            />
-            <input type="text" 
-                placeholder="Author"
-                value={authorInput}
-                onChange={event => setAuthorInput(event.target.value)}
-            />
-            <input type="text" 
-                placeholder="Published Year"
-                value={publishedYearInput}
-                onChange={event => setPublishedYearInput(event.target.value)}
-            />
-            <input type="number" 
-                placeholder="Number of Pages"
-                value={isNaN(numberOfPagesInput) ? "" : numberOfPagesInput}
-                min="1"
-                onChange={event => setNumberOfPagesInput(event.target.valueAsNumber)}
-            />
+            <label>
+                Title
+                <input type="text" 
+                    placeholder="Title"
+                    value={titleInput}
+                    onChange={event => setTitleInput(event.target.value)}
+                />
+            </label>
+            <label>
+                Author
+                <input type="text" 
+                    placeholder="Author"
+                    value={authorInput}
+                    onChange={event => setAuthorInput(event.target.value)}
+                />
+            </label>
+            <label>
+                Published Year
+                <input type="text" 
+                    placeholder="Published Year"
+                    value={publishedYearInput}
+                    onChange={event => setPublishedYearInput(event.target.value)}
+                />
+            </label>
+            <label>
+                Number of Pages
+                <input type="number" 
+                    placeholder="Number of Pages"
+                    value={isNaN(numberOfPagesInput) ? "" : numberOfPagesInput}
+                    min="1"
+                    onChange={event => setNumberOfPagesInput(event.target.valueAsNumber)}
+                />
+            </label>
             <div className="thumnail-wrapper">
-                <img src={thumbnailInput ? thumbnailInput : thumbnailUrlInput} alt=""/>
                 <label>
+                    Thumbnail Image
                     <input 
                         type="file" 
                         accept="image/*"
                         onChange={handleImageUpload}
                         style={{ display: "none" }} 
                     />
-                    <FontAwesomeIcon icon={faUpload} />
+                    <img src={thumbnailInput ? thumbnailInput : thumbnailUrlInput} alt=""/>
+                    <div className="options-wrapper">
+                        <FontAwesomeIcon icon={faUpload} />
+                        {thumbnailInput ? <FontAwesomeIcon icon={faTimesCircle} onClick={handleImageRemove} /> : null}
+                    </div>
                 </label>
-                {thumbnailInput ? <FontAwesomeIcon icon={faTimesCircle} onClick={() => setThumbnailInput(null)} /> : null}
             </div>
-            <label>Read: </label>
-            <input type="checkbox" 
-                placeholder="Read"
-                checked={readInput}
-                onChange={event => setReadInput(event.target.checked)}
-            />
-            <input type="number" 
-                placeholder="Rating"
-                value={isNaN(ratingInput) ? "" : ratingInput}
-                min="1"
-                max="10"
-                onChange={event => setRatingInput(event.target.valueAsNumber)}
-            />
-            <textarea
-                placeholder="Notes"
-                value={notesInput}
-                onChange={event => setNotesInput(event.target.value)}
-            />
+            <label>
+                Read: 
+                <input type="checkbox" 
+                    placeholder="Read"
+                    checked={readInput}
+                    onChange={event => setReadInput(event.target.checked)}
+                    style={{ display: "none" }}
+                />
+                {<FontAwesomeIcon icon={readInput ? faCheckSquare : faSquare} />}
+            </label>
+            <label>
+                Rating
+                <input type="number" 
+                    placeholder="Rating"
+                    value={isNaN(ratingInput) ? "" : ratingInput}
+                    min="1"
+                    max="10"
+                    onChange={event => setRatingInput(event.target.valueAsNumber)}
+                />
+            </label>
+            <label>
+                Notes
+                <textarea
+                    placeholder="Notes"
+                    value={notesInput}
+                    onChange={event => setNotesInput(event.target.value)}
+                    onKeyUp={textAreaAdjust}
+                />
+            </label>
             {seriesExists
             ?
             <div className="series-wrapper">
-                <Autosuggest
-                    input={seriesInput}
-                    setInput={setSeriesInput}
-                    suggestions={user.series.map(series => series.name)}
-                    placeholder="Series"
-                />
-                <button type="button" onClick={handleRemoveSeries}>Remove Series</button>
+                <label>
+                    Series Name
+                    <Autosuggest
+                        input={seriesInput}
+                        setInput={setSeriesInput}
+                        suggestions={user.series.map(series => series.name)}
+                        placeholder="Series"
+                    />
+                    <button type="button" onClick={handleRemoveSeries}>Remove Series</button>
+                </label>
             </div>
             :
             <button type="button" onClick={() => setSeriesExists(true)}>Add Series</button>}
-            <div className="shelves-wrapper">
+            <div className="shelves-display-wrapper">
                 {shelvesInput.map((shelf, index) => (
                     shelf !== "All Books" ?
-                    <div key={index} className="shelf-wrapper">
-                        <Autosuggest 
-                            input={shelvesInput[index] ? shelvesInput[index] : ""}
-                            setInput={newInput => setShelvesInput(shelvesInput.map((oldShelf, oldIndex) => oldIndex === index ? newInput : oldShelf))}
-                            suggestions={user.shelves.filter(shelf => shelf.name !== "All Books").map(shelf => shelf.name)}
-                            placeholder="Shelf"
-                        />
-                        <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>
+                    <div key={index} className="shelf-display-wrapper">
+                        <label>
+                            Shelf Name
+                            <Autosuggest 
+                                input={shelvesInput[index] ? shelvesInput[index] : ""}
+                                setInput={newInput => setShelvesInput(shelvesInput.map((oldShelf, oldIndex) => oldIndex === index ? newInput : oldShelf))}
+                                suggestions={user.shelves.filter(shelf => shelf.name !== "All Books").map(shelf => shelf.name)}
+                                placeholder="Shelf"
+                            />
+                            <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>
+                        </label>
                     </div>
                     : null
                 ))}
                 <button type="button" onClick={() => setShelvesInput([...shelvesInput, ""])}>Add Shelf</button>
             </div>
 
-            <button type="submit" disabled={loading}>Submit</button>
+            <div className="options-wrapper">
+                <button type="submit" disabled={loading}>Submit</button>
+                <button type="button" onClick={() => setDisplay("book")}>Cancel</button>
+            </div>
+            <div className="error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
         </form>
     )
 }

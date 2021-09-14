@@ -53,6 +53,8 @@ export default function editBook({ book, setDisplay, user, updateUser }) {
         setSubmitForm(true)
     }
 
+    const handleSetDisplay = newDisplay => setDisplay(newDisplay)
+
     return (
         <div className="edit-book">
             <BookForm 
@@ -60,11 +62,11 @@ export default function editBook({ book, setDisplay, user, updateUser }) {
                 handleSubmit={handleEditSubmit}
                 loading={loading}
                 setLoading={setLoading}
+                error={error}
                 setError={setError}
+                setDisplay={handleSetDisplay}
                 user={user}
             />
-            <button type="button" onClick={() => setDisplay("book")}>Cancel</button>
-            <div>{error}</div>
         </div>
     )
 }

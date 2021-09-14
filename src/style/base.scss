@@ -37,13 +37,20 @@ form {
     flex-direction: column;
     align-items: center;
 
-    input, button {
+    input, textarea, button {
         background-image: url("../../static/assets/White\ Header.png");
         border-radius: 5px;
     }
 
-    input {
+    input, textarea {
         margin-bottom: 10px;
+    }
+
+    textarea {
+        resize: none;
+        border-width: 2px;
+        border-style: inset;
+        width: 168.4px;
     }
 
     button {
