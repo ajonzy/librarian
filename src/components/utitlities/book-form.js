@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import Camera, { FACING_MODES } from 'react-html5-camera-photo'
 import 'react-html5-camera-photo/build/css/index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUpload, faCamera, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faUpload, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 import Autosuggest from "./autosuggest"
 
@@ -13,7 +12,6 @@ export default function bookForm({ title, author, published_year, number_of_page
     const [numberOfPagesInput, setNumberOfPagesInput] = useState(number_of_pages || Number.NaN)
     const [thumbnailUrlInput, setThumbnailUrlInput] = useState(thumbnail_url || "")
     const [thumbnailInput, setThumbnailInput] = useState(null)
-    const [cameraDisplay, setCameraDisplay] = useState(false)
     const [readInput, setReadInput] = useState(read || false)
     const [ratingInput, setRatingInput] = useState(rating || Number.NaN)
     const [notesInput, setNotesInput] = useState(notes || "")
@@ -139,15 +137,6 @@ export default function bookForm({ title, author, published_year, number_of_page
     }
 
     return (
-        cameraDisplay 
-        ? 
-        <div className="camera-wrapper">
-            <Camera
-                idealFacingMode={FACING_MODES.ENVIRONMENT}
-                onTakePhoto={dataUri => handleTakePhoto(dataUri)}
-            />
-        </div>
-        : 
         <form onSubmit={handleFormSubmit}>
             <input type="text" 
                 placeholder="Title"
@@ -181,7 +170,6 @@ export default function bookForm({ title, author, published_year, number_of_page
                     />
                     <FontAwesomeIcon icon={faUpload} />
                 </label>
-                <FontAwesomeIcon icon={faCamera} onClick={() => setCameraDisplay(true)} />
                 {thumbnailInput ? <FontAwesomeIcon icon={faTimesCircle} onClick={() => setThumbnailInput(null)} /> : null}
             </div>
             <label>Read: </label>
