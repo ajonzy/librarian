@@ -9,11 +9,6 @@ function main() {
   const vh = window.innerHeight * 0.01
   document.documentElement.style.setProperty('--vh', `${vh}px`)
 
-  window.addEventListener('orientationchange', () => {
-    const vh = window.innerHeight * 0.01
-    document.documentElement.style.setProperty('--vh', `${vh}px`)
-  })
-
   ReactDOM.render(
     <BrowserRouter>
       <App />
