@@ -61,7 +61,7 @@ export default class App extends Component {
   render() {
     console.log(this.state.user)
     return (
-      <div className='app'>
+      <div className='app' style={{ minHeight: window.innerHeight }}>
         {this.state.userToken
         ?
         this.state.loading
