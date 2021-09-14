@@ -2,7 +2,7 @@
     padding-top: 34px;
     padding-bottom: 34px;
     width: 100%;
-    height: calc(100vh - 144px);
+    height: calc((var(--vh, 1vh) * 100) - 144px);
     overflow: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
