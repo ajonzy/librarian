@@ -1,12 +1,22 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import BarcodeScannerComponent from "react-webcam-barcode-scanner"
 
 export default function scan({ handleSearch, loading, setError }) {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+    const [windowWidth, setWindowWidth] = useState(0)
+    const [windowHeight, setWindowHeight] = useState(0)
+
+    const scanRef = useRef(null)
 
     useEffect(() => {
+        console.log(scanRef.current.offsetWidth)
+        console.log(scanRef.current.offsetHeight)
+
+        setWindowWidth(scanRef.current.offsetWidth)
+        setWindowHeight(scanRef.current.offsetHeight)
+
         window.onresize = () => {
-            setWindowWidth(window.innerWidth)
+            setWindowWidth(scanRef.current.offsetWidth)
+            setWindowHeight(scanRef.current.offsetHeight)
         }
 
         return () => {
@@ -15,9 +25,10 @@ export default function scan({ handleSearch, loading, setError }) {
     }, [])
 
     return (
-        <div className="scan">
+        <div ref={scanRef} className="scan">
             <BarcodeScannerComponent
                 width={windowWidth}
+                height={windowHeight}
                 onUpdate={(err, result) => {
                     if (!loading) {
                         if (result) {
