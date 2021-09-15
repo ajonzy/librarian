@@ -1,13 +1,17 @@
 import React, { useState } from "react"
 
-export default function search({ handleSearch, loading, setError }) {
+import loadingImg from "../../../../../static/assets/loading-small.gif"
+
+export default function search({ handleSearch, loading, error, setError }) {
     const [titleInput, setTitleInput] = useState("")
     const [authorInput, setAuthorInput] = useState("")
 
-    const handleTitleAuthorSearch = () => {
+    const handleTitleAuthorSearch = event => {
+        event.preventDefault()
+
         let query = ""
         if (titleInput === "" && authorInput === "") {
-            setError("Please enter a tile, author, or both to search for")
+            setError("Please enter a title, author, or both to search for")
         }
         else {
             if (titleInput !== "") {
@@ -27,7 +31,7 @@ export default function search({ handleSearch, loading, setError }) {
     }
 
     return (
-        <div className="search">
+        <form onSubmit={handleTitleAuthorSearch} className="search">
             <input 
                 type="text"
                 placeholder="Title"
@@ -40,7 +44,8 @@ export default function search({ handleSearch, loading, setError }) {
                 value={authorInput}
                 onChange={event => setAuthorInput(event.target.value)}
             />
-            <button onClick={handleTitleAuthorSearch} disabled={loading}>Search</button>
-        </div>
+            <button type="submit" disabled={loading}>Search</button>
+            <div className="error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
+        </form>
     )
 }
