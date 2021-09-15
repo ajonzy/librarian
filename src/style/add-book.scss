@@ -4,16 +4,20 @@
     .add-book-options-wrapper {
         width: 100%;
         display: flex;
+        background-image: url("../../static/assets/White\ Header.png");
 
-        button {
+        div {
             width: 25%;
             height: 54px;
-            background-image: url("../../static/assets/White\ Header.png");
             border: 1px solid black;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+
+        div.active {
+            background-color: rgba(255, 255, 255, .5);
         }
     }
 }
