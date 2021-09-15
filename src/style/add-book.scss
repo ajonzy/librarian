@@ -71,4 +71,71 @@
             }
         }
     }
+
+    .add-book {
+        background-image: url("../../static/assets/Open\ Book\ 2.png");
+        width: 100%;
+        padding-left: 40px;
+        background-position: center;
+        background-size: 100% 100%;
+        // margin-top: 75px;
+        margin-top: 34px;
+        margin-bottom: 34px;
+
+        form {
+            width: 100%;
+            padding-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+    
+            * {
+                margin: 0px;
+            }
+    
+            & > * {
+                margin: 4px;
+            }
+    
+            img {
+                max-width: 60%;
+                max-height: 200px;
+            }
+    
+            button {
+                margin-left: 5px;
+                margin-right: 5px;
+                width: 55px;
+                background-image: url("../../static/assets/Gray\ Background.png");
+                color: #e5d8c4;
+                width: 120px;
+                margin: 4px;
+            }
+
+            label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+    
+                button {
+                    margin: 0px;
+                    margin-top: 4px;
+                }
+            }
+    
+            svg {
+                margin: 4px 8px;
+                font-size: 24px;
+            }
+    
+            .shelf-display-wrapper {
+                margin-bottom: 8px;
+            }
+    
+            .options-wrapper button {
+                width: 65px;
+            }
+        }
+    }
 }

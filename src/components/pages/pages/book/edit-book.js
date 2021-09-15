@@ -53,8 +53,8 @@ export default function editBook({ book, setDisplay, handleScroll, user, updateU
         setSubmitForm(true)
     }
 
-    const handleSetDisplay = newDisplay => {
-        setDisplay(newDisplay)
+    const handleCancel = () => {
+        setDisplay("book")
         handleScroll()
     }
 
@@ -67,7 +67,7 @@ export default function editBook({ book, setDisplay, handleScroll, user, updateU
                 setLoading={setLoading}
                 error={error}
                 setError={setError}
-                setDisplay={handleSetDisplay}
+                handleCancel={handleCancel}
                 user={user}
             />
         </div>

@@ -55,6 +55,8 @@ export default function addBook({ title, author, published_year, number_of_pages
         setSubmitForm(true)
     }
 
+    const handleCancel = () => setDisplay("bookcase")
+
     return (
         <div className="add-book">
             <BookForm 
@@ -67,11 +69,11 @@ export default function addBook({ title, author, published_year, number_of_pages
                 handleSubmit={handleAddSubmit}
                 loading={loading}
                 setLoading={setLoading}
+                error={error}
                 setError={setError}
+                handleCancel={handleCancel}
                 user={user}
             />
-            <button type="button" onClick={() => setDisplay("bookcase")}>Cancel</button>
-            <div>{error}</div>
         </div>
     )
 }

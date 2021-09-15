@@ -7,7 +7,7 @@ import Autosuggest from "./autosuggest"
 
 import loadingImg from "../../../static/assets/loading-small.gif"
 
-export default function bookForm({ title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_id, series_data, shelves, user_id, handleSubmit, loading, setLoading, error, setError, setDisplay, user }) {
+export default function bookForm({ title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_id, series_data, shelves, user_id, handleSubmit, loading, setLoading, error, setError, handleCancel, user }) {
     const [titleInput, setTitleInput] = useState(title || "")
     const [authorInput, setAuthorInput] = useState(author || "")
     const [publishedYearInput, setPublishedYearInput] = useState(published_year || "")
@@ -262,7 +262,7 @@ export default function bookForm({ title, author, published_year, number_of_page
 
             <div className="options-wrapper">
                 <button type="submit" disabled={loading}>Submit</button>
-                <button type="button" onClick={() => setDisplay("book")}>Cancel</button>
+                <button type="button" onClick={handleCancel}>Cancel</button>
             </div>
             <div className="error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
         </form>
