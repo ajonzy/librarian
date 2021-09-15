@@ -1,4 +1,6 @@
 import React, { useState } from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExpand, faBarcode, faSearch, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
 
 import Scan from "../pages/add-book/scan"
 import Isbn from "../pages/add-book/isbn"
@@ -107,10 +109,22 @@ export default function addBook(props) {
     return (
         <div className="add-book-wrapper">
             <div className="add-book-options-wrapper">
-                <button onClick={() => handleSetDisplay("scan")}>Scan</button>
-                <button onClick={() => handleSetDisplay("isbn")}>ISBN</button>
-                <button onClick={() => handleSetDisplay("search")}>Search</button>
-                <button onClick={() => handleSetDisplay("add-book")}>Manual&nbsp;Input</button>
+                <button onClick={() => handleSetDisplay("scan")} className={display === "scan" ? "active" : ""}>
+                    <span>Scan</span>
+                    <FontAwesomeIcon icon={faExpand} />
+                </button>
+                <button onClick={() => handleSetDisplay("isbn")} className={display === "isbn" ? "active" : ""}>
+                    <span>ISBN</span>
+                    <FontAwesomeIcon icon={faBarcode} />
+                </button>
+                <button onClick={() => handleSetDisplay("search")} className={display === "search" || display === "search-results" ? "active" : ""}>
+                    <span>Search</span>
+                    <FontAwesomeIcon icon={faSearch} />
+                </button>
+                <button onClick={() => handleSetDisplay("add-book")} className={display === "add-book" ? "active" : ""}>
+                    <span>Entry</span>
+                    <FontAwesomeIcon icon={faFeatherAlt} />
+                </button>
             </div>
             {renderDisplay()}
             <div>{error}</div>

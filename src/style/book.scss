@@ -1,14 +1,7 @@
 .book-wrapper {
     padding-top: 34px;
     padding-bottom: 34px;
-    width: 100%;
-    height: calc((var(--vh, 1vh) * 100) - 144px);
-    overflow: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include page-styles;
     background-image: url("../../static/assets/Shelf\ Background_.png");
     background-position: center;
     background-size: 100% 100%;
@@ -108,8 +101,4 @@
         width: 75px;
         margin-bottom: 20px;
     }
-}
-
-.book-wrapper::-webkit-scrollbar {
-    display: none;
 }
