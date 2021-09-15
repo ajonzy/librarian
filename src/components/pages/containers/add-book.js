@@ -74,6 +74,7 @@ export default function addBook(props) {
                     isbn={scannedIsbn}
                     handleSearch={handleSearch}
                     loading={loading}
+                    error={error}
                     setError={setError}
                 />
             )
@@ -81,6 +82,7 @@ export default function addBook(props) {
                 <Search 
                     handleSearch={handleSearch}
                     loading={loading}
+                    error={error}
                     setError={setError}
                 />
             )
@@ -98,6 +100,8 @@ export default function addBook(props) {
                     number_of_pages={selectedBook.pageCount}
                     thumbnail_url={selectedBook.thumbnailUrl}
                     setDisplay={props.setDisplay}
+                    error={error}
+                    setError={setError}
                     user={props.user}
                     updateUser={props.updateUser}
                     handleViewBook={props.handleViewBook}
@@ -127,7 +131,6 @@ export default function addBook(props) {
                 </div>
             </div>
             {renderDisplay()}
-            <div>{error}</div>
         </div>
     )
 }

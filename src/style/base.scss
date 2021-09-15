@@ -74,3 +74,16 @@ form {
 button {
     font-weight: bold;
 }
+
+.error-loading {
+    height: 40px;
+    width: 150px;
+    color: red;
+    margin-top: 0px;
+    margin-bottom: 12px;
+    text-align: center;
+
+    img {
+        height: 20px;
+    }
+}

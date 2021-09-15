@@ -1,5 +1,8 @@
 .add-book-wrapper {
-    width: 100%;
+    @include page-styles;
+    background-image: url("../../static/assets/Shelf\ Background_.png");
+    background-position: center;
+    background-size: 100% 100%;
 
     .add-book-options-wrapper {
         width: 100%;
@@ -18,6 +21,18 @@
 
         div.active {
             background-color: rgba(255, 255, 255, .5);
+        }
+    }
+
+    .scan, .isbn, .search {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            margin-bottom: 10px;
         }
     }
 }
