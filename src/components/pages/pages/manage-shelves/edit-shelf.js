@@ -34,7 +34,10 @@ export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay,
             fetch(`https://librarianapi.herokuapp.com/shelf/update/${selectedShelf.id}`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
-                body: JSON.stringify({ name: formattedName })
+                body: JSON.stringify({ 
+                    name: formattedName,
+                    position: selectedShelf.position
+                })
             })
             .then(response => response.json())
             .then(data => {

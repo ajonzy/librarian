@@ -63,6 +63,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             }
     
             const shelvesIds = []
+            let newShelvesCount = 0
             for (let shelfInput of shelvesInput) {
                 if (shelfInput !== "") {
                     let shelf = user.shelves.filter(shelf => shelf.name.toLowerCase() === shelfInput.toLowerCase())[0]
@@ -78,11 +79,15 @@ export default function bookForm({ title, author, published_year, number_of_page
                             headers: { "content-type": "application/json" },
                             body: JSON.stringify({
                                 name: formattedName,
+                                position: user.shelves.length + newShelvesCount,
                                 user_id: user_id
                             })
                         })
                         .then(response => response.json())
-                        .then(data => shelf = data.item)
+                        .then(data => {
+                            shelf = data.item
+                            newShelvesCount++
+                        })
                         .catch(error => {
                             setError("An error occured... Please try again later.")
                             setLoading(false)

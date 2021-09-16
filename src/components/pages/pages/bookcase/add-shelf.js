@@ -28,6 +28,7 @@ export default function addShelf({ setDisplay, user, updateUser }) {
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({
                     name: formattedName,
+                    position: user.shelves.length,
                     user_id: user.id
                 })
             })
