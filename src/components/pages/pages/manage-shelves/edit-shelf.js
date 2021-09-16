@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import loadingImg from "../../../../../static/assets/loading-small.gif"
+
 export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay, updateUser }) {
     const [nameInput, setNameInput] = useState(selectedShelf.name)
     const [loading, setLoading] = useState(false)
@@ -24,6 +26,7 @@ export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay,
             setLoading(true)
 
             const formattedName = nameInput
+                                  .trim()
                                   .split(" ")
                                   .map(word => word[0].toUpperCase() + word.slice(1))
                                   .join(" ")
@@ -64,7 +67,7 @@ export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay,
                 <button type="submit" disabled={loading}>Edit Shelf</button>
                 <button onClick={handleFormCancel}>Cancel</button>
             </div>
-            <div>{error}</div>
+            <div className="error error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
         </form>
     )
 }
