@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import loadingImg from "../../../../../static/assets/loading-small.gif"
+
 export default function addShelf({ setDisplay, user, updateUser }) {
     const [nameInput, setNameInput] = useState("")
     const [loading, setLoading] = useState(false)
@@ -16,6 +18,7 @@ export default function addShelf({ setDisplay, user, updateUser }) {
             setLoading(true)
 
             const formattedName = nameInput
+                                  .trim()
                                   .split(" ")
                                   .map(word => word[0].toUpperCase() + word.slice(1))
                                   .join(" ")
@@ -65,7 +68,7 @@ export default function addShelf({ setDisplay, user, updateUser }) {
                 <button type="submit" disabled={loading}>Add Shelf</button>
                 <button onClick={handleFormCancel}>Cancel</button>
             </div>
-            <div className="error">{error}</div>
+            <div className="error error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
         </form>
     )
 }
