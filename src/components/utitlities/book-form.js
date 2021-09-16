@@ -40,6 +40,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             let series = user.series.filter(series => series.name.toLowerCase() === seriesInput.toLowerCase())[0]
             if (series === undefined && seriesInput !== "") {
                 const formattedName = seriesInput
+                                      .trim()
                                       .split(" ")
                                       .map(word => word[0].toUpperCase() + word.slice(1))
                                       .join(" ")
@@ -67,6 +68,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                     let shelf = user.shelves.filter(shelf => shelf.name.toLowerCase() === shelfInput.toLowerCase())[0]
                     if (shelf === undefined) {
                         const formattedName = shelfInput
+                                              .trim()
                                               .split(" ")
                                               .map(word => word[0].toUpperCase() + word.slice(1))
                                               .join(" ")
@@ -120,7 +122,12 @@ export default function bookForm({ title, author, published_year, number_of_page
                 })
             }
 
-            handleSubmit({ titleInput, authorInput, publishedYearInput, numberOfPagesInput, thumbnail, readInput, ratingInput, notesInput, series, shelvesIds, user_id })
+            handleSubmit({ 
+                titleInput: titleInput.trim(), 
+                authorInput: authorInput.trim(), 
+                publishedYearInput: publishedYearInput.trim(), 
+                numberOfPagesInput, thumbnail, readInput, ratingInput, notesInput, series, shelvesIds, user_id 
+            })
         }
     }
 

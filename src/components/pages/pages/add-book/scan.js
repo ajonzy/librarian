@@ -8,9 +8,6 @@ export default function scan({ handleSearch, loading, setError }) {
     const scanRef = useRef(null)
 
     useEffect(() => {
-        console.log(scanRef.current.offsetWidth)
-        console.log(scanRef.current.offsetHeight)
-
         setWindowWidth(scanRef.current.offsetWidth)
         setWindowHeight(scanRef.current.offsetHeight)
 
