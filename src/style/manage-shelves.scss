@@ -9,6 +9,45 @@
         margin: 0px 5px;
     }
 
+    .shelf-display-options-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 80%;
+        background-color: rgba(0,0,0,.4);
+        border-radius: 10px;
+        margin: 33px 0 20px 0;
+
+        form {
+            background-image: none;
+            border: none;
+            margin: 0px;
+            box-shadow: none;
+            height: auto;
+
+            label {
+                padding: 5px 0px;
+                width: 70%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                justify-items: center;
+            }
+
+            & > * {
+                transform: translateY(0px);
+            }
+
+            .error-loading {
+                transform: translateY(0px);
+            }
+
+            button {
+                margin-top: 19px;
+            }
+        }
+    }
+
     .shelves-manager {
         width: 100%;
         display: flex;
