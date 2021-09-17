@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faDotCircle } from '@fortawesome/free-regular-svg-icons'
+import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
@@ -59,6 +60,66 @@ export default function manageShelves({ user, updateUser, handleEdit }) {
         }
     }
 
+    const handleShelfMove = (shelf, direction) => {
+        setSelectedShelf(shelf)
+        setConfirmDelete("")
+        setError("")
+        setLoading(true)
+
+        fetch(`https://librarianapi.herokuapp.com/shelf/update/${shelf.id}`, {
+            method: "PUT",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ 
+                name: shelf.name,
+                position: direction === "+" ? shelf.position + 1 : shelf.position - 1
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            setLoading(false)
+            updateUser(data.user)
+        })
+        .catch(error => {
+            setError("An error occured... Please try again later.")
+            setLoading(false)
+            console.log("Error updating shelf: ", error)
+        })
+    }
+
+    const renderShelves = () => {
+        let shelves = []
+        switch (user.shelves_display) {
+            case "most-books":
+                shelves = shelves.concat(user.shelves.filter(shelf => shelf.name !== "All Books").sort((shelf1, shelf2) => shelf2.books.length - shelf1.books.length !== 0 ? shelf2.books.length - shelf1.books.length : shelf1.name < shelf2.name ? -1 : 1))
+                break
+            case "alphabetical":
+                shelves = shelves.concat(user.shelves.filter(shelf => shelf.name !== "All Books").sort((shelf1, shelf2) => shelf1.name < shelf2.name ? -1 : 1))
+                break
+            case "custom":
+                shelves = shelves.concat(user.shelves.filter(shelf => shelf.name !== "All Books").sort((shelf1, shelf2) => shelf1.position - shelf2.position))
+                break
+        }
+
+        return shelves.map(shelf => (
+            <div className="shelf-manager-wrapper" key={shelf.id}>
+                <div className="shelf-manager">
+                    <h3>{shelf.name}</h3>
+                    <div className="options-wrapper">
+                        <button disabled={shelf.id === selectedShelf.id ? loading : false} onClick={() => handleEdit(shelf)}>Edit</button>
+                        <button disabled={shelf.id === selectedShelf.id ? loading : false} onClick={() => handleDeleteShelf(shelf)}>Delete</button>
+                    </div>
+                    <p className="confirm-error-loading">{shelf.id === selectedShelf.id ? confirmDelete : ""}{shelf.id === selectedShelf.id ? error : ""}{shelf.id === selectedShelf.id && loading ? <img src={loadingImg} /> : null}</p>
+                </div>
+
+                {user.shelves_display === "custom" ?
+                <div className="position-change-wrapper">
+                    {shelf.position !== 1 ? <button disabled={loading} onClick={() => handleShelfMove(shelf, "-")}><FontAwesomeIcon icon={faCaretUp} /></button> : <div className="spacer-47" />}
+                    {shelf.position !== user.shelves.length - 1 ? <button disabled={loading} onClick={() => handleShelfMove(shelf, "+")}><FontAwesomeIcon icon={faCaretDown} /></button> : <div className="spacer-47" />}
+                </div> : null}
+            </div>
+        ))
+    }
+
     return (
         <div className="shelves-manager">
             <div className="shelf-display-options-wrapper">
@@ -105,20 +166,7 @@ export default function manageShelves({ user, updateUser, handleEdit }) {
                 </form>
             </div>
 
-            {user.shelves.map(shelf => (
-                shelf.name !== "All Books" 
-                ?
-                <div className="shelf-manager" key={shelf.id}>
-                    <h3>{shelf.name}</h3>
-                    <div className="options-wrapper">
-                        <button disabled={shelf.id === selectedShelf.id ? loading : false} onClick={() => handleEdit(shelf)}>Edit</button>
-                        <button disabled={shelf.id === selectedShelf.id ? loading : false} onClick={() => handleDeleteShelf(shelf)}>Delete</button>
-                    </div>
-                    <p className="confirm-error-loading">{shelf.id === selectedShelf.id ? confirmDelete : ""}{shelf.id === selectedShelf.id ? error : ""}{shelf.id === selectedShelf.id && loading ? <img src={loadingImg} /> : null}</p>
-                </div>
-                :
-                null
-            ))}
+            {renderShelves()}
         </div>
     )
 }

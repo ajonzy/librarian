@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
-export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay, updateUser }) {
+export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay, user, updateUser }) {
     const [nameInput, setNameInput] = useState(selectedShelf.name)
+    const [positionInput, setPositionInput] = useState(selectedShelf.position)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
@@ -31,12 +32,18 @@ export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay,
                                   .map(word => word[0].toUpperCase() + word.slice(1))
                                   .join(" ")
 
+            const formattedPosition = positionInput < 1 && !isNaN(positionInput)
+                                      ? 1 
+                                      : positionInput > user.shelves.length - 1 && !isNaN(positionInput)
+                                        ? user.shelves.length - 1 
+                                        : positionInput
+
             fetch(`https://librarianapi.herokuapp.com/shelf/update/${selectedShelf.id}`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({ 
                     name: formattedName,
-                    position: selectedShelf.position
+                    position: !isNaN(positionInput) ? formattedPosition : selectedShelf.position
                 })
             })
             .then(response => response.json())
@@ -64,13 +71,22 @@ export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay,
     }
 
     return (
-        <form onSubmit={handleEditShelf}>
-            <input type="text" placeholder="Shelf Name" value={nameInput} onChange={event => setNameInput(event.target.value)}/>
-            <div className="buttons-wrapper">
-                <button type="submit" disabled={loading}>Edit Shelf</button>
-                <button onClick={handleFormCancel}>Cancel</button>
-            </div>
-            <div className="error error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
-        </form>
+        <div className="shelf-manager-wrapper">
+            <form onSubmit={handleEditShelf}>
+                <input type="text" placeholder="Shelf Name" value={nameInput} onChange={event => setNameInput(event.target.value)}/>
+                <div className="buttons-wrapper">
+                    <button type="submit" disabled={loading}>Edit Shelf</button>
+                    <button onClick={handleFormCancel}>Cancel</button>
+                </div>
+                <div className="error error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
+            </form>
+
+            {user.shelves_display === "custom" ?
+            <input 
+                type="number"
+                value={isNaN(positionInput) ? "" : positionInput}
+                onChange={event => setPositionInput(event.target.valueAsNumber)}
+            /> : null}
+        </div>
     )
 }

@@ -4,16 +4,16 @@ import Shelf from "../../../utitlities/shelf"
 
 export default function ({ setDisplay, user, handleViewShelf }) {
     const renderShelves = () => {
-        let shelves = [user.shelves[0]]
+        let shelves = user.shelves.filter(shelf => shelf.name === "All Books")
         switch (user.shelves_display) {
             case "most-books":
-                shelves = shelves.concat(user.shelves.slice(1).sort((shelf1, shelf2) => shelf2.books.length - shelf1.books.length !== 0 ? shelf2.books.length - shelf1.books.length : shelf1.name < shelf2.name ? -1 : 1))
+                shelves = shelves.concat(user.shelves.filter(shelf => shelf.name !== "All Books").sort((shelf1, shelf2) => shelf2.books.length - shelf1.books.length !== 0 ? shelf2.books.length - shelf1.books.length : shelf1.name < shelf2.name ? -1 : 1))
                 break
             case "alphabetical":
-                shelves = shelves.concat(user.shelves.slice(1).sort((shelf1, shelf2) => shelf1.name < shelf2.name ? -1 : 1))
+                shelves = shelves.concat(user.shelves.filter(shelf => shelf.name !== "All Books").sort((shelf1, shelf2) => shelf1.name < shelf2.name ? -1 : 1))
                 break
             case "custom":
-                shelves = shelves.concat(user.shelves.slice(1).sort((shelf1, shelf2) => shelf1.position - shelf2.position))
+                shelves = shelves.concat(user.shelves.filter(shelf => shelf.name !== "All Books").sort((shelf1, shelf2) => shelf1.position - shelf2.position))
                 break
         }
 

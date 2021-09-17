@@ -26,6 +26,7 @@ export default function manageShelves(props) {
                     selectedShelf={selectedShelf} 
                     setSelectedShelf={setSelectedShelf} 
                     updateUser={props.updateUser} 
+                    user={props.user}
                     setDisplay={setDisplay} 
                 />
             )
