@@ -1,0 +1,38 @@
+.series-manager-wrapper {
+    background-image: url("../../static/assets/Shelf\ Background_.png");
+    background-position: center;
+    background-size: 100% 100%;
+
+    .manage-series-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 12px;
+
+        .series-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 80%;
+            background-color: rgba(0,0,0,.3);
+            border-radius: 10px;
+            margin-bottom: 40px;
+
+            h3 {
+                margin-bottom: 0px;
+            }
+
+            .options-wrapper {
+                margin-bottom: 19px;
+            }
+
+            .confirm-error-loading {
+                height: 0px;
+                margin-bottom: 0px;
+            }
+        }
+    }
+}

@@ -76,6 +76,7 @@ export default function bookcase(props) {
                     user={props.user} 
                     updateUser={updateUser} 
                     setDisplay={setDisplay} 
+                    handleViewBook={handleViewBook}
                 />
             )
             case "shelf": return (

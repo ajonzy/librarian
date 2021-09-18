@@ -19,6 +19,7 @@ export default function manageSeries(props) {
                     user={props.user} 
                     updateUser={props.updateUser} 
                     handleEdit={handleEdit} 
+                    handleViewBook={props.handleViewBook}
                 />
             )
             case "edit-series": return (
@@ -33,7 +34,7 @@ export default function manageSeries(props) {
     }
 
     return (
-        <div className='manager-wrapper'>
+        <div className='manager-wrapper series-manager-wrapper'>
             <h2>Manage Series</h2>
             <button onClick={() => props.setDisplay("bookcase")}>Done</button>
             {renderDisplay()}
