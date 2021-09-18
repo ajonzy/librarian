@@ -57,14 +57,37 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
         }
     }
 
-    return (
-        <form onSubmit={handleEditSeries}>
-            <input type="text" placeholder="Series Name" value={nameInput} onChange={event => setNameInput(event.target.value)}/>
-            <div className="buttons-wrapper">
-                <button type="submit" disabled={loading}>Edit Series</button>
-                <button onClick={handleFormCancel}>Cancel</button>
+    const renderBooks = () => {
+        let books = []
+        books = books.concat(selectedSeries.books.filter(book => book.series_position !== null).sort((book1, book2) => book1.series_position - book2.series_position))
+        books = books.concat(selectedSeries.books.filter(book => book.series_position === null).sort((book1, book2) => book1.title < book2.title ? -1 : 1))
+
+        return (
+            <div className="series-books-display">
+                {books.map(book => (
+                    <div key={book.id} className="series-book-display" onClick={() => handleViewBook(book, user)}>
+                        <input 
+                            type="number" 
+                            value={book.series_position}
+                        />
+                        <p>{book.title}</p>
+                    </div>
+                ))}
             </div>
-            <div>{error}</div>
-        </form>
+        )
+    }
+
+    return (
+        <div className="manage-series-wrapper">
+            <form onSubmit={handleEditSeries}>
+                <input type="text" placeholder="Series Name" value={nameInput} onChange={event => setNameInput(event.target.value)}/>
+                {renderBooks()}
+                <div className="buttons-wrapper">
+                    <button type="submit" disabled={loading}>Edit&nbsp;Series</button>
+                    <button onClick={handleFormCancel}>Cancel</button>
+                </div>
+                <div>{error}</div>
+            </form>
+        </div>
     )
 }
