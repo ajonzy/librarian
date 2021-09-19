@@ -40,6 +40,12 @@ export default function bookcase(props) {
         setDisplay("shelf")
     }
 
+    const handleHeaderFooterPageChange = newPage => {
+        setSelectedShelf({})
+        setSelectedBook({})
+        setDisplay(newPage)
+    }
+
     const updateUser = user => {
         const updatedShelf = selectedShelf.id ? user.shelves.filter(shelf => shelf.id === selectedShelf.id)[0] : {}
         const updatedBook = selectedBook.id ? user.books.filter(book => book.id === selectedBook.id)[0] : {}
@@ -113,14 +119,14 @@ export default function bookcase(props) {
                 user={props.user} 
                 handleSuccessfulLogout={props.handleSuccessfulLogout} 
                 display={display}
-                setDisplay={setDisplay} 
+                setDisplay={handleHeaderFooterPageChange} 
             />
             <div className="spacer-72" />
             {renderDisplay()}
             <div className="spacer-72" />
             <Footer 
                 display={display}
-                setDisplay={setDisplay} 
+                setDisplay={handleHeaderFooterPageChange} 
             />
         </div>
     )

@@ -28,6 +28,7 @@ export default function addBook({ title, author, published_year, number_of_pages
                         notes: addData.notesInput,
                         owned: true,
                         series_id: addData.series ? addData.series.id : null,
+                        series_position: addData.series ? addData.seriesPositionInput : null,
                         shelves_ids: addData.shelvesIds,
                         user_id: user.id
                     })

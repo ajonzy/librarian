@@ -27,6 +27,7 @@ export default function editBook({ book, setDisplay, handleScroll, user, updateU
                         rating: editData.ratingInput,
                         notes: editData.notesInput,
                         series_id: editData.series ? editData.series.id : null,
+                        series_position: editData.series ? editData.seriesPositionInput : null,
                         shelves_ids: editData.shelvesIds
                     })
                 })

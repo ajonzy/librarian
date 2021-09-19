@@ -7,7 +7,7 @@ import Autosuggest from "./autosuggest"
 
 import loadingImg from "../../../static/assets/loading-small.gif"
 
-export default function bookForm({ title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_id, series_data, shelves, user_id, handleSubmit, loading, setLoading, error, setError, handleCancel, user }) {
+export default function bookForm({ title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_id, series_position, series_data, shelves, user_id, handleSubmit, loading, setLoading, error, setError, handleCancel, user }) {
     const [titleInput, setTitleInput] = useState(title || "")
     const [authorInput, setAuthorInput] = useState(author || "")
     const [publishedYearInput, setPublishedYearInput] = useState(published_year || "")
@@ -19,6 +19,7 @@ export default function bookForm({ title, author, published_year, number_of_page
     const [notesInput, setNotesInput] = useState(notes || "")
     const [seriesExists, setSeriesExists] = useState(Boolean(series_id) || false)
     const [seriesInput, setSeriesInput] = useState(series_data ? series_data.name : "")
+    const [seriesPositionInput, setSeriesPositionInput] = useState(series_position || Number.NaN)
     const [shelvesInput, setShelvesInput] = useState(shelves ? shelves.map(shelf => shelf.name) : ["All Books"])
 
     const handleRemoveSeries = () => {
@@ -131,7 +132,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                 titleInput: titleInput.trim(), 
                 authorInput: authorInput.trim(), 
                 publishedYearInput: publishedYearInput.trim(), 
-                numberOfPagesInput, thumbnail, readInput, ratingInput, notesInput, series, shelvesIds, user_id 
+                numberOfPagesInput, thumbnail, readInput, ratingInput, notesInput, series, seriesPositionInput, shelvesIds, user_id 
             })
         }
     }
@@ -219,7 +220,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             </label>
             <label>
                 Rating
-                <input type="number" 
+                <input className="numberInput" type="number" 
                     placeholder="Rating"
                     value={isNaN(ratingInput) ? "" : ratingInput}
                     min="1"
@@ -247,8 +248,17 @@ export default function bookForm({ title, author, published_year, number_of_page
                         suggestions={user.series.map(series => series.name)}
                         placeholder="Series"
                     />
-                    <button type="button" onClick={handleRemoveSeries}>Remove Series</button>
                 </label>
+                <label>
+                    Series Position
+                    <input className="numberInput" type="number" 
+                        placeholder="Position"
+                        value={isNaN(seriesPositionInput) ? "" : seriesPositionInput}
+                        min="0"
+                        onChange={event => setSeriesPositionInput(event.target.valueAsNumber)}
+                    />
+                </label>
+                <button type="button" onClick={handleRemoveSeries}>Remove Series</button>
             </div>
             :
             <button type="button" onClick={() => setSeriesExists(true)}>Add Series</button>}
@@ -264,8 +274,8 @@ export default function bookForm({ title, author, published_year, number_of_page
                                 suggestions={user.shelves.filter(shelf => shelf.name !== "All Books").map(shelf => shelf.name)}
                                 placeholder="Shelf"
                             />
-                            <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>
                         </label>
+                        <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>
                     </div>
                     : null
                 ))}

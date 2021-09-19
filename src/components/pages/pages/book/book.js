@@ -12,7 +12,11 @@ export default function book({ id, title, author, published_year, number_of_page
     const renderSeries = () => {
         const series = user.series.filter(series => series.id === series_data.id)[0]
 
-        return series.books.map(book => <p key={book.id} onClick={() => handleChangeBookView(book)}>{book.title}</p>)
+        let books = []
+        books = books.concat(series.books.filter(book => book.series_position !== null).sort((book1, book2) => book1.series_position - book2.series_position))
+        books = books.concat(series.books.filter(book => book.series_position === null).sort((book1, book2) => book1.title < book2.title ? -1 : 1))
+
+        return books.map(book => <p key={book.id} onClick={() => handleChangeBookView(book)}>{book.title}</p>)
     }
 
     const renderShelves = () => {

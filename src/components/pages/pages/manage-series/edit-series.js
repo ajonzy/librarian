@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 export default function editSeries({ selectedSeries, setSelectedSeries, setDisplay, updateUser }) {
     const [nameInput, setNameInput] = useState(selectedSeries.name)
+    const [bookPositions, setBookPositions] = useState(selectedSeries.id ? selectedSeries.books.map(book => {return {id: book.id, position: book.series_position || Number.NaN}}) : [])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
@@ -28,10 +29,18 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
                                   .map(word => word[0].toUpperCase() + word.slice(1))
                                   .join(" ")
 
+            const formattedBookPositions = bookPositions.filter(bookPosition => {
+                const book = selectedSeries.books.filter(book => book.id === bookPosition.id)[0]
+                return book.series_position != bookPosition.position
+            })
+
             fetch(`https://librarianapi.herokuapp.com/series/update/${selectedSeries.id}`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
-                body: JSON.stringify({ name: formattedName })
+                body: JSON.stringify({ 
+                    name: formattedName,
+                    book_positions: formattedBookPositions 
+                })
             })
             .then(response => response.json())
             .then(data => {
@@ -57,6 +66,15 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
         }
     }
 
+    const handlePositionChange = (event, book) => {
+        const updatedBook = bookPositions.filter(bookPosition => bookPosition.id === book.id)[0]
+        const otherBooks = bookPositions.filter(bookPosition => bookPosition.id !== book.id)
+
+        updatedBook.position = event.target.valueAsNumber
+
+        setBookPositions([updatedBook, ...otherBooks])
+    }
+
     const renderBooks = () => {
         let books = []
         books = books.concat(selectedSeries.books.filter(book => book.series_position !== null).sort((book1, book2) => book1.series_position - book2.series_position))
@@ -65,10 +83,11 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
         return (
             <div className="series-books-display">
                 {books.map(book => (
-                    <div key={book.id} className="series-book-display" onClick={() => handleViewBook(book, user)}>
+                    <div key={book.id} className="series-book-display">
                         <input 
                             type="number" 
-                            value={book.series_position}
+                            value={isNaN(bookPositions.filter(bookPosition => bookPosition.id === book.id)[0].position) ? "" : bookPositions.filter(bookPosition => bookPosition.id === book.id)[0].position}
+                            onChange={event => handlePositionChange(event, book)}
                         />
                         <p>{book.title}</p>
                     </div>
@@ -81,7 +100,7 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
         <div className="manage-series-wrapper">
             <form onSubmit={handleEditSeries}>
                 <input type="text" placeholder="Series Name" value={nameInput} onChange={event => setNameInput(event.target.value)}/>
-                {renderBooks()}
+                {selectedSeries.id ? renderBooks() : null}
                 <div className="buttons-wrapper">
                     <button type="submit" disabled={loading}>Edit&nbsp;Series</button>
                     <button onClick={handleFormCancel}>Cancel</button>
