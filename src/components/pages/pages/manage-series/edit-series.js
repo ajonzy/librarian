@@ -86,6 +86,7 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
                     <div key={book.id} className="series-book-display">
                         <input 
                             type="number" 
+                            placeholder="N/A"
                             value={isNaN(bookPositions.filter(bookPosition => bookPosition.id === book.id)[0].position) ? "" : bookPositions.filter(bookPosition => bookPosition.id === book.id)[0].position}
                             onChange={event => handlePositionChange(event, book)}
                         />

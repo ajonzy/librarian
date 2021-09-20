@@ -21,19 +21,32 @@ export default function bookForm({ title, author, published_year, number_of_page
     const [seriesInput, setSeriesInput] = useState(series_data ? series_data.name : "")
     const [seriesPositionInput, setSeriesPositionInput] = useState(series_position || Number.NaN)
     const [shelvesInput, setShelvesInput] = useState(shelves ? shelves.map(shelf => shelf.name) : ["All Books"])
+    const [requiredError, setRequiredError] = useState(false)
+    const [shelvesInputErrors, setShelvesInputErrors] = useState([])
 
     const handleRemoveSeries = () => {
         setSeriesExists(false)
         setSeriesInput("")
+        setShelvesInputErrors([])
     }
 
     const handleFormSubmit = async event => {
         event.preventDefault()
 
         setError("")
+        setRequiredError(false)
 
-        if (titleInput === "" || authorInput === "") {
-            setError("Title and Author fields must be filled out")
+        let blankShelves = []
+        shelvesInput.forEach((shelfInput, index) => {
+            if (shelfInput === "") {
+                blankShelves = [...blankShelves, index]
+            }
+        })
+
+        if (titleInput === "" || (seriesExists && seriesInput === "") || blankShelves.length > 0) {
+            setError("Please fill out required fields")
+            setRequiredError(true)
+            setShelvesInputErrors(blankShelves)
         }
         else {
             setLoading(true)
@@ -162,7 +175,8 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Title
                 <input type="text" 
-                    placeholder="Title"
+                    style={{ borderColor: requiredError && titleInput === "" ? "red" : "black" }}
+                    placeholder="*Required"
                     value={titleInput}
                     onChange={event => setTitleInput(event.target.value)}
                 />
@@ -170,7 +184,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Author
                 <input type="text" 
-                    placeholder="Author"
+                    placeholder="Unknown"
                     value={authorInput}
                     onChange={event => setAuthorInput(event.target.value)}
                 />
@@ -178,7 +192,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Published Year
                 <input type="text" 
-                    placeholder="Published Year"
+                    placeholder="Unknown"
                     value={publishedYearInput}
                     onChange={event => setPublishedYearInput(event.target.value)}
                 />
@@ -186,7 +200,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Number of Pages
                 <input type="number" 
-                    placeholder="Number of Pages"
+                    placeholder="Unknown"
                     value={isNaN(numberOfPagesInput) ? "" : numberOfPagesInput}
                     min="1"
                     onChange={event => setNumberOfPagesInput(event.target.valueAsNumber)}
@@ -195,13 +209,15 @@ export default function bookForm({ title, author, published_year, number_of_page
             <div className="thumnail-wrapper">
                 <label>
                     Thumbnail Image
+                    <img src={thumbnailInput ? thumbnailInput : thumbnailUrlInput} alt=""/>
+                </label>
+                <label>
                     <input 
                         type="file" 
                         accept="image/*"
                         onChange={handleImageUpload}
                         style={{ display: "none" }} 
                     />
-                    <img src={thumbnailInput ? thumbnailInput : thumbnailUrlInput} alt=""/>
                     <div className="options-wrapper">
                         <FontAwesomeIcon icon={faUpload} />
                         {thumbnailInput ? <FontAwesomeIcon icon={faTimesCircle} onClick={handleImageRemove} /> : null}
@@ -221,7 +237,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Rating
                 <input className="numberInput" type="number" 
-                    placeholder="Rating"
+                    placeholder="N/A"
                     value={isNaN(ratingInput) ? "" : ratingInput}
                     min="1"
                     max="10"
@@ -231,7 +247,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Notes
                 <textarea
-                    placeholder="Notes"
+                    placeholder="N/A"
                     value={notesInput}
                     onChange={event => setNotesInput(event.target.value)}
                     onKeyUp={textAreaAdjust}
@@ -246,13 +262,14 @@ export default function bookForm({ title, author, published_year, number_of_page
                         input={seriesInput}
                         setInput={setSeriesInput}
                         suggestions={user.series.map(series => series.name)}
-                        placeholder="Series"
+                        placeholder="*Required"
+                        style={{ borderColor: requiredError && seriesInput === "" ? "red" : "black" }}
                     />
                 </label>
                 <label>
                     Series Position
                     <input className="numberInput" type="number" 
-                        placeholder="Position"
+                        placeholder="N/A"
                         value={isNaN(seriesPositionInput) ? "" : seriesPositionInput}
                         min="0"
                         onChange={event => setSeriesPositionInput(event.target.valueAsNumber)}
@@ -272,7 +289,8 @@ export default function bookForm({ title, author, published_year, number_of_page
                                 input={shelvesInput[index] ? shelvesInput[index] : ""}
                                 setInput={newInput => setShelvesInput(shelvesInput.map((oldShelf, oldIndex) => oldIndex === index ? newInput : oldShelf))}
                                 suggestions={user.shelves.filter(shelf => shelf.name !== "All Books").map(shelf => shelf.name)}
-                                placeholder="Shelf"
+                                placeholder="*Required"
+                                style={shelvesInputErrors.includes(index) ? { borderColor: requiredError && shelvesInput[index] === "" ? "red" : "black" } : {}}
                             />
                         </label>
                         <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>

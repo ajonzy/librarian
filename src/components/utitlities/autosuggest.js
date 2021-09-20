@@ -25,7 +25,8 @@ export default function autosuggest(props) {
                 placeholder: props.placeholder,
                 value: props.input,
                 onFocus: () => getSuggestions(""),
-                onChange: (event, { newValue }) => props.setInput(newValue)
+                onChange: (event, { newValue }) => props.setInput(newValue),
+                style: props.style ? props.style : {}
             }}
         />
     )

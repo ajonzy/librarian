@@ -106,7 +106,7 @@ export default function manageShelves({ user, updateUser, handleEdit }) {
                     <h3>{shelf.name}</h3>
                     <div className="options-wrapper">
                         <button disabled={shelf.id === selectedShelf.id ? loading : false} onClick={() => handleEdit(shelf)}>Edit</button>
-                        <button disabled={shelf.id === selectedShelf.id ? loading : false} onClick={() => handleDeleteShelf(shelf)}>Delete</button>
+                        <button disabled={shelf.id === selectedShelf.id ? loading : false} onClick={() => handleDeleteShelf(shelf)} style={{ color: "red" }}>Delete</button>
                     </div>
                     <p className="confirm-error-loading">{shelf.id === selectedShelf.id ? confirmDelete : ""}{shelf.id === selectedShelf.id ? error : ""}{shelf.id === selectedShelf.id && loading ? <img src={loadingImg} /> : null}</p>
                 </div>

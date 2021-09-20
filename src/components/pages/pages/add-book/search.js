@@ -11,7 +11,7 @@ export default function search({ handleSearch, loading, error, setError }) {
 
         let query = ""
         if (titleInput === "" && authorInput === "") {
-            setError("Please enter a title, author, or both to search for")
+            setError("Please enter a title, author, or both")
         }
         else {
             if (titleInput !== "") {

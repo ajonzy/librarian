@@ -41,7 +41,7 @@ export default function manageSeries({ user, updateUser, handleEdit, handleViewB
                 {renderBooks(series)}
                 <div className="options-wrapper">
                     <button onClick={() => handleEdit(series)}>Edit</button>
-                    <button onClick={() => handleDeleteSeries(series)}>Delete</button>
+                    <button onClick={() => handleDeleteSeries(series)} style={{ color: "red" }}>Delete</button>
                 </div>
                 <p className="confirm-error-loading">{series.id === selectedSeries.id ? confirmDelete : ""}{series.id === selectedSeries.id ? error : ""}{series.id === selectedSeries.id && loading ? <img src={loadingImg} /> : null}</p>
             </div>

@@ -10,7 +10,7 @@ export default function isbn({ isbn, handleSearch, loading, error, setError }) {
 
         const isbnCheck = isbnInput.replace("-", "")
         if ((isbnCheck.length !== 10 && isbnCheck.length !== 13) || isNaN(isbnCheck)) {
-            setError("ISBN must be 10 or 13 digits only")
+            setError("ISBN must be 10 or 13 digits")
         }
         else {
             const query = `isbn:${isbnCheck}`

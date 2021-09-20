@@ -84,6 +84,7 @@ export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay,
             {user.shelves_display === "custom" ?
             <input 
                 type="number"
+                placeholder={selectedShelf.position}
                 value={isNaN(positionInput) ? "" : positionInput}
                 onChange={event => setPositionInput(event.target.valueAsNumber)}
             /> : null}
