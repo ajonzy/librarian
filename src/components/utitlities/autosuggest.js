@@ -7,10 +7,13 @@ export default function autosuggest(props) {
     const getSuggestions = value => {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length
+        const suggestions = props.suggestions.map(suggestion => suggestion.toLowerCase())
 
-        return inputLength === 0 ? props.suggestions : props.suggestions.filter(suggestion =>
-            suggestion.toLowerCase().includes(inputValue)
-        )
+        return inputLength === 0 
+            ? props.suggestions 
+            : !suggestions.includes(inputValue) 
+                ? props.suggestions.filter(suggestion => suggestion.toLowerCase().includes(inputValue)) 
+                : []
     }
 
     return (

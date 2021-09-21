@@ -175,7 +175,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Title
                 <input type="text" 
-                    style={{ borderColor: requiredError && titleInput === "" ? "red" : "black" }}
+                    style={requiredError && titleInput === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
                     placeholder="*Required"
                     value={titleInput}
                     onChange={event => setTitleInput(event.target.value)}
@@ -263,7 +263,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                         setInput={setSeriesInput}
                         suggestions={user.series.map(series => series.name)}
                         placeholder="*Required"
-                        style={{ borderColor: requiredError && seriesInput === "" ? "red" : "black" }}
+                        style={requiredError && seriesInput === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
                     />
                 </label>
                 <label>
@@ -290,7 +290,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                                 setInput={newInput => setShelvesInput(shelvesInput.map((oldShelf, oldIndex) => oldIndex === index ? newInput : oldShelf))}
                                 suggestions={user.shelves.filter(shelf => shelf.name !== "All Books").map(shelf => shelf.name)}
                                 placeholder="*Required"
-                                style={shelvesInputErrors.includes(index) ? { borderColor: requiredError && shelvesInput[index] === "" ? "red" : "black" } : {}}
+                                style={requiredError && shelvesInputErrors.includes(index) && shelvesInput[index] === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
                             />
                         </label>
                         <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>
