@@ -21,23 +21,23 @@ export default function searchResults({ user, searchInput, setDisplay, handleVie
 
     const matchedTitles = user.books.filter(book => (
         book.title.toLowerCase().includes(searchInput)
-    ))
+    )).sort((item1, item2) => item1.title < item2.title ? -1 : 1)
 
     const matchedAuthors = user.books.filter(book => (
         book.author.toLowerCase().includes(searchInput)
-    ))
+    )).sort((item1, item2) => item1.title < item2.title ? -1 : 1)
 
     const matchedNotes = user.books.filter(book => (
         book.notes.toLowerCase().includes(searchInput)
-    ))
+    )).sort((item1, item2) => item1.title < item2.title ? -1 : 1)
 
     const matchedSeries = user.series.filter(series => (
         series.name.toLowerCase().includes(searchInput)
-    ))
+    )).sort((item1, item2) => item1.name < item2.name ? -1 : 1)
 
     const matchedShelves = user.shelves.filter(shelf => (
         shelf.name.toLowerCase().includes(searchInput) && shelf.name !== "All Books"
-    ))
+    )).sort((item1, item2) => item1.name < item2.name ? -1 : 1)
 
     const renderTitles = () => {
         return (
