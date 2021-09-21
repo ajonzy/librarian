@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import loadingImg from "../../../../../static/assets/loading-small.gif"
+
 export default function editSeries({ selectedSeries, setSelectedSeries, setDisplay, updateUser }) {
     const [nameInput, setNameInput] = useState(selectedSeries.name)
     const [bookPositions, setBookPositions] = useState(selectedSeries.id ? selectedSeries.books.map(book => {return {id: book.id, position: book.series_position || Number.NaN}}) : [])
@@ -25,6 +27,7 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
             setLoading(true)
 
             const formattedName = nameInput
+                                  .trim()
                                   .split(" ")
                                   .map(word => word[0].toUpperCase() + word.slice(1))
                                   .join(" ")
@@ -100,13 +103,18 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
     return (
         <div className="manage-series-wrapper">
             <form onSubmit={handleEditSeries}>
-                <input type="text" placeholder="Series Name" value={nameInput} onChange={event => setNameInput(event.target.value)}/>
+                <input 
+                    type="text" 
+                    autoCorrect="off"
+                    placeholder="Series Name" 
+                    value={nameInput} onChange={event => setNameInput(event.target.value)}
+                />
                 {selectedSeries.id ? renderBooks() : null}
                 <div className="buttons-wrapper">
                     <button type="submit" disabled={loading}>Edit&nbsp;Series</button>
                     <button onClick={handleFormCancel}>Cancel</button>
                 </div>
-                <div>{error}</div>
+                <div className="error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
             </form>
         </div>
     )

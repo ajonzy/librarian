@@ -8,6 +8,7 @@ export default function createAccount({ handleCreateAccount, handlePageChange, l
             <form onSubmit={handleCreateAccount}>
                 <input 
                     type="text" 
+                    autoCorrect="off" autoCapitalize="none"
                     placeholder="Username"
                     value={username}
                     onChange={event => setUsername(event.target.value)}

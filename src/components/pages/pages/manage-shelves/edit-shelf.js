@@ -73,7 +73,12 @@ export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay,
     return (
         <div className="shelf-manager-wrapper">
             <form onSubmit={handleEditShelf}>
-                <input type="text" placeholder="Shelf Name" value={nameInput} onChange={event => setNameInput(event.target.value)}/>
+                <input 
+                    type="text" 
+                    autoCorrect="off"
+                    placeholder="Shelf Name" 
+                    value={nameInput} onChange={event => setNameInput(event.target.value)}
+                />
                 <div className="buttons-wrapper">
                     <button type="submit" disabled={loading}>Edit Shelf</button>
                     <button onClick={handleFormCancel}>Cancel</button>

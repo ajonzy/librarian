@@ -8,7 +8,9 @@ export default function isbn({ isbn, handleSearch, loading, error, setError }) {
     const handleIsbnSearch = event => {
         event.preventDefault()
 
-        const isbnCheck = isbnInput.replace("-", "")
+        const formattedIsbn = isbnInput.trim()
+
+        const isbnCheck = formattedIsbn.replace("-", "")
         if ((isbnCheck.length !== 10 && isbnCheck.length !== 13) || isNaN(isbnCheck)) {
             setError("ISBN must be 10 or 13 digits")
         }
@@ -22,6 +24,7 @@ export default function isbn({ isbn, handleSearch, loading, error, setError }) {
         <form onSubmit={handleIsbnSearch} className="isbn">
             <input 
                 type="text"
+                autoCorrect="off" autoCapitalize="none"
                 placeholder="ISBN"
                 value={isbnInput}
                 onChange={event => setIsbnInput(event.target.value)}

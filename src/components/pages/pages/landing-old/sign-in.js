@@ -6,6 +6,7 @@ export default function signIn({ handleSignIn, handlePageChange, loading, userna
             <form onSubmit={handleSignIn}>
                 <input 
                     type="text" 
+                    autoCorrect="off" autoCapitalize="none"
                     placeholder="Username"
                     value={username}
                     onChange={event => setUsername(event.target.value)}

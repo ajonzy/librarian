@@ -36,14 +36,41 @@ export default function bookForm({ title, author, published_year, number_of_page
         setError("")
         setRequiredError(false)
 
+        const formattedTitle = titleInput
+                               .trim()
+                               .split(" ")
+                               .map(word => word[0].toUpperCase() + word.slice(1))
+                               .join(" ")
+
+        const formattedAuthor = authorInput
+                               .trim()
+                               .split(" ")
+                               .map(word => word[0].toUpperCase() + word.slice(1))
+                               .join(" ")
+
+        const formattedPublishedYear = publishedYearInput.trim()
+
+        const formattedSeries = seriesInput
+                                .trim()
+                                .split(" ")
+                                .map(word => word[0].toUpperCase() + word.slice(1))
+                                .join(" ")
+
+        const formattedShelves = shelvesInput.map(shelf => shelf
+                                                           .trim()
+                                                           .split(" ")
+                                                           .map(word => word[0].toUpperCase() + word.slice(1))
+                                                           .join(" ")
+        )
+
         let blankShelves = []
-        shelvesInput.forEach((shelfInput, index) => {
+        formattedShelves.forEach((shelfInput, index) => {
             if (shelfInput === "") {
                 blankShelves = [...blankShelves, index]
             }
         })
 
-        if (titleInput === "" || (seriesExists && seriesInput === "") || blankShelves.length > 0) {
+        if (formattedTitle === "" || (seriesExists && formattedSeries === "") || blankShelves.length > 0) {
             setError("Please fill out required fields")
             setRequiredError(true)
             setShelvesInputErrors(blankShelves)
@@ -51,8 +78,8 @@ export default function bookForm({ title, author, published_year, number_of_page
         else {
             setLoading(true)
 
-            let series = user.series.filter(series => series.name.toLowerCase() === seriesInput.toLowerCase())[0]
-            if (series === undefined && seriesInput !== "") {
+            let series = user.series.filter(series => series.name.toLowerCase() === formattedSeries.toLowerCase())[0]
+            if (series === undefined && formattedSeries !== "") {
                 const formattedName = seriesInput
                                       .trim()
                                       .split(" ")
@@ -78,7 +105,7 @@ export default function bookForm({ title, author, published_year, number_of_page
     
             const shelvesIds = []
             let newShelvesCount = 0
-            for (let shelfInput of shelvesInput) {
+            for (let shelfInput of formattedShelves) {
                 if (shelfInput !== "") {
                     let shelf = user.shelves.filter(shelf => shelf.name.toLowerCase() === shelfInput.toLowerCase())[0]
                     if (shelf === undefined) {
@@ -142,9 +169,9 @@ export default function bookForm({ title, author, published_year, number_of_page
             }
 
             handleSubmit({ 
-                titleInput: titleInput.trim(), 
-                authorInput: authorInput.trim(), 
-                publishedYearInput: publishedYearInput.trim(), 
+                titleInput: formattedTitle, 
+                authorInput: formattedAuthor, 
+                publishedYearInput: formattedPublishedYear, 
                 numberOfPagesInput, thumbnail, readInput, ratingInput, notesInput, series, seriesPositionInput, shelvesIds, user_id 
             })
         }
@@ -175,6 +202,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Title
                 <input type="text" 
+                    autoCorrect="off"
                     style={requiredError && titleInput === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
                     placeholder="*Required"
                     value={titleInput}
@@ -184,6 +212,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Author
                 <input type="text" 
+                    autoCorrect="off"
                     placeholder="Unknown"
                     value={authorInput}
                     onChange={event => setAuthorInput(event.target.value)}
@@ -192,6 +221,7 @@ export default function bookForm({ title, author, published_year, number_of_page
             <label>
                 Published Year
                 <input type="text" 
+                    autoCorrect="off" autoCapitalize="none"
                     placeholder="Unknown"
                     value={publishedYearInput}
                     onChange={event => setPublishedYearInput(event.target.value)}

@@ -64,7 +64,12 @@ export default function addShelf({ setDisplay, user, updateUser }) {
 
     return (
         <form className="add-shelf-form" onSubmit={handleAddShelf}>
-            <input type="text" placeholder="Shelf Name" onChange={event => setNameInput(event.target.value)}/>
+            <input 
+                type="text" 
+                autoCorrect="off"
+                placeholder="Shelf Name" 
+                onChange={event => setNameInput(event.target.value)}
+            />
             <div className="options-wrapper">
                 <button type="submit" disabled={loading}>Add Shelf</button>
                 <button onClick={handleFormCancel}>Cancel</button>

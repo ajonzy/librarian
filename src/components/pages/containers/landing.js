@@ -23,10 +23,12 @@ export default function landing(props) {
     }
 
     const handleAuth = type => {
+        const formattedUsername = username.trim()
+
         fetch(`https://librarianapi.herokuapp.com/user/${type}`, {
             method: "POST",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username: formattedUsername, password })
         })
         .then(response => response.json())
         .then(data => {

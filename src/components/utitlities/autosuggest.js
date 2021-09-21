@@ -26,6 +26,7 @@ export default function autosuggest(props) {
             alwaysRenderSuggestions={true}
             inputProps={{
                 placeholder: props.placeholder,
+                autoCorrect: "off", 
                 value: props.input,
                 onFocus: () => getSuggestions(""),
                 onChange: (event, { newValue }) => props.setInput(newValue),

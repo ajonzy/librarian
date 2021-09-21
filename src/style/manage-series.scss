@@ -11,6 +11,11 @@
         margin-top: 20px;
         margin-bottom: 12px;
 
+        .confirm-error-loading, .error-loading {
+            height: 0px;
+            margin-bottom: 0px;
+        }
+
         .series-wrapper, form {
             display: flex;
             flex-direction: column;
@@ -28,15 +33,14 @@
             .options-wrapper {
                 margin-bottom: 19px;
             }
-
-            .confirm-error-loading {
-                height: 0px;
-                margin-bottom: 0px;
-            }
         }
 
         form {
-            padding: 19px 0px;
+            padding-top: 19px;
+
+            .buttons-wrapper {
+                margin-bottom: 19px;
+            }
 
             input {
                 margin-bottom: 0px;

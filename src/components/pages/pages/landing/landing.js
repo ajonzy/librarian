@@ -8,6 +8,7 @@ export default function landing({ handleSignIn, handlePageChange, loading, usern
             <form onSubmit={handleSignIn}>
                 <input 
                     type="text" 
+                    autoCorrect="off" autoCapitalize="none"
                     placeholder="Username"
                     value={username}
                     onChange={event => setUsername(event.target.value)}

@@ -6,6 +6,7 @@ export default function ({ handleCreateAccount, handlePageChange, loading, usern
             <form onSubmit={handleCreateAccount}>
                 <input 
                     type="text" 
+                    autoCorrect="off" autoCapitalize="none"
                     placeholder="Username"
                     value={username}
                     onChange={event => setUsername(event.target.value)}

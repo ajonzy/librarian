@@ -9,21 +9,24 @@ export default function search({ handleSearch, loading, error, setError }) {
     const handleTitleAuthorSearch = event => {
         event.preventDefault()
 
+        const formattedTitle = titleInput.trim()
+        const formattedAuthor = authorInput.trim()
+
         let query = ""
-        if (titleInput === "" && authorInput === "") {
+        if (formattedTitle === "" && formattedAuthor === "") {
             setError("Please enter a title, author, or both")
         }
         else {
-            if (titleInput !== "") {
-                query += `intitle:${titleInput}`
+            if (formattedTitle !== "") {
+                query += `intitle:${formattedTitle}`
             }
 
-            if (titleInput !== "" && authorInput !== "") {
+            if (formattedTitle !== "" && formattedAuthor !== "") {
                 query += "+"
             }
 
-            if (authorInput !== "") {
-                query += `inauthor:${authorInput}`
+            if (formattedAuthor !== "") {
+                query += `inauthor:${formattedAuthor}`
             }
 
             handleSearch(query)
@@ -34,12 +37,14 @@ export default function search({ handleSearch, loading, error, setError }) {
         <form onSubmit={handleTitleAuthorSearch} className="search">
             <input 
                 type="text"
+                autoCorrect="off"
                 placeholder="Title"
                 value={titleInput}
                 onChange={event => setTitleInput(event.target.value)}
             />
             <input 
                 type="text"
+                autoCorrect="off"
                 placeholder="Author"
                 value={authorInput}
                 onChange={event => setAuthorInput(event.target.value)}

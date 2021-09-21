@@ -20,7 +20,7 @@ export default function book(props) {
             case "search-results": return (
                 <SearchResults
                     user={props.user}
-                    searchInput={searchInput.toLowerCase()}
+                    searchInput={searchInput.toLowerCase().trim()}
                     setDisplay={setDisplay}
                     handleViewBook={props.handleViewBook}
                 />
