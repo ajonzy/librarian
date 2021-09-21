@@ -39,13 +39,13 @@ export default function bookForm({ title, author, published_year, number_of_page
         const formattedTitle = titleInput
                                .trim()
                                .split(" ")
-                               .map(word => word[0].toUpperCase() + word.slice(1))
+                               .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                .join(" ")
 
         const formattedAuthor = authorInput
                                .trim()
                                .split(" ")
-                               .map(word => word[0].toUpperCase() + word.slice(1))
+                               .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                .join(" ")
 
         const formattedPublishedYear = publishedYearInput.trim()
@@ -53,13 +53,13 @@ export default function bookForm({ title, author, published_year, number_of_page
         const formattedSeries = seriesInput
                                 .trim()
                                 .split(" ")
-                                .map(word => word[0].toUpperCase() + word.slice(1))
+                                .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                 .join(" ")
 
         const formattedShelves = shelvesInput.map(shelf => shelf
                                                            .trim()
                                                            .split(" ")
-                                                           .map(word => word[0].toUpperCase() + word.slice(1))
+                                                           .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                                            .join(" ")
         )
 
@@ -83,7 +83,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                 const formattedName = seriesInput
                                       .trim()
                                       .split(" ")
-                                      .map(word => word[0].toUpperCase() + word.slice(1))
+                                      .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                       .join(" ")
     
                 await fetch("https://librarianapi.herokuapp.com/series/add", {
@@ -112,7 +112,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                         const formattedName = shelfInput
                                               .trim()
                                               .split(" ")
-                                              .map(word => word[0].toUpperCase() + word.slice(1))
+                                              .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                               .join(" ")
     
                         await fetch("https://librarianapi.herokuapp.com/shelf/add", {
@@ -203,7 +203,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                 Title
                 <input type="text" 
                     autoCorrect="off"
-                    style={requiredError && titleInput === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
+                    style={requiredError && titleInput.trim() === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
                     placeholder="*Required"
                     value={titleInput}
                     onChange={event => setTitleInput(event.target.value)}
@@ -293,7 +293,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                         setInput={setSeriesInput}
                         suggestions={user.series.map(series => series.name)}
                         placeholder="*Required"
-                        style={requiredError && seriesInput === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
+                        style={requiredError && seriesInput.trim() === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
                     />
                 </label>
                 <label>
@@ -320,7 +320,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                                 setInput={newInput => setShelvesInput(shelvesInput.map((oldShelf, oldIndex) => oldIndex === index ? newInput : oldShelf))}
                                 suggestions={user.shelves.filter(shelf => shelf.name !== "All Books").map(shelf => shelf.name)}
                                 placeholder="*Required"
-                                style={requiredError && shelvesInputErrors.includes(index) && shelvesInput[index] === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
+                                style={requiredError && shelvesInputErrors.includes(index) && shelvesInput[index].trim() === "" ? { borderColor: "red", borderWidth: "3px" } : {}}
                             />
                         </label>
                         <button type="button" onClick={() => setShelvesInput(shelvesInput.filter((_, oldIndex) => oldIndex !== index))}>Remove Shelf</button>

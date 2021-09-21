@@ -29,7 +29,7 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
             const formattedName = nameInput
                                   .trim()
                                   .split(" ")
-                                  .map(word => word[0].toUpperCase() + word.slice(1))
+                                  .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                   .join(" ")
 
             const formattedBookPositions = bookPositions.filter(bookPosition => {

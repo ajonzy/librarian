@@ -75,6 +75,9 @@ export default function landing(props) {
         else if (password !== passwordConfirm) {
             setError("Passwords do not match")
         }
+        else if (password.length < 6) {
+            setError("Passwords must be 6 or more characters")
+        }
         else {
             setError("")
             setLoading(true)

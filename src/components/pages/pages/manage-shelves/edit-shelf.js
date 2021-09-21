@@ -29,7 +29,7 @@ export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay,
             const formattedName = nameInput
                                   .trim()
                                   .split(" ")
-                                  .map(word => word[0].toUpperCase() + word.slice(1))
+                                  .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                   .join(" ")
 
             const formattedPosition = positionInput < 1 && !isNaN(positionInput)

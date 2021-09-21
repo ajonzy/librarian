@@ -20,7 +20,7 @@ export default function addShelf({ setDisplay, user, updateUser }) {
             const formattedName = nameInput
                                   .trim()
                                   .split(" ")
-                                  .map(word => word[0].toUpperCase() + word.slice(1))
+                                  .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                   .join(" ")
 
             fetch("https://librarianapi.herokuapp.com/shelf/add", {
