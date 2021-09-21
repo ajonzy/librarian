@@ -4,8 +4,8 @@ import ManageSeries from "../pages/manage-series/manage-series"
 import EditSeries from "../pages/manage-series/edit-series"
 
 export default function manageSeries(props) {
-    const [display, setDisplay] = useState("manage-series")
-    const [selectedSeries, setSelectedSeries] = useState({})
+    const [display, setDisplay] = useState(props.series.id ? "edit-series" : "manage-series")
+    const [selectedSeries, setSelectedSeries] = useState(props.series.id ? props.series : {})
     
     const handleEdit = series => {
         setSelectedSeries(series)

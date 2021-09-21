@@ -16,7 +16,96 @@
         }
     }
 
-    img {
-        max-height: 200px;
+    .search-results {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > p {
+            color: #e5d8c4;
+            font-size: 30px;
+            margin: 0px;
+        }
+
+        .search-results-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            & > h3 {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-image: url("../../static/assets/White\ Header.png");
+                padding: 20px;
+                margin: 0px;
+            }
+
+            .book-result {
+                @include book-display-styles;
+                color: #e5d8c4;
+            }
+
+            .series-result {
+                @include series-display-styles;
+                color: #e5d8c4;
+
+                button {
+                    background-image: url("../../static/assets/White\ Header.png");
+                    border-radius: 5px;
+                    width: 85px;
+                    margin: 0px 5px;
+                }
+
+                .confirm-error-loading, .error-loading {
+                    height: 0px;
+                    margin-bottom: 0px;
+                }
+            }
+
+            .shelf-result {
+                background-image: url("../../static/assets/New\ Bookshelf_.png");
+                height: 96px;
+                width: 85%;
+                background-position: center;
+                background-size: 100% 100%;
+                border: 1px solid black;
+                box-shadow: 0px 0px 15px 10px rgba(0,0,0,0.3);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                color: #e5d8c4;
+                margin-bottom: 40px;
+
+                button {
+                    background-image: url("../../static/assets/White\ Header.png");
+                    border-radius: 5px;
+                    width: 85px;
+                    margin: 0px 5px;
+                }
+
+                h3 {
+                    margin: 0 0 10px 0;
+                }
+
+                & > * {
+                    transform: translateY(19px);
+                }
+
+                .confirm-error-loading, .error-loading {
+                    transform: translateY(36px);
+                }
+            }
+        }
+
+        & > button {
+            background-image: url("../../static/assets/White\ Header.png");
+            border-radius: 5px;
+            width: 85px;
+            margin: 34px;
+        }
     }
 }

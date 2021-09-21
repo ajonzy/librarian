@@ -4,8 +4,8 @@ import ManageShelves from "../pages/manage-shelves/manage-shelves"
 import EditShelf from "../pages/manage-shelves/edit-shelf"
 
 export default function manageShelves(props) {
-    const [display, setDisplay] = useState("manage-shelves")
-    const [selectedShelf, setSelectedShelf] = useState({})
+    const [display, setDisplay] = useState(props.shelf.id ? "edit-shelf" : "manage-shelves")
+    const [selectedShelf, setSelectedShelf] = useState(props.shelf.id ? props.shelf : {})
     
     const handleEdit = shelf => {
         setSelectedShelf(shelf)

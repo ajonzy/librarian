@@ -3,9 +3,14 @@ import React, { useState } from 'react'
 import Search from "../pages/search/search"
 import SearchResults from "../pages/search/search-results"
 
-export default function book(props) {
+export default function search(props) {
     const [display, setDisplay] = useState("search")
     const [searchInput, setSearchInput] = useState("")
+
+    const handleSearchCancel = () => {
+        setSearchInput("")
+        setDisplay("search")
+    }
     
     const renderDisplay = () => {
         switch(display) {
@@ -20,9 +25,12 @@ export default function book(props) {
             case "search-results": return (
                 <SearchResults
                     user={props.user}
+                    updateUser={props.updateUser}
                     searchInput={searchInput.toLowerCase().trim()}
-                    setDisplay={setDisplay}
+                    setDisplay={handleSearchCancel}
                     handleViewBook={props.handleViewBook}
+                    handleEditSeries={props.handleEditSeries}
+                    handleEditShelf={props.handleEditShelf}
                 />
             )
         }

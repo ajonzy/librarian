@@ -14,10 +14,12 @@ export default function bookcase(props) {
     const [display, setDisplay] = useState("bookcase")
     const [selectedShelf, setSelectedShelf] = useState({})
     const [selectedBook, setSelectedBook] = useState({})
+    const [selectedSeries, setSelectedSeries] = useState({})
 
     const handleViewShelf = shelf => {
         setSelectedShelf(shelf)
         setSelectedBook({})
+        setSelectedSeries({})
         setDisplay("shelf")
     }
 
@@ -25,24 +27,40 @@ export default function bookcase(props) {
         const shelf = props.user.shelves.filter(shelf => shelf.id === nestedShelf.id)[0]
         setSelectedShelf(shelf)
         setSelectedBook({})
+        setSelectedSeries({})
         setDisplay("shelf")
     }
 
     const handleViewShelfCancel = () => {
         setSelectedShelf({})
         setSelectedBook({})
+        setSelectedSeries({})
         setDisplay("bookcase")
     }
 
     const handleViewBook = (book, userData) => {
         setSelectedBook(book)
         setSelectedShelf(userData.shelves.filter(shelf => shelf.name === "All Books")[0])
+        setSelectedSeries({})
         setDisplay("shelf")
+    }
+
+    const handleEditSeries = series => {
+        setSelectedSeries(series)
+        setSelectedShelf({})
+        setDisplay("manage-series")
+    }
+
+    const handleEditShelf = shelf => {
+        setSelectedShelf(shelf)
+        setSelectedSeries({})
+        setDisplay("manage-shelves")
     }
 
     const handleHeaderFooterPageChange = newPage => {
         setSelectedShelf({})
         setSelectedBook({})
+        setSelectedSeries({})
         setDisplay(newPage)
     }
 
@@ -72,6 +90,7 @@ export default function bookcase(props) {
             )
             case "manage-shelves": return (
                 <ManageShelves 
+                    shelf={selectedShelf}
                     user={props.user} 
                     updateUser={updateUser} 
                     setDisplay={setDisplay} 
@@ -79,6 +98,7 @@ export default function bookcase(props) {
             )
             case "manage-series": return (
                 <ManageSeries 
+                    series={selectedSeries}
                     user={props.user} 
                     updateUser={updateUser} 
                     setDisplay={setDisplay} 
@@ -107,7 +127,10 @@ export default function bookcase(props) {
                 <Search
                     setDisplay={setDisplay}
                     user={props.user} 
+                    updateUser={updateUser}
                     handleViewBook={handleViewBook}
+                    handleEditSeries={handleEditSeries}
+                    handleEditShelf={handleEditShelf}
                 />
             )
         }
