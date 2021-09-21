@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 
 import Autosuggest from "../../../utitlities/autosuggest"
 
-import loadingImg from "../../../../../static/assets/loading-small.gif"
-
 export default function editSeries({ user, searchInput, setSearchInput, setDisplay }) {
     const [error, setError] = useState("")
 
@@ -32,7 +30,7 @@ export default function editSeries({ user, searchInput, setSearchInput, setDispl
                 placeholder="Search"
             />
             <button type="submit">Search</button>
-            <div className="error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
+            <div className="error-loading">{error}</div>
         </form>
     )
 }
