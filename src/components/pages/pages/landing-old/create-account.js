@@ -1,10 +1,8 @@
 import React from 'react'
 
-import loadingImg from "../../../../../static/assets/loading-small.gif"
-
-export default function createAccount({ handleCreateAccount, handlePageChange, loading, username, setUsername, password, setPassword, passwordConfirm, setPasswordConfirm, error }) {
+export default function ({ handleCreateAccount, handlePageChange, loading, username, setUsername, password, setPassword, passwordConfirm, setPasswordConfirm }) {
     return (
-        <div className="form-wrapper create-account">
+        <div className="form-wrapper">
             <form onSubmit={handleCreateAccount}>
                 <input 
                     type="text" 
@@ -26,9 +24,7 @@ export default function createAccount({ handleCreateAccount, handlePageChange, l
                 />
                 <button type="submit" disabled={loading}>Create Account</button>
             </form>
-            <div className="error-loading">{error}{loading ? <img src={loadingImg} /> : null}</div>
-            <h4>Already have an account?</h4>
-            <button onClick={() => handlePageChange("landing")} disabled={loading}>Sign In</button>
+            <button onClick={() => handlePageChange("landing")}>&lt;- Back</button>
         </div>
     )
 }

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
 import Landing from "../pages/landing/landing"
+import SignIn from "../pages/landing/sign-in"
 import CreateAccount from "../pages/landing/create-account"
 
-import logo from "../../../../static/assets/Book Stacks.png"
-import logoText from "../../../../static/assets/My Book Stacks.png"
+import logo from "../../../../static/assets/libarbarian.jpg"
 
 export default function landing(props) {
     const [display, setDisplay] = useState("landing")
@@ -32,12 +32,9 @@ export default function landing(props) {
         .then(data => {
             setLoading(false)
             if (typeof data === "string") {
-                console.warn(data)
+                console.log(data)
                 if (data === "Invalid Credentials") {
                     setError("Incorrect username or password")
-                }
-                else if (data === "Error: User already exists") {
-                    setError("Username not available")
                 }
             }
             else {
@@ -84,12 +81,17 @@ export default function landing(props) {
         switch(display) {
             case "landing": return (
                 <Landing 
+                    loading={loading} 
+                    handlePageChange={handlePageChange} 
+                />
+            )
+            case "sign-in": return (
+                <SignIn 
                     handleSignIn={handleSignIn} 
                     handlePageChange={handlePageChange} 
                     loading={loading} username={username} 
                     setUsername={setUsername} password={password} 
                     setPassword={setPassword} 
-                    error={error}
                 />
             )
             case "create-account": return (
@@ -102,8 +104,7 @@ export default function landing(props) {
                     password={password} 
                     setPassword={setPassword} 
                     passwordConfirm={passwordConfirm} 
-                    setPasswordConfirm={setPasswordConfirm}
-                    error={error} 
+                    setPasswordConfirm={setPasswordConfirm} 
                 />
             )
         }
@@ -111,10 +112,10 @@ export default function landing(props) {
 
     return (
         <div className='landing-wrapper'>
-            <h1>Welcome to</h1>
-            <img id="logo-text" src={logoText} alt="Logo"/>
-            <img id="logo-image" src={logo} alt="Logo"/>
+            <h1>Welcome to<br/>Libarbarian</h1>
+            <img src={logo} alt="Logo"/>
             {renderDisplay()}
+            <div>{error}</div>
         </div>
     )
 }
