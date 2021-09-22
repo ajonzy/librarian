@@ -121,6 +121,8 @@ export default function manageShelves({ user, updateUser, handleEdit }) {
     }
 
     return (
+        user.shelves.length > 1
+        ?
         <div className="shelves-manager">
             <div className="shelf-display-options-wrapper">
                 <h3>Shelf Sort</h3>
@@ -168,5 +170,7 @@ export default function manageShelves({ user, updateUser, handleEdit }) {
 
             {renderShelves()}
         </div>
+        :
+        <p>No shelves yet... Add more books!</p>
     )
 }
