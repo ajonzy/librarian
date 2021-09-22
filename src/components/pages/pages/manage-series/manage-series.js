@@ -65,8 +65,12 @@ export default function manageSeries({ user, updateUser, handleEdit, handleViewB
     }
 
     return (
+        user.series.length > 0 
+        ?
         <div className="manage-series-wrapper">
             {renderSeries()}
         </div>
+        :
+        <p>No series yet... Add more books!</p>
     )
 }
