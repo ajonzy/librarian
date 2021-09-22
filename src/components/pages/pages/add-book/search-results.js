@@ -16,7 +16,7 @@ export default function searchResults({ booksData, handleBookSelect }) {
                         <p>Title: {title}</p>
                         <p>Author: {author}</p>
                         <p>Published Year: {publishedYear}</p>
-                        <p>Page Count: {pageCount}</p>
+                        <p>Page Count: {!isNaN(pageCount) ? pageCount : "Unknown"}</p>
                         <button onClick={() => handleBookSelect({ title, author, publishedYear, pageCount, thumbnailUrl })}>Select</button>
                     </div>
                 )
