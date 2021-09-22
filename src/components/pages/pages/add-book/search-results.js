@@ -7,7 +7,7 @@ export default function searchResults({ booksData, handleBookSelect }) {
                 const title = book.volumeInfo.title || "Unknown"
                 const author = book.volumeInfo.authors ? book.volumeInfo.authors[0] : "Unknown"
                 const publishedYear = book.volumeInfo.publishedDate ? book.volumeInfo.publishedDate.slice(0, 4) : "Unknown"
-                const pageCount = book.volumeInfo.pageCount || "Unknown"
+                const pageCount = book.volumeInfo.pageCount || Number.NaN
                 const thumbnailUrl = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : ""
 
                 return (
