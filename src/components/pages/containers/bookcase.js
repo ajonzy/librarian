@@ -65,10 +65,12 @@ export default function bookcase(props) {
     }
 
     const updateUser = user => {
-        const updatedShelf = selectedShelf.id ? user.shelves.filter(shelf => shelf.id === selectedShelf.id)[0] : {}
-        const updatedBook = selectedBook.id ? user.books.filter(book => book.id === selectedBook.id)[0] : {}
+        const updatedShelf = selectedShelf.id ? user.shelves.filter(shelf => shelf.id === selectedShelf.id)[0] || {} : {}
+        const updatedBook = selectedBook.id ? user.books.filter(book => book.id === selectedBook.id)[0] || {} : {}
+        const updatedSeries = selectedSeries.id ? user.series.filter(series => series.id === selectedSeries.id)[0] || {} : {}
         setSelectedShelf(updatedShelf)
         setSelectedBook(updatedBook)
+        setSelectedSeries(updatedSeries)
         props.updateUser(user)
     }
 
