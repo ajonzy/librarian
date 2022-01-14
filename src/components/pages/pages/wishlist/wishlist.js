@@ -14,6 +14,7 @@ export default function Shelf({ books, handleViewBook, handleViewWishlistCancel 
 
     const renderBooks = () => books.map((book, index) => (
         // TODO: Sort
+        // TODO: Add priority
 
         <div key={book.id} className="book-display" onClick={() => handleViewBook(book)}>
             <p>{book.title}<br/>by<br/>{book.author}</p>

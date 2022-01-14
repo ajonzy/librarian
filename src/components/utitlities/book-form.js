@@ -7,7 +7,7 @@ import Autosuggest from "./autosuggest"
 
 import loadingImg from "../../../static/assets/loading-small.gif"
 
-export default function bookForm({ title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_id, series_position, series_data, shelves, user_id, handleSubmit, loading, setLoading, error, setError, handleCancel, user }) {
+export default function bookForm({ title, author, published_year, number_of_pages, thumbnail_url, read, owned, rating, notes, series_id, series_position, series_data, shelves, user_id, handleSubmit, loading, setLoading, error, setError, handleCancel, user }) {
     const [titleInput, setTitleInput] = useState(title || "")
     const [authorInput, setAuthorInput] = useState(author || "")
     const [publishedYearInput, setPublishedYearInput] = useState(published_year || "")
@@ -15,6 +15,7 @@ export default function bookForm({ title, author, published_year, number_of_page
     const [thumbnailUrlInput, setThumbnailUrlInput] = useState(thumbnail_url || "")
     const [thumbnailInput, setThumbnailInput] = useState(null)
     const [readInput, setReadInput] = useState(read || false)
+    const [ownedInput, setOwnedInput] = useState(owned !== undefined ? owned : true)
     const [ratingInput, setRatingInput] = useState(rating || Number.NaN)
     const [notesInput, setNotesInput] = useState(notes || "")
     const [seriesExists, setSeriesExists] = useState(Boolean(series_id) || false)
@@ -172,7 +173,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                 titleInput: formattedTitle, 
                 authorInput: formattedAuthor, 
                 publishedYearInput: formattedPublishedYear, 
-                numberOfPagesInput, thumbnail, readInput, ratingInput, notesInput, series, seriesPositionInput, shelvesIds, user_id 
+                numberOfPagesInput, thumbnail, readInput, ownedInput, ratingInput, notesInput, series, seriesPositionInput, shelvesIds, user_id 
             })
         }
     }
@@ -254,17 +255,28 @@ export default function bookForm({ title, author, published_year, number_of_page
                     </div>
                 </label>
             </div>
-            {/* TODO: Add wishlist button */}
-            <label>
-                Read: 
-                <input type="checkbox" 
-                    placeholder="Read"
-                    checked={readInput}
-                    onChange={event => setReadInput(event.target.checked)}
-                    style={{ display: "none" }}
-                />
-                {<FontAwesomeIcon icon={readInput ? faCheckSquare : faSquare} />}
-            </label>
+            <div className="checkboxes-wrapper">
+                <label>
+                    Read
+                    <input type="checkbox" 
+                        placeholder="Read"
+                        checked={readInput}
+                        onChange={event => setReadInput(event.target.checked)}
+                        style={{ display: "none" }}
+                    />
+                    {<FontAwesomeIcon icon={readInput ? faCheckSquare : faSquare} />}
+                </label>
+                <label>
+                    Wishlist
+                    <input type="checkbox" 
+                        placeholder="Wishlist"
+                        checked={!ownedInput}
+                        onChange={event => setOwnedInput(!event.target.checked)}
+                        style={{ display: "none" }}
+                    />
+                    {<FontAwesomeIcon icon={ownedInput ? faSquare : faCheckSquare} />}
+                </label>
+            </div>
             <label>
                 Rating
                 <input className="numberInput" type="number" 

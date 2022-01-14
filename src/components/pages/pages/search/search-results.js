@@ -44,9 +44,10 @@ export default function searchResults({ user, searchInput, setDisplay, handleVie
             <div className="search-results-section">
                 <h3>Titles</h3>
                 {matchedTitles.map((book, index) => (
-                    <div key={`${book.id}-title`} className="search-result book-result" onClick={() => handleViewBook(book, user)}>
+                    <div key={`${book.id}-title`} className={`search-result book-result ${book.owned ? null : "wishlist"}`} onClick={() => handleViewBook(book, user)}>
                         <p>{book.title}<br/>by<br/>{book.author !== "" ? book.author : "Unknown"}</p>
                         <img src={book.thumbnail_url ? book.thumbnail_url : bookImages[index % 6]} alt=""/>
+                        {book.owned ? null : <h2>Wishlist</h2>}
                     </div>
                 ))}
             </div>
@@ -59,9 +60,10 @@ export default function searchResults({ user, searchInput, setDisplay, handleVie
                 <div className="spacer-20" />
                 <h3>Authors</h3>
                 {matchedAuthors.map((book, index) => (
-                    <div key={`${book.id}-author`} className="search-result book-result" onClick={() => handleViewBook(book, user)}>
+                    <div key={`${book.id}-author`} className={`search-result book-result ${book.owned ? null : "wishlist"}`} onClick={() => handleViewBook(book, user)}>
                         <p>{book.title}<br/>by<br/>{book.author !== "" ? book.author : "Unknown"}</p>
                         <img src={book.thumbnail_url ? book.thumbnail_url : bookImages[index % 6]} alt=""/>
+                        {book.owned ? null : <h2>Wishlist</h2>}
                     </div>
                 ))}
             </div>
@@ -74,10 +76,11 @@ export default function searchResults({ user, searchInput, setDisplay, handleVie
                 <div className="spacer-20" />
                 <h3>Notes</h3>
                 {matchedNotes.map((book, index) => (
-                    <div key={`${book.id}-notes`} className="search-result book-result" onClick={() => handleViewBook(book, user)}>
+                    <div key={`${book.id}-notes`} className={`search-result book-result ${book.owned ? null : "wishlist"}`} onClick={() => handleViewBook(book, user)}>
                         <p>{book.title}<br/>by<br/>{book.author !== "" ? book.author : "Unknown"}</p>
                         <p>({book.notes})</p>
                         <img src={book.thumbnail_url ? book.thumbnail_url : bookImages[index % 6]} alt=""/>
+                        {book.owned ? null : <h2>Wishlist</h2>}
                     </div>
                 ))}
             </div>
@@ -118,7 +121,7 @@ export default function searchResults({ user, searchInput, setDisplay, handleVie
             <div className="series-books-display">
                 {books.map(book => (
                     <div key={book.id} className="series-book-display" onClick={() => handleViewBook(book, user)}>
-                        <p>{book.title}</p>
+                        <p style={book.owned ? {} : { color: "#9c7575" }}>{book.owned ? null : ("(Wishlist) ")}{book.title}</p>
                     </div>
                 ))}
             </div>

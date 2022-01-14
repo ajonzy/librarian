@@ -24,6 +24,7 @@ export default function editBook({ book, setDisplay, handleScroll, user, updateU
                         number_of_pages: editData.numberOfPagesInput,
                         thumbnail_url: editData.thumbnail,
                         read: editData.readInput,
+                        owned: editData.ownedInput,
                         rating: editData.ratingInput,
                         notes: editData.notesInput,
                         series_id: editData.series ? editData.series.id : null,

@@ -120,6 +120,8 @@ export default function manageShelves({ user, updateUser, handleEdit }) {
         ))
     }
 
+    // TODO: Add see wishlist books option
+
     return (
         user.shelves.length > 1
         ?

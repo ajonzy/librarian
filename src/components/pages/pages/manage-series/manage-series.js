@@ -57,7 +57,7 @@ export default function manageSeries({ user, updateUser, handleEdit, handleViewB
             <div className="series-books-display">
                 {books.map(book => (
                     <div key={book.id} className="series-book-display" onClick={() => handleViewBook(book, user)}>
-                        <p>{book.title}</p>
+                        <p style={book.owned ? {} : { color: "#9c7575" }}>{book.owned ? null : ("(Wishlist) ")}{book.title}</p>
                     </div>
                 ))}
             </div>

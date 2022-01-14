@@ -12,7 +12,7 @@ import book6 from "../../../../../static/assets/Book 10.png"
 export default function Shelf({ shelf, handleViewBook, handleViewShelfCancel }) {
     const bookImages = [book1, book2, book3, book4, book5, book6]
 
-    const renderBooks = () => shelf.books.map((book, index) => (
+    const renderBooks = () => shelf.books.filter(book => book.owned).map((book, index) => (
         // TODO: Sort
 
         <div key={book.id} className="book-display" onClick={() => handleViewBook(book)}>

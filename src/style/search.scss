@@ -47,6 +47,23 @@
             .book-result {
                 @include book-display-styles;
                 color: #e5d8c4;
+
+                &.wishlist {
+                    position: relative;
+
+                    h2 {
+                        position: absolute;
+                        transform: rotate(45deg);
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        opacity: 60%;
+                        font-size: 6em;
+                        margin: 0px;
+                    }
+                }
             }
 
             .series-result {

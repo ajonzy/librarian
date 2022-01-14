@@ -4,7 +4,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
-export default function book({ id, title, author, published_year, number_of_pages, thumbnail_url, read, rating, notes, series_data, shelves, setDisplay, handleChangeBookView,  handleViewShelf, handleScroll, user, updateUser }) {
+export default function book({ id, title, author, published_year, number_of_pages, thumbnail_url, read, owned, rating, notes, series_data, shelves, setDisplay, handleChangeBookView,  handleViewShelf, handleScroll, user, updateUser }) {
     const [confirmDelete, setConfirmDelete] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
@@ -16,10 +16,11 @@ export default function book({ id, title, author, published_year, number_of_page
         books = books.concat(series.books.filter(book => book.series_position !== null).sort((book1, book2) => book1.series_position - book2.series_position))
         books = books.concat(series.books.filter(book => book.series_position === null).sort((book1, book2) => book1.title < book2.title ? -1 : 1))
 
-        return books.map(book => <p key={book.id} onClick={() => handleChangeBookView(book)}>{book.title}</p>)
+        return books.map(book => <p key={book.id} onClick={() => handleChangeBookView(book)} style={book.owned ? {} : { color: "#9c7575" }}>{book.owned ? null : ("(Wishlist) ")}{book.title}</p>)
     }
 
     const renderShelves = () => {
+        // TODO: sort
         return shelves.map(shelf => shelf.name !== "All Books" ? (
             <p key={shelf.id} onClick={() => handleViewShelf(shelf)}>{shelf.name}</p>
          ) : null)
@@ -63,6 +64,7 @@ export default function book({ id, title, author, published_year, number_of_page
             <p>Published Year: {published_year ? published_year : "Unknown"}</p>
             <p>Number of Pages: {number_of_pages ? number_of_pages : "Unknown"}</p>
             {read ? <p style={{ color: "green" }}>Read <FontAwesomeIcon icon={faCheck} /></p> : <p style={{ color: "red" }}>Not Read</p>}
+            {owned ? null : <p style={{ color: "red" }}>Wishlist</p>}
             {thumbnail_url ? <img src={thumbnail_url} alt=""/> : null}
             {rating ? <div className="book-rating-wrapper">
                 <p>Rating</p>
