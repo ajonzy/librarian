@@ -6,6 +6,7 @@ import AddShelf from "../pages/bookcase/add-shelf"
 import ManageShelves from "./manage-shelves"
 import ManageSeries from "./manage-series"
 import Shelf from "./shelf"
+import Wishlist from "./wishlist"
 import AddBook from "./add-book"
 import Search from "./search"
 import Footer from "../../utitlities/footer"
@@ -112,6 +113,15 @@ export default function bookcase(props) {
                     shelf={selectedShelf} 
                     selectedBook={selectedBook}
                     handleViewShelfCancel={handleViewShelfCancel} 
+                    handleViewShelf={handleViewNestedShelf} 
+                    user={props.user} 
+                    updateUser={updateUser}
+                />
+            )
+            case "wishlist": return (
+                <Wishlist
+                    selectedBook={selectedBook}
+                    handleViewWishlistCancel={handleViewShelfCancel} 
                     handleViewShelf={handleViewNestedShelf} 
                     user={props.user} 
                     updateUser={updateUser}

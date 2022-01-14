@@ -254,6 +254,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                     </div>
                 </label>
             </div>
+            {/* TODO: Add wishlist button */}
             <label>
                 Read: 
                 <input type="checkbox" 
