@@ -33,9 +33,9 @@ export default function Shelf({ books, handleViewBook, handleViewWishlistCancel 
     ))
 
     return (
-        <div className='shelf-display'>
-            <button onClick={() => handleViewWishlistCancel()}><FontAwesomeIcon icon={faLongArrowAltLeft} /> Back</button>
+        <div className='shelf-display wishlist'>
             <h2>Wishlist</h2>
+            <button onClick={() => handleViewWishlistCancel()}>Done</button>
             {books.length > 0
             ?
             renderBooks()

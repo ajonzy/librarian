@@ -2,9 +2,8 @@
     width: 100%;
 
     .shelf-display {
-        padding-top: 34px;
-        padding-bottom: 34px;
         @include page-styles;
+        padding-bottom: 34px;
         background-image: url("../../static/assets/Shelf\ Background_.png");
         background-position: center;
         background-size: 100% 100%;
@@ -19,6 +18,10 @@
             border-radius: 5px;
             width: 75px;
         }
+    }
+
+    .shelf-display.non-wishlist {
+        padding-top: 34px;
 
         h2 {
             margin: 20px 0 0 0;
