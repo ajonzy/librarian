@@ -12,13 +12,27 @@ import book6 from "../../../../../static/assets/Book 10.png"
 export default function Shelf({ shelf, handleViewBook, handleViewShelfCancel }) {
     const bookImages = [book1, book2, book3, book4, book5, book6]
 
-    const renderBooks = () => shelf.books.filter(book => book.owned).map((book, index) => (
-        // TODO: Sort
-
-        <div key={book.id} className="book-display" onClick={() => handleViewBook(book)}>
-            <p>{book.title}<br/>by<br/>{book.author}</p>
-            <img src={book.thumbnail_url ? book.thumbnail_url : bookImages[index % 6]} alt=""/>
-        </div>
+    const renderBooks = () => (
+        shelf.books.filter(book => book.owned)
+        .sort((book1, book2) => {
+            if (book1.author === book2.author) {
+                if (book1.title === book2.title) {
+                    return book1.id < book2.id ? -1 : 1
+                }
+                else {
+                    return book1.title < book2.title ? -1 : 1
+                }
+            }
+            else {
+                book1.author < book2.author ? -1 : 1
+            }
+        })
+        .map((book, index) => (
+            <div key={book.id} className="book-display" onClick={() => handleViewBook(book)}>
+                <p>{book.title}<br/>by<br/>{book.author}</p>
+                <img src={book.thumbnail_url ? book.thumbnail_url : bookImages[index % 6]} alt=""/>
+            </div>
+        )
     ))
 
     return (

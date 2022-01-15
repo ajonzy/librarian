@@ -20,8 +20,7 @@ export default function book({ id, title, author, published_year, number_of_page
     }
 
     const renderShelves = () => {
-        // TODO: sort
-        return shelves.map(shelf => shelf.name !== "All Books" ? (
+        return shelves.sort((shelf1, shelf2) => shelf1.name < shelf2.name ? -1 : 1).map(shelf => shelf.name !== "All Books" ? (
             <p key={shelf.id} onClick={() => handleViewShelf(shelf)}>{shelf.name}</p>
          ) : null)
     }
