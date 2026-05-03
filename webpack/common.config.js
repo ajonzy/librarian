@@ -49,6 +49,9 @@ module.exports = {
       __API_BASE_URL__: JSON.stringify(
         process.env.API_BASE_URL || 'https://librarianapi.herokuapp.com'
       ),
+      __GOOGLE_BOOKS_API_KEY__: JSON.stringify(
+        process.env.GOOGLE_BOOKS_API_KEY || ''
+      ),
     }),
     new SplitChunksPlugin({
       name: ['app', 'vendor'],

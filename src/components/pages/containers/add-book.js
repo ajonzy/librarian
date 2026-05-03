@@ -7,6 +7,7 @@ import Isbn from "../pages/add-book/isbn"
 import Search from "../pages/add-book/search"
 import SearchResults from "../pages/add-book/search-results"
 import AddBook from "../pages/add-book/add-book"
+import { buildBooksVolumesUrl, hasGoogleBooksApiKey } from "../../../googleBooks"
 
 export default function addBook(props) {
     const [display, setDisplay] = useState("scan")
@@ -36,10 +37,24 @@ export default function addBook(props) {
         setLoading(true)
         setError("")
 
-        fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=40`)
-        .then(response => response.json())
-        .then(data => {
+        const url = buildBooksVolumesUrl(query)
+
+        fetch(url)
+        .then(async response => {
+            const data = await response.json().catch(() => ({}))
             setLoading(false)
+            if (response.status === 429) {
+                const hint = hasGoogleBooksApiKey()
+                    ? " Google Books quota exceeded; wait and try again or raise quota in Google Cloud."
+                    : " Configure GOOGLE_BOOKS_API_KEY (Google Cloud: enable Books API, create a browser key with HTTP referrer restrictions)."
+                setError(`Too many search requests.${hint}`)
+                return
+            }
+            if (!response.ok) {
+                const msg = data.error && data.error.message ? data.error.message : `Search failed (${response.status}).`
+                setError(msg)
+                return
+            }
             if (data.items) {
                 setBooksData(data.items)
                 setDisplay("search-results")
