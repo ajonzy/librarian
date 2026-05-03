@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faDotCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 
+import API_BASE_URL from "../../../../config"
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
 export default function manageShelves({ user, updateUser, handleEdit }) {
@@ -19,7 +20,7 @@ export default function manageShelves({ user, updateUser, handleEdit }) {
         setLoading(true)
         setError("")
 
-        fetch(`https://librarianapi.herokuapp.com/user/update/shelves_display/${user.id}`, { 
+        fetch(`${API_BASE_URL}/user/update/shelves_display/${user.id}`, { 
             method: "PUT",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ shelves_display: displaySelection }) 
@@ -46,7 +47,7 @@ export default function manageShelves({ user, updateUser, handleEdit }) {
             setError("")
             setLoading(true)
 
-            fetch(`https://librarianapi.herokuapp.com/shelf/delete/${deletedShelf.id}`, { method: "DELETE" })
+            fetch(`${API_BASE_URL}/shelf/delete/${deletedShelf.id}`, { method: "DELETE" })
             .then(response => response.json())
             .then(data => {
                 setLoading(false)
@@ -66,7 +67,7 @@ export default function manageShelves({ user, updateUser, handleEdit }) {
         setError("")
         setLoading(true)
 
-        fetch(`https://librarianapi.herokuapp.com/shelf/update/${shelf.id}`, {
+        fetch(`${API_BASE_URL}/shelf/update/${shelf.id}`, {
             method: "PUT",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ 

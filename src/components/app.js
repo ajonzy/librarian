@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie'
 
+import API_BASE_URL from "../config"
 import Landing from "./pages/containers/landing"
 import Bookcase from "./pages/containers/bookcase"
 
@@ -45,7 +46,7 @@ export default class App extends Component {
 
   componentDidMount() {
     if (this.state.userToken) {
-      fetch(`https://librarianapi.herokuapp.com/user/get/${this.state.userToken}`)
+      fetch(`${API_BASE_URL}/user/get/${this.state.userToken}`)
       .then(response => response.json())
       .then(data => {
         if (data === "Invalid Credentials") {

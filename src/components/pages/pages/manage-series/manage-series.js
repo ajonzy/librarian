@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import API_BASE_URL from "../../../../config"
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
 export default function manageSeries({ user, updateUser, handleEdit, handleViewBook }) {
@@ -18,7 +19,7 @@ export default function manageSeries({ user, updateUser, handleEdit, handleViewB
             setError("")
             setLoading(true)
 
-            fetch(`https://librarianapi.herokuapp.com/series/delete/${deletedSeries.id}`, { method: "DELETE" })
+            fetch(`${API_BASE_URL}/series/delete/${deletedSeries.id}`, { method: "DELETE" })
             .then(response => response.json())
             .then(data => {
                 setLoading(false)

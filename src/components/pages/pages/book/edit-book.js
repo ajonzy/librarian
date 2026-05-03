@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+import API_BASE_URL from "../../../../config"
 import BookForm from "../../../utitlities/book-form"
 
 export default function editBook({ book, setDisplay, handleScroll, user, updateUser }) {
@@ -14,7 +15,7 @@ export default function editBook({ book, setDisplay, handleScroll, user, updateU
             setSubmitForm(false)
             setSubmitFormData({})
             if (error === "") {
-                fetch(`https://librarianapi.herokuapp.com/book/update/${book.id}`, {
+                fetch(`${API_BASE_URL}/book/update/${book.id}`, {
                     method: "PUT",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({

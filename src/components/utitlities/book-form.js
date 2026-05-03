@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 
+import API_BASE_URL from "../../config"
 import Autosuggest from "./autosuggest"
 
 import loadingImg from "../../../static/assets/loading-small.gif"
@@ -87,7 +88,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                                       .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                       .join(" ")
     
-                await fetch("https://librarianapi.herokuapp.com/series/add", {
+                await fetch(`${API_BASE_URL}/series/add`, {
                     method: "POST",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({
@@ -116,7 +117,7 @@ export default function bookForm({ title, author, published_year, number_of_page
                                               .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                               .join(" ")
     
-                        await fetch("https://librarianapi.herokuapp.com/shelf/add", {
+                        await fetch(`${API_BASE_URL}/shelf/add`, {
                             method: "POST",
                             headers: { "content-type": "application/json" },
                             body: JSON.stringify({

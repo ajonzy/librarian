@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import API_BASE_URL from "../../../../config"
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
 export default function addShelf({ setDisplay, user, updateUser }) {
@@ -23,7 +24,7 @@ export default function addShelf({ setDisplay, user, updateUser }) {
                                   .map(word => word !== "" ?  word[0].toUpperCase() + word.slice(1) : "")
                                   .join(" ")
 
-            fetch("https://librarianapi.herokuapp.com/shelf/add", {
+            fetch(`${API_BASE_URL}/shelf/add`, {
                 method: "POST",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({

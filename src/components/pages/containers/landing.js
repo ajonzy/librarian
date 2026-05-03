@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import API_BASE_URL from "../../../config"
 import Landing from "../pages/landing/landing"
 import CreateAccount from "../pages/landing/create-account"
 
@@ -25,7 +26,7 @@ export default function landing(props) {
     const handleAuth = type => {
         const formattedUsername = username.trim()
 
-        fetch(`https://librarianapi.herokuapp.com/user/${type}`, {
+        fetch(`${API_BASE_URL}/user/${type}`, {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ username: formattedUsername, password })

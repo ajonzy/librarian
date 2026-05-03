@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import API_BASE_URL from "../../../../config"
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
 export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay, user, updateUser }) {
@@ -38,7 +39,7 @@ export default function editShelf({ selectedShelf, setSelectedShelf, setDisplay,
                                         ? user.shelves.length - 1 
                                         : positionInput
 
-            fetch(`https://librarianapi.herokuapp.com/shelf/update/${selectedShelf.id}`, {
+            fetch(`${API_BASE_URL}/shelf/update/${selectedShelf.id}`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({ 

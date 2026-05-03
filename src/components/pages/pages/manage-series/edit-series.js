@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import API_BASE_URL from "../../../../config"
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
 export default function editSeries({ selectedSeries, setSelectedSeries, setDisplay, updateUser }) {
@@ -37,7 +38,7 @@ export default function editSeries({ selectedSeries, setSelectedSeries, setDispl
                 return book.series_position != bookPosition.position
             })
 
-            fetch(`https://librarianapi.herokuapp.com/series/update/${selectedSeries.id}`, {
+            fetch(`${API_BASE_URL}/series/update/${selectedSeries.id}`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({ 

@@ -45,7 +45,10 @@ module.exports = {
       'process.env': {
         'CLOUDINARY_NAME': JSON.stringify(process.env.CLOUDINARY_NAME),
         'CLOUDINARY_UPLOAD_PRESET': JSON.stringify(process.env.CLOUDINARY_UPLOAD_PRESET),
-      }
+      },
+      __API_BASE_URL__: JSON.stringify(
+        process.env.API_BASE_URL || 'https://librarianapi.herokuapp.com'
+      ),
     }),
     new SplitChunksPlugin({
       name: ['app', 'vendor'],

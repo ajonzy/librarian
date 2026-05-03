@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
+import API_BASE_URL from "../../../../config"
 import loadingImg from "../../../../../static/assets/loading-small.gif"
 
 export default function book({ id, title, author, published_year, number_of_pages, thumbnail_url, read, owned, rating, notes, series_data, shelves, setDisplay, handleChangeBookView,  handleViewShelf, handleScroll, user, updateUser }) {
@@ -34,7 +35,7 @@ export default function book({ id, title, author, published_year, number_of_page
             setError("")
             setLoading(true)
 
-            fetch(`https://librarianapi.herokuapp.com/book/delete/${id}`, { method: "DELETE" })
+            fetch(`${API_BASE_URL}/book/delete/${id}`, { method: "DELETE" })
             .then(response => response.json())
             .then(data => {
                 setLoading(false)

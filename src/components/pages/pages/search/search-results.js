@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
 
+import API_BASE_URL from "../../../../config"
 import book1 from "../../../../../static/assets/Book 1.png"
 import book2 from "../../../../../static/assets/Book 3.png"
 import book3 from "../../../../../static/assets/Book 5.png"
@@ -98,7 +99,7 @@ export default function searchResults({ user, searchInput, setDisplay, handleVie
             setError("")
             setLoading(true)
 
-            fetch(`https://librarianapi.herokuapp.com/series/delete/${deletedSeries.id}`, { method: "DELETE" })
+            fetch(`${API_BASE_URL}/series/delete/${deletedSeries.id}`, { method: "DELETE" })
             .then(response => response.json())
             .then(data => {
                 setLoading(false)
@@ -160,7 +161,7 @@ export default function searchResults({ user, searchInput, setDisplay, handleVie
             setError("")
             setLoading(true)
 
-            fetch(`https://librarianapi.herokuapp.com/shelf/delete/${deletedShelf.id}`, { method: "DELETE" })
+            fetch(`${API_BASE_URL}/shelf/delete/${deletedShelf.id}`, { method: "DELETE" })
             .then(response => response.json())
             .then(data => {
                 setLoading(false)

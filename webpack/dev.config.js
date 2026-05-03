@@ -46,6 +46,7 @@ module.exports = webpackMerge(webpackCommon, {
           {
             loader: 'sass-loader',
             options: {
+              implementation: require('sass'),
               outputStyle: 'expanded',
               sourceMap: true,
               sourceMapContents: true

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+import API_BASE_URL from "../../../../config"
 import BookForm from "../../../utitlities/book-form"
 
 export default function addBook({ title, author, published_year, number_of_pages, thumbnail_url, setDisplay, user, updateUser, handleViewBook }) {
@@ -14,7 +15,7 @@ export default function addBook({ title, author, published_year, number_of_pages
             setSubmitForm(false)
             setSubmitFormData({})
             if (error === "") {
-                fetch("https://librarianapi.herokuapp.com/book/add", {
+                fetch(`${API_BASE_URL}/book/add`, {
                     method: "POST",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({
